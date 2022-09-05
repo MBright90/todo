@@ -1,0 +1,34 @@
+*, html, a {
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+@font-face {
+    font-family: "juice-regular";
+    src: url('../fonts/juice_regular-webfont.woff2') format('woff2'),
+         url('../fonts/juice_regular-webfont.woff') format('woff');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'juice-bold';
+    src: url('../fonts/juice_bold-webfont.woff2') format('woff2'),
+         url('../fonts/juice_bold-webfont.woff') format('woff');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'amerika';
+    src: url('../fonts/amerika_-webfont.woff2') format('woff2'),
+         url('../fonts/amerika_-webfont.woff') format('woff');
+    font-style: normal;
+    font-weight: normal;
+}
+
+body {
+    font-family: 'amerika', Arial, Helvetica, sans-serif;
+}
