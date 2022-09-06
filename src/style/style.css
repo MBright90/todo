@@ -1,5 +1,5 @@
 :root {
-    --border-green: 4px solid #319DA0;
+    --border-green: 2px solid #319DA0;
 }
 
 *, html, a {
@@ -41,6 +41,7 @@ ul, li {
 body {
     font-family: 'juice-regular', Arial, Helvetica, sans-serif;
     letter-spacing: 2px;
+    overflow-x: hidden;
 }
 
 /* ------------------ Header styles ------------------ */
@@ -109,13 +110,27 @@ main {
 
 .main-layout > div {
     border: var(--border-green);
+    position: relative;
     padding: 20px;
     height: 100%;
     width: 100%;
 }
 
 .main-layout div h1 {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.main-layout div > a {
+    border-bottom: 2px solid white;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+
+    transition: all ease-in-out .2s;
+}
+
+.main-layout div > a:hover {
+    border-bottom: var(--border-green)
 }
 
 /* ------------------ Home todo list section ------------------ */
@@ -144,6 +159,8 @@ main {
 
 .main-layout .todo-list-home table td {
     vertical-align: top;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .main-layout .todo-list-home table .headers {
