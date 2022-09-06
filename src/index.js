@@ -1,4 +1,4 @@
-import '@fortawesome/fontawesome-free/js/solid'
+import './assets/fontawesome-css/all.css'
 import "./style/style.css"
 
 // Menu icon! innerHTML = "<i class='fa-solid fa-bars'></i>"
