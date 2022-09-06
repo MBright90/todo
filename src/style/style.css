@@ -1,8 +1,13 @@
 *, html, a {
+    box-sizing: border-box;
     color: inherit;
     margin: 0;
     padding: 0;
     text-decoration: none;
+}
+
+ul, li {
+    list-style: none;
 }
 
 @font-face {
@@ -30,5 +35,90 @@
 }
 
 body {
-    font-family: 'amerika', Arial, Helvetica, sans-serif;
+    font-family: 'juice-regular', Arial, Helvetica, sans-serif;
+    letter-spacing: 2px;
+}
+
+/* Header styles */
+
+header {
+    /* background-color: #781C68; */
+    background-color: #319DA0;
+    color: #FFFFFF;
+    display: sticky;
+    font-family: 'amerika';
+    top: 0;
+    letter-spacing: 8px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header a {
+    font-size: 1.6rem;
+}
+
+/* Nav styles */
+
+nav {
+    background-color: #FFD39A;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: calc(100vh - 54px);
+    padding: 20px;
+    width: 300px;
+}
+
+nav ul {
+    border-right: 4px solid #319DA0;
+    padding: 10px;
+    text-align: right;
+}
+
+nav ul:last-of-type {
+    margin-top: auto;
+}
+
+nav ul li {
+    margin: 10px 0;
+}
+
+nav ul li a {
+    font-size: 1.4rem;
+}
+
+/* Main styles */
+
+main {
+    display: flex;
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+.main-layout div {
+    height: 100%;
+    width: 100%;
+}
+
+.main-layout .todo-list-home {
+    background-color: red;
+    grid-area: 1 / 1 / 3 / 2 ;
+}
+
+.main-layout .project-list-home {
+    background-color: green;
+    grid-area: 1 / 2 / 2 / 3 ;
+}
+
+.main-layout .upcoming-deadlines-home {
+    background-color: blue;
+    grid-area: 2 / 2 / 3 / 3;
 }
