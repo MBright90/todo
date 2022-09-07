@@ -112,6 +112,7 @@ main {
 
 .main-layout > div {
     border: var(--border-green);
+    border-radius: 3px;
     display: flex;
     gap: 10px;
     flex-direction: column;
@@ -141,7 +142,18 @@ main {
 .main-layout .empty-container {
     align-self: center;
     display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%
+}
+
+.main-layout .empty-container div {
+    background-color: #319DA0;
+    border-radius: 3px;
+    color: #f0f0f0;
+    line-height: 1.7rem;
+    padding: 40px;
+    text-align: center;
 }
 
 /* ------------------ Home todo list section ------------------ */
