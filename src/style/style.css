@@ -62,6 +62,7 @@ header {
 
 header a {
     font-size: 1.6rem;
+    position: relative;
 }
 
 /* ------------------ Nav styles ------------------ */
@@ -71,16 +72,20 @@ nav {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    gap: 30px;
+    gap: 20px;
     min-height: calc(100vh - 54px);
     padding: 20px;
+    text-align: right;
     width: 300px;
+}
+
+nav h1 {
+    margin-top: 15px;
 }
 
 nav ul {
     border-right: var(--border-green);
     padding: 10px;
-    text-align: right;
 }
 
 nav ul:last-of-type {
