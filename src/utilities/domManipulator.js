@@ -95,15 +95,81 @@ const domManipulator = (() => {
         return nav;  
     };
 
-    const _createHomeList = () => {
+    const _createHomeList = (toDoList) => {
+
+        const _createInteractiveCell = () => {
+            const newCell = document.createElement("td");
+
+            const tick = document.createElement("a");
+            const tickIcon = _createElementClass("i", "fa-solid", "fa-check");
+            tick.appendChild(tickIcon);
+
+            const star = document.createElement("a");
+            const starIcon = _createElementClass("i", "fa-regular", "fa-star");
+            star.appendChild(starIcon);
+
+            const edit = document.createElement("a");
+            const editIcon = _createElementClass("i", "fa-regular", "fa-pen-to-square");
+            edit.appendChild(editIcon);
+
+            const trash = document.createElement("a");
+            const trashIcon = _createElementClass("i", "fa-solid", "fa-trash");
+            trash.appendChild(trashIcon);
+
+            appendChildren(newCell, tick, star, edit, trash);
+            return newCell;
+        };
+
+        const _createListRow = (toDo) => {
+            const currentRow = document.createElement("tr");
+
+            const toDoTitle = _createElementText("td", item.title);
+            const toDoDetails = _createElementText("td", item.details);
+            const toDoDue = _createElementText("td", item.dueDate);
+            const toDoInteractive = _createInteractiveCell();
+
+            _appendChildren(currentRow, toDoTitle, toDoDetails, toDoDue, toDoInteractive);
+            return currentRow;
+        };
+
+        const _createTableData = (toDoDatabase) => {
+            //Check length of object here
+            const tableArr = [];
+            toDoDatabase.forEach(toDoItem => {
+                const newRow = _createListRow(toDoItem);
+                tableArr.push(newRow)
+            });
+            return tableArr;
+        };
+
+        const _appendTableData = (tableElement, tableRowArr) => {
+            tableRowArr.forEach(tableRow => {
+                tableElement.appendChild(toDoRow);
+            });
+        };
+
+        const _createTableHeaders = () => {
+            const homeTableHeaders = document.createElement("tr");
+            const headers = ["ToDo", "Details", "Due Date", ""];
+            headers.forEach(heading => {
+                const headingCell = _createElementText("th", heading);
+                homeTableHeaders.appendChild(headingCell);
+            });
+            return homeTableHeaders
+        };
+
         const homeListContainer = _createElementClass("div", "todo-list-home");
         const homeListHeader = _createElementText("h1", "Your ToDo List");
 
         const homeListTable = document.createElement("table");
-        const homeTableHeaders = document.createElement("tr");
+        homeListTable.appendChild(_createTableHeaders())
+        _appendTableData(homeListTable, _createTableData(toDoList));
 
+        const allLink = _createElementText("a", "See all");
 
-    }
+        _appendChildren(homeListContainer, homeListHeader, homeListTable, allLink);
+        return homeListContainer;
+    };
 
     /* Functions to return */
 
@@ -116,7 +182,7 @@ const domManipulator = (() => {
         );
     };
 
-    const initHomePage = () => {
+    const initHomePage = (toDoList) => {
         // Code Block Here
     }
 
