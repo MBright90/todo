@@ -81,22 +81,28 @@ const domManipulator = (() => {
         const homeHeaderLink = _createElementText("a", "Home");
         homeHeader.appendChild(homeHeaderLink);
 
-        const dateUl = createElementClass("ul", "date-links");
+        const dateUl = _createElementClass("ul", "date-links");
         _createListedLinks(dateUl, ["Upcoming", "Today", "This Week", "This Month"])
 
-        const projectHeader = document.createElementText("h1", "Projects");
-        const projectUl = createElementClass("ul", "project-links");
+        const projectHeader = _createElementText("h1", "Projects");
+        const projectUl = _createElementClass("ul", "project-links");
         _createListedLinks(projectUl, ["New Project", "Project Overview"])
 
         const extraUl = createElementClass("ul", "extra-links");
         _createListedLinks(extraUl, ["Contact Us", "About"]);
 
-        appendChildren(nav, homeHeader, dateUl, projectHeader, projectUl, extraUl);
+        _appendChildren(nav, homeHeader, dateUl, projectHeader, projectUl, extraUl);
         return nav;  
     };
 
     const _createHomeList = () => {
-        
+        const homeListContainer = _createElementClass("div", "todo-list-home");
+        const homeListHeader = _createElementText("h1", "Your ToDo List");
+
+        const homeListTable = document.createElement("table");
+        const homeTableHeaders = document.createElement("tr");
+
+
     }
 
     /* Functions to return */
@@ -106,11 +112,17 @@ const domManipulator = (() => {
             document.body, 
             _createHeader(),
             _createNav(),
+            _initMain(),
         );
     };
 
+    const initHomePage = () => {
+        // Code Block Here
+    }
+
     return (
-        initDashboard
+        initDashboard,
+        initHomePage
     );
 
 })();
