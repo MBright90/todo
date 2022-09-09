@@ -1,3 +1,4 @@
+import { domManipulator } from './utilities/domManipulator.js'
 import './assets/fontawesome-css/all.css'
 import "./style/style.css"
 
