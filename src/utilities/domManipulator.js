@@ -183,8 +183,10 @@ const domManipulator = (() => {
     };
 
     const initHomePage = (toDoList) => {
-        // Code Block Here
-    }
+        _appendToMain(
+            _createHomeList(toDoList),
+        );
+    };
 
     return (
         initDashboard,
