@@ -42,15 +42,17 @@ const domManipulator = (() => {
         document.body.appendChild(element);
     };
 
-    const _appendToMain = (element) => {
+    const _appendToMain = (...elements) => {
         if (!document.querySelector("main")) {
             throw new Error("No 'main' element found");
         };
         const main = document.querySelector("main");
-        main.appendChild(element);
+        elements.forEach(element => {
+            main.appendChild(element);
+        })
     };
 
-    const createMain = () => {
+    const _initMain = () => {
         const main = document.createElement("main");
         return main;
     };
@@ -93,13 +95,17 @@ const domManipulator = (() => {
         return nav;  
     };
 
+    const _createHomeList = () => {
+        
+    }
+
     /* Functions to return */
 
     const initDashboard = () => {
         _appendChildren(
             document.body, 
             _createHeader(),
-            _createNav,
+            _createNav(),
         );
     };
 
