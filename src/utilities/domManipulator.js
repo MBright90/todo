@@ -36,6 +36,23 @@ const domManipulator = (() => {
         });
     };
 
+    /* Table functions */
+
+    const _createTableHeaders = (...headers) => {
+        const tableHeaders = document.createElement("tr");
+        headers.forEach(heading => {
+            const headingCell = _createElementText("th", heading);
+            tableHeaders.appendChild(headingCell);
+        });
+        return tableHeaders
+    };
+
+    const _appendTableData = (tableElement, tableRowArr) => {
+        tableRowArr.forEach(tableRow => {
+            tableElement.appendChild(tableRow);
+        });
+    };
+
     /* Manipulation functions */
 
     const _appendToMain = (...elements) => {
@@ -151,27 +168,11 @@ const domManipulator = (() => {
             return tableArr;
         };
 
-        const _appendTableData = (tableElement, tableRowArr) => {
-            tableRowArr.forEach(tableRow => {
-                tableElement.appendChild(toDoRow);
-            });
-        };
-
-        const _createTableHeaders = () => {
-            const homeTableHeaders = document.createElement("tr");
-            const headers = ["ToDo", "Details", "Due Date", ""];
-            headers.forEach(heading => {
-                const headingCell = _createElementText("th", heading);
-                homeTableHeaders.appendChild(headingCell);
-            });
-            return homeTableHeaders
-        };
-
         const homeListContainer = _createElementClass("div", "todo-list-home");
         const homeListHeader = _createElementText("h1", "Your ToDo List");
 
         const homeListTable = document.createElement("table");
-        homeListTable.appendChild(_createTableHeaders())
+        homeListTable.appendChild(_createTableHeaders("ToDo", "Details", "Due Date", ""))
         _appendTableData(homeListTable, _createTableData(toDoList));
 
         const allLink = _createElementText("a", "See all");
@@ -220,6 +221,19 @@ const domManipulator = (() => {
         return homeProjectContainer;
     };
 
+    const _createHomeDeadlines = (upcomingDeadlines) => {
+
+        const _createDeadlineRow = (deadline) => {
+            const deadlineRow = document.createElement("tr");
+            const deadlineTitle = _createElementText("td", deadline.title);
+            const deadlineDueDate = _createElementText("td", deadline.dueDate);
+
+            _appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
+            return deadlineRow
+        };
+
+    };
+
     /* Functions to return */
 
     const initDashboard = () => {
@@ -231,7 +245,7 @@ const domManipulator = (() => {
         );
     };
 
-    const initHomePage = (toDoList, upcomingProjects) => {
+    const initHomePage = (toDoList, upcomingProjects, upcomingDeadlines) => {
         _appendToMain(
             _createHomeList(toDoList),
             _createHomeProjects(upcomingProjects),
