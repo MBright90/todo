@@ -38,10 +38,6 @@ const domManipulator = (() => {
 
     /* Manipulation functions */
 
-    const _appendToBody = (element) => {
-        document.body.appendChild(element);
-    };
-
     const _appendToMain = (...elements) => {
         if (!document.querySelector("main")) {
             throw new Error("No 'main' element found");
@@ -55,6 +51,19 @@ const domManipulator = (() => {
     const _initMain = () => {
         const main = document.createElement("main");
         return main;
+    };
+
+    const _noDataMessage = (headingMessage, paraStrings) => {
+        // Pass in strings for an 'h1' element and arbitrary amount of 'p' elements in order to display.
+        const noProjectContainer = _createElementClass("div", "empty-container");
+        const noProjectHeading = _createElementText("h1", headingMessage);
+        noProjectContainer.appendChild(noProjectHeading);
+
+        paraStrings.forEach(string => {
+            noProjectContainer.appendChild(_createElementText("p", string));
+        });
+
+        return noProjectContainer;
     };
 
     const _createHeader = () => {
@@ -123,9 +132,9 @@ const domManipulator = (() => {
         const _createListRow = (toDo) => {
             const currentRow = document.createElement("tr");
 
-            const toDoTitle = _createElementText("td", item.title);
-            const toDoDetails = _createElementText("td", item.details);
-            const toDoDue = _createElementText("td", item.dueDate);
+            const toDoTitle = _createElementText("td", toDo.title);
+            const toDoDetails = _createElementText("td", toDo.details);
+            const toDoDue = _createElementText("td", toDo.dueDate);
             const toDoInteractive = _createInteractiveCell();
 
             _appendChildren(currentRow, toDoTitle, toDoDetails, toDoDue, toDoInteractive);
@@ -169,6 +178,46 @@ const domManipulator = (() => {
 
         _appendChildren(homeListContainer, homeListHeader, homeListTable, allLink);
         return homeListContainer;
+    };
+
+    const _createHomeProjects = (topProjectList) => {
+
+        const _createGridCard = (project) => {
+            const projectCard = _createElementClass("div", "project-card");
+            
+            const projectImage = _createElementClass("div", "project-image");
+            projectImage.style.backgroundImage = `url("${project.imageUrl}")`;
+            const projectTitle = _createElementClass("div", "project-title");
+            projectTitle.textContent = project.title;
+            const projectDescription = _createElementClass("div", "project-description");
+            projectDescription.textContent = project.description;
+
+            _appendChildren(projectCard, projectImage, projectTitle, projectDescription);
+            return projectCard;
+        };
+
+        const homeProjectContainer = _createElementClass("div", "project-list-home");
+        if (!topProjectList) {
+            const messageContainer = _noDataMessage(
+                "Oh No!",
+                "You have no current projects",
+                "Create a new project from the sidebar"
+            );
+            homeProjectContainer.appendChild(messageContainer);
+            return homeProjectContainer;
+        };
+
+        const homeProjectHeading = _createElementText("h1", "Projects");
+
+        const projectGrid = _createElementClass("div", "project-grid");
+        topProjectList.forEach(project => {
+            projectGrid.appendChild(_createGridCard(project));
+        });
+
+        const allLink = _createElementText("a", "See all");
+
+        _appendChildren(homeProjectContainer, homeProjectHeading, projectGrid, allLink);
+        return homeProjectContainer;
     };
 
     /* Functions to return */
