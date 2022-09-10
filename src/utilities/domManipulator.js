@@ -231,9 +231,10 @@ const domManipulator = (() => {
         );
     };
 
-    const initHomePage = (toDoList) => {
+    const initHomePage = (toDoList, upcomingProjects) => {
         _appendToMain(
             _createHomeList(toDoList),
+            _createHomeProjects(upcomingProjects),
         );
     };
 
