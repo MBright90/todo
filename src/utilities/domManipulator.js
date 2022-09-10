@@ -166,7 +166,7 @@ const domManipulator = (() => {
                 tableArr.push(newRow)
             });
             return tableArr;
-        };
+        }; // Could be unnecessary here? Data manipulation should be done by another module
 
         const homeListContainer = _createElementClass("div", "todo-list-home");
         const homeListHeader = _createElementText("h1", "Your ToDo List");
@@ -232,6 +232,27 @@ const domManipulator = (() => {
             return deadlineRow
         };
 
+        const homeDeadlinesContainer = _createElementClass("div", "upcoming-deadlines-home");
+        if (!upcomingDeadlines) {
+            const messageContainer = _noDataMessage(
+                "Great News",
+                "You have no upcoming deadlines",
+                "Sit back and relax, or add a new ToDo for this week",
+            );
+            homeDeadlinesContainer.appendChild(messageContainer);
+            return homeDeadlinesContainer;
+        };
+
+        const deadlinesTitle = _createElementText("h1", "Upcoming Deadlines");
+
+        const deadlinesTable = document.createElement("table");
+        deadlinesTable.appendChild(_createTableHeaders("ToDo", "Days Until Due"));
+        upcomingDeadlines.forEach(deadline => {
+            deadlinesTable.appendChild(_createDeadlineRow(deadline));
+        });
+
+        _appendChildren(homeDeadlinesContainer, deadlinesTitle, deadlinesTable);
+        return homeDeadlinesContainer;
     };
 
     /* Functions to return */
@@ -249,6 +270,7 @@ const domManipulator = (() => {
         _appendToMain(
             _createHomeList(toDoList),
             _createHomeProjects(upcomingProjects),
+            _createHomeDeadlines(upcomingDeadlines),
         );
     };
 
