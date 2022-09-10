@@ -183,7 +183,7 @@ const domManipulator = (() => {
 
     const _createHomeProjects = (topProjectList) => {
 
-        const _createGridCard = (project) => {
+        const _createProjectCard = (project) => {
             const projectCard = _createElementClass("div", "project-card");
             
             const projectImage = _createElementClass("div", "project-image");
@@ -212,7 +212,7 @@ const domManipulator = (() => {
 
         const projectGrid = _createElementClass("div", "project-grid");
         topProjectList.forEach(project => {
-            projectGrid.appendChild(_createGridCard(project));
+            projectGrid.appendChild(_createProjectCard(project));
         });
 
         const allLink = _createElementText("a", "See all");
