@@ -1,4 +1,4 @@
-import { homeInterface as home } from './utilities/utilities.js'
+import { pageInterface as page } from './utilities/utilities.js'
 import './assets/fontawesome-css/all.css'
 import "./style/style.css"
 
