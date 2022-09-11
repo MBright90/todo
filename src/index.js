@@ -1,4 +1,4 @@
-import { domManipulator } from './utilities/domManipulator.js'
+import { homeInterface as home } from './utilities/utilities.js'
 import './assets/fontawesome-css/all.css'
 import "./style/style.css"
 
