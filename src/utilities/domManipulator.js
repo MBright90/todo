@@ -266,8 +266,8 @@ const domManipulator = (() => {
         );
     };
 
-    const initHomePage = (toDoList, upcomingProjects, upcomingDeadlines) => {
-        
+    const initHomepage = (toDoList, upcomingProjects, upcomingDeadlines) => {
+
         toDoList = toDoList || null;
         upcomingProjects = upcomingProjects || null;
         upcomingDeadlines = upcomingDeadlines || null;
@@ -279,11 +279,17 @@ const domManipulator = (() => {
         );
     };
 
+    const removeCurrentMain = () => {
+        const main = document.querySelector("main");
+        main.remove();
+    }
+
     return (
         initDashboard,
-        initHomePage
+        initHomepage,
+        removeCurrentMain
     );
 
 })();
 
-export {domManipulator};
+export { domManipulator };
