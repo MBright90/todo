@@ -1,7 +1,6 @@
 import { domManipulator as dom } from "./domManipulator";
 
-
-const homeInterface = (() => {
+const pageInterface = (() => {
 
     const createHomepage = () => {
 
@@ -11,18 +10,21 @@ const homeInterface = (() => {
         dom.initHomepage();
     };
 
-    const updateDashboard = () => {
+    const showDashboard = () => {
         dom.removeCurrentMain();
         dom.initHomepage();
     }
+
+    // const showAllTodos = () => {}
+    // const showProjects = () => {}
 
     // Functions to return
 
     return {
         createHomepage,
-        updateDashboard
+        showDashboard
     }
 
 })();
 
-export { homeInterface };
+export { pageInterface };
