@@ -267,6 +267,11 @@ const domManipulator = (() => {
     };
 
     const initHomePage = (toDoList, upcomingProjects, upcomingDeadlines) => {
+        
+        toDoList = toDoList || null;
+        upcomingProjects = upcomingProjects || null;
+        upcomingDeadlines = upcomingDeadlines || null;
+
         _appendToMain(
             _createHomeList(toDoList),
             _createHomeProjects(upcomingProjects),
