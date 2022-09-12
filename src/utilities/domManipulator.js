@@ -58,11 +58,12 @@ const domManipulator = (() => {
     const _appendToMain = (...elements) => {
         if (!document.querySelector("main")) {
             throw new Error("No 'main' element found");
+        } else {
+            const main = document.querySelector("main");
+            elements.forEach(element => {
+                main.appendChild(element);
+            })
         };
-        const main = document.querySelector("main");
-        elements.forEach(element => {
-            main.appendChild(element);
-        })
     };
 
     const _initMain = () => {
