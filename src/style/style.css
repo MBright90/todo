@@ -231,7 +231,6 @@ main {
 }
 
 .main-layout .project-list-home .project-grid {
-    
     flex: 1 0 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
