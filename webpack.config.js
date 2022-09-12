@@ -5,7 +5,8 @@ module.exports = {
     entry: './src/index.js',
     // plugins: [
     //     new HtmlWebpackPlugin({
-    //         title: "The You Do ToDo Space"
+    //         title: "The You Do ToDo Space",
+    //         favicon: 
     //     })
     // ],
     output: {
@@ -20,6 +21,17 @@ module.exports = {
                     'style-loader',
                     'css-loader'
                 ],
+            },
+            {
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ['@babel/plugin-proposal-class-properties'],
+                    }
+                }
             },
             {
                 test: /\.(woff|woff2|ttf)$/i,
