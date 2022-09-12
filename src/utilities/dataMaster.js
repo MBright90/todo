@@ -1,3 +1,6 @@
+import { format } from "date-fns"
+format(new Date())
+
 const dataMaster = (() => {
     todoIDLength = 8;
     projectIDLength = 10;
