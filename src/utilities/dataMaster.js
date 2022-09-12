@@ -119,22 +119,24 @@ const dataMaster = (() => {
     // Data deletion functions
 
     const _deleteGeneralTodo = (IDtoDelete) => {
-        const todoToDelete = _todoDataset.general.find(todo => todo.todoID === IDtoDelete);
+        const todoToDelete = _retrieveTodoIndex(IDtoDelete);
         if (!todoToDelete) {
             console.log("No toDo found with that ID");
             return false;
-        } else {
-            const index = _todoDataset.general.findIndex(todoToDelete);
-            _todoDataset.splice(index, 1);
+        } else {;
+            _todoDataset.general.splice(todoToDelete, 1);
         };
     };
 
     const _deleteProjectTodo = (projectID, IDtoDelete) => {
-
+        const projectIndex = _retrieveProjectIndex(projectID);
+        const todoIndex = _retrieveTodoIndex(IDtoDelete);
+        _todoDataset.projects[projectIndex].projectToDos.splice[todoIndex, 1];
     };
 
     const _deleteProject = (projectToDelete) => {
-
+        const projectIndex = _retrieveProjectIndex(projectToDelete);
+        _todoDataset.projects.splice(projectIndex, 1);
     };
 
     // Dataset appending functions
@@ -148,7 +150,23 @@ const dataMaster = (() => {
         _todoDataset.projects.find(proj => proj.projectID === findProjectID).projectToDos.push(todoObject);
     };
 
+    const _appendProject = (projectToAppend) => {
+        _todoDataset.projects.push(projectToAppend);
+    };
+
     // Data retrieving functions
+
+    const _retrieveTodoIndex = (todoToFind) => {
+        return _todoDataset.general.findIndex(todo => todo.todoID === todoToFind) ||
+            _todoDataset.projects.forEach(proj => {
+                proj.projectToDos.forEach(projTodo => projTodo.toDoID === todoToFind);
+            }
+        );
+    };
+
+    const _retrieveProjectIndex = (projectToFind) => {
+        return _todoDataset.projects.findIndex(proj => proj.projectID === projectToFind);
+    };
 
     const _retrieveProject = (projectID) => {
         const foundProject = _todoDataset.projects.find(proj => proj.projectID === projectID);
@@ -177,9 +195,20 @@ const dataMaster = (() => {
 
     // Functions to return
 
-    const addNewTodo = (title, description, dueDate) => {
+    const addNewTodo = (title, description, dueDate, projectID) => {
+        projectID = projectID || null; 
         const newTodo = _createTodoObject(title, description, dueDate);
-        _appendGeneralTodo(newTodo);
+        if(!projectID) {
+            _appendGeneralTodo(newTodo);
+        } else {
+            _appendProjectTodo(newToDo, projectID);
+        };
+    };
+
+    const addNewProject = (title, imageURL) => {
+        imageURL = imageURL || null;
+        const newProject = _createProjectObject(title, imageURL);
+        _appendProject(newProject);
     };
 
     const retrieveData = (sortBy) => {
@@ -205,6 +234,7 @@ const dataMaster = (() => {
 
     return {
         addNewTodo,
+        addNewProject,
         retrieveData,
         deleteData,
     };
