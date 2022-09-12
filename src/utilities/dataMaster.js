@@ -1,5 +1,5 @@
 const dataMaster = (() => {
-    const todoDataset = {};
+    const _todoDataset = {};
 
     // Local storage functions //
 
@@ -107,9 +107,11 @@ const dataMaster = (() => {
     // Dataset appending functions
 
     const _appendGeneralTodo = (todoObject) => {
+        _todoDataset.general.push(todoObject);
+    };
 
-    }
-
-    // const _appendProjectTodo = (todoObject, projectID) => {}
+    const _appendProjectTodo = (todoObject, findProjectID) => {
+        _todoDataset.projects.find(proj => proj.projectID === findProjectID).projectToDos.push(todoObject);
+    };
 
 })();
