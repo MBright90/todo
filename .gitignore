@@ -1,5 +1,3 @@
-# Ignore all node modules
-*/node_modules
-
 # Ignore added spellings
-*/.vscode
+.vscode
+node_modules
