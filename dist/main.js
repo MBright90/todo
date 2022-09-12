@@ -16,7 +16,7 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utilities_utilities_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities/utilities.js */ \"./src/utilities/utilities.js\");\n/* harmony import */ var _assets_fontawesome_css_all_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/fontawesome-css/all.css */ \"./src/assets/fontawesome-css/all.css\");\n/* harmony import */ var _style_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style/style.css */ \"./src/style/style.css\");\n\n\n // Menu icon! innerHTML = \"<i class='fa-solid fa-bars'></i>\"\n// New project icon = \"<i class='fa-solid fa-plus'></i>\"\n\n/* ******* \n\n\n\n******* */\n\n//# sourceURL=webpack://todo/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _assets_fontawesome_css_all_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./assets/fontawesome-css/all.css */ \"./src/assets/fontawesome-css/all.css\");\n/* harmony import */ var _style_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style/style.css */ \"./src/style/style.css\");\n/* harmony import */ var _utilities_utilities_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utilities/utilities.js */ \"./src/utilities/utilities.js\");\n\n\n // Menu icon! innerHTML = \"<i class='fa-solid fa-bars'></i>\"\n// New project icon = \"<i class='fa-solid fa-plus'></i>\"\n\n/* ******* \n\n\n\n******* */\n\n//# sourceURL=webpack://todo/./src/index.js?");
 
 /***/ }),
 
