@@ -6,7 +6,7 @@ module.exports = {
     // plugins: [
     //     new HtmlWebpackPlugin({
     //         title: "The You Do ToDo Space",
-    //         favicon: 
+    //         favicon: "./src/assets/images/favicon.ico"
     //     })
     // ],
     output: {
@@ -37,6 +37,10 @@ module.exports = {
                 test: /\.(woff|woff2|ttf)$/i,
                 type: 'asset/resource'
             },
+            {
+                test: /\.ico$/i,
+                type: 'asset/resource'
+            }
         ]
     }
 }
