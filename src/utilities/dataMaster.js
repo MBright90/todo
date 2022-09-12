@@ -6,10 +6,7 @@ const dataMaster = (() => {
     todoIDLength = 8;
     projectIDLength = 10;
 
-    const _todoDataset = {
-        general : [],
-        projects: [],
-    };
+    const _todoDataset = _retrieveLocalData();
 
     // Local storage functions //
 
@@ -191,6 +188,18 @@ const dataMaster = (() => {
             });
         });
         return allToDos;
+    };
+
+    const _retrieveTodo = (todoID) => {
+        const foundTodo = _todoDataset.general.find(todo => todo.toDoID === todoID);
+        if (!foundTodo) {
+            _todoDataset.projects.forEach(proj => {
+                proj.projectToDos.forEach(projToDo => {
+                    if (projToDo.todoID === todoID) return projToDo
+                });
+            });
+        };
+        return foundTodo; 
     };
 
     const _retrieveDateOrdered = () => {
