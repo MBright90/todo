@@ -104,6 +104,26 @@ const dataMaster = (() => {
         };
     };
 
+    // Data deletion functions
+
+    const _deleteGeneralTodo = (IDtoDelete) => {
+        const todoToDelete = _todoDataset.general.find(todo => todo.todoID === IDtoDelete);
+        if (!todoToDelete) {
+            throw new Error("No toDo found with that ID");
+        } else {
+        const index = _todoDataset.general.findIndex(todoToDelete);
+        _todoDataset.splice(index, 1);
+        };
+    };
+
+    const _deleteProjectTodo = (projectID, IDtoDelete) => {
+
+    };
+
+    const _deleteProject = (projectToDelete) => {
+        
+    };
+
     // Dataset appending functions
 
     const _appendGeneralTodo = (todoObject) => {
