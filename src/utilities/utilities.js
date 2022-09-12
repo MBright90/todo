@@ -1,4 +1,5 @@
 import { domManipulator as dom } from "./domManipulator";
+import { dataMaster as data } from "./dataMaster.js";
 
 const pageInterface = (() => {
 
@@ -13,7 +14,7 @@ const pageInterface = (() => {
     const showDashboard = () => {
         dom.removeCurrentMain();
         dom.initHomepage();
-    }
+    };
 
     // const showAllTodos = () => {}
     // const showProjects = () => {}
@@ -23,7 +24,7 @@ const pageInterface = (() => {
     return {
         createHomepage,
         showDashboard
-    }
+    };
 
 })();
 
