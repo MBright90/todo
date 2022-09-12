@@ -1,5 +1,6 @@
 import { format } from "date-fns"
-format(new Date())
+
+format(new Date(), 'DD/MM/YYYY')
 
 const dataMaster = (() => {
     todoIDLength = 8;
@@ -18,14 +19,14 @@ const dataMaster = (() => {
                 {
                     title: "toDo title",
                     description: "toDo description",
-                    dueDate: new Date(2022, 09, 25),
+                    dueDate: new Date(2022, 9, 25),
                     important: true,
                     toDoID: 21862122
                 },
                 {
                     title: "toDo title two",
                     description: "toDo description two",
-                    dueDate: new Date(2022, 09, 27),
+                    dueDate: new Date(2022, 9, 27),
                     important: false,
                     toDoID: 24862122
                 }
@@ -39,7 +40,7 @@ const dataMaster = (() => {
                         {
                             title: "project toDo one",
                             description: "project description one",
-                            dueDate: new Date(30/09/2022, 9, 11),
+                            dueDate: new Date(2022, 9, 11),
                             important: true,
                             toDoID: 23862122,
                             complete: False,
@@ -83,7 +84,9 @@ const dataMaster = (() => {
         return localData;
     };
 
-    // const saveLocalData = () => {};
+    const saveLocalData = () => {
+        
+    };
 
     // Data creation functions
 
@@ -214,11 +217,12 @@ const dataMaster = (() => {
         _appendProject(newProject);
     };
 
-    const retrieveData = (sortBy) => {
-        const sortBy = sortBy || null;
-        if (sortBy === "date") {
+    const retrieveData = (toSortBy) => {
+        // Pass in "date" to retrieve todos sorted in date order. Use "projects" to return all projects.
+        toSortBy = toSortBy || null;
+        if (toSortBy === "date") {
             return _retrieveDateOrdered();
-        } else if (sortBy === "projects") {
+        } else if (toSortBy === "projects") {
             return _todoDataset.projects;
         } else {
             return _retrieveAllTodos();
