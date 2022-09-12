@@ -1,4 +1,7 @@
 const dataMaster = (() => {
+    todoIDLength = 8;
+    projectIDLength = 10;
+
     const _todoDataset = {
         general : [],
         projects: [],
@@ -28,7 +31,7 @@ const dataMaster = (() => {
                 {
                     projectTitle: "project one title",
                     projectImage: "",
-                    projectID: 219621,
+                    projectID: 1111219621,
                     projectToDos: [
                         {
                             title: "project toDo one",
@@ -51,7 +54,7 @@ const dataMaster = (() => {
                 {
                     projectTitle: "project two title",
                     projectImage: "",
-                    projectID: 249621,
+                    projectID: 1111249621,
                     projectToDos: [
                         {
                             title: "project toDo one",
@@ -84,13 +87,13 @@ const dataMaster = (() => {
     const _createTodoID = () => {
         const date = new Date();
         const newID = `${date.getSeconds()}${date.getHours()}${date.getFullYear()}${date.getMilliseconds()}`;
-        return parseInt(newID);
+        return newID.padStart(todoIDLength, "0");
     };
 
     const _createProjectID = () => {
         const date = new Date();
         const newID = `${date.getMilliseconds()}${date.getSeconds()}${date.getMinutes()}${date.getMonth()}`
-        return parseInt(newID);
+        return newID.padStart(projectIDLength, "1");
     };
 
     const _createTodoObject = (todoTitle, todoDescription, todoDueDate, isImportant) => {
@@ -118,10 +121,11 @@ const dataMaster = (() => {
     const _deleteGeneralTodo = (IDtoDelete) => {
         const todoToDelete = _todoDataset.general.find(todo => todo.todoID === IDtoDelete);
         if (!todoToDelete) {
-            throw new Error("No toDo found with that ID");
+            console.log("No toDo found with that ID");
+            return false;
         } else {
-        const index = _todoDataset.general.findIndex(todoToDelete);
-        _todoDataset.splice(index, 1);
+            const index = _todoDataset.general.findIndex(todoToDelete);
+            _todoDataset.splice(index, 1);
         };
     };
 
@@ -167,6 +171,8 @@ const dataMaster = (() => {
 
     const _retrieveDateOrdered = () => {
         const allToDos = _retrieveAllTodos();
+        const sortedByDate = allToDos.sort((a, b) => a.dueDate < b.dueDate);
+        return sortedByDate;
     };
 
     // Functions to return
@@ -176,9 +182,31 @@ const dataMaster = (() => {
         _appendGeneralTodo(newTodo);
     };
 
+    const retrieveData = (sortBy) => {
+        const sortBy = sortBy || null;
+        if (sortBy === "date") {
+            return _retrieveDateOrdered();
+        } else if (sortBy === "projects") {
+            return _todoDataset.projects;
+        } else {
+            return _retrieveAllTodos();
+        };
+    };
+
+    const deleteData = (IDtoDelete) => {
+        if (IDtoDelete.length === projectIDLength) {
+            _deleteProject(IDtoDelete)
+        } else if (IDtoDelete.length === todoIDlength) {
+            if (!_deleteGeneralTodo(IDtoDelete)) {
+                _deleteProjectTodo(IDtoDelete)
+            };
+        };
+    };
+
     return {
         addNewTodo,
-
+        retrieveData,
+        deleteData,
     };
 
 })();
