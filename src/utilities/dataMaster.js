@@ -102,6 +102,7 @@ const dataMaster = (() => {
     };
 
     const _createTodoObject = (todoTitle, todoDescription, todoDueDate, isImportant) => {
+        const dateArray = todoDueDate.split("/")
         const todoObject = {
             title: todoTitle,
             description: todoDescription,
@@ -116,7 +117,7 @@ const dataMaster = (() => {
         const projectObject = {
             projectTitle: newProjectTitle,
             projectImage: newProjectImage || null,
-            projectDescription: projectDescription,
+            projectDescription: newProjectDescription,
             projectID: _createProjectID(),
         };
         return projectObject;
@@ -208,9 +209,12 @@ const dataMaster = (() => {
     const _retrieveDateOrdered = () => {
         const allToDos = _retrieveAllTodos();
         const sortedByDate = allToDos.sort((a, b) => {
-            const dates = [a.dueDate, b.dueDate];
-            return dates.sort( compareAsc );
-        });
+            console.log(a.dueDate)
+            console.log(b.dueDate)
+            return a.dueDate > b.dueDate ? 1 : -1;
+            }
+        );
+        console.log(sortedByDate)
         return sortedByDate;
     };
 
