@@ -1,12 +1,7 @@
 const domManipulator = (() => {
 
     /* Utility functions */
-
-    const _initBody = () => {
-        const newBody = document.createElement("body");
-        return newBody;
-    };
-    const body = _initBody();
+    const body = document.body;
 
     const _createElementClass = (element, ...args) => {
         const newElement = document.createElement(element);
