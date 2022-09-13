@@ -239,13 +239,34 @@ const dataMaster = (() => {
         toSortBy = toSortBy || null;
         amount = amount || null;
 
+        let dataArray = [];
+
         if (toSortBy === "date") {
-            return _retrieveDateOrdered();
+            dataArray = _retrieveDateOrdered(); 
+            if (amount) {
+                return dataArray.slice(0, amount);
+            };
+            return dataArray;
+
         } else if (toSortBy === "projects") {
-            return _todoDataset.projects;
+            dataArray = _todoDataset.projects; 
+            if (amount) {
+                return dataArray.slice(0, amount);
+            };
+            return dataArray;
+
         } else if (toSortBy === "general") {
+            dataArray = _todoDataset.general;
+            if (amount) {
+                return dataArray.slice(0, amount);
+            };
             return _todoDataset.general;
+
         } else {
+            dataArray = _retrieveAllTodos();
+            if (amount) {
+                return dataArray.slice(0, amount);
+            };
             return _retrieveAllTodos();
         };
     };
