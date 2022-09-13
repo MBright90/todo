@@ -2,6 +2,12 @@ const domManipulator = (() => {
 
     /* Utility functions */
 
+    const _initBody = () => {
+        const newBody = document.createElement("body");
+        return newBody;
+    };
+    const body = _initBody();
+
     const _createElementClass = (element, ...args) => {
         const newElement = document.createElement(element);
         args.forEach(arg => {
@@ -22,8 +28,8 @@ const domManipulator = (() => {
     };
 
     const _appendChildren = (element, ...args) => {
-        args.forEach(child => {
-            element.appendChild(child);
+        args.forEach(arg => {
+            element.appendChild(arg);
         });
     };
 
@@ -260,7 +266,7 @@ const domManipulator = (() => {
 
     const initDashboard = () => {
         _appendChildren(
-            document.body, 
+            body, 
             _createHeader(),
             _createNav(),
             _initMain(),
