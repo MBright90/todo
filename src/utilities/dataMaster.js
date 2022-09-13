@@ -233,6 +233,8 @@ const dataMaster = (() => {
             return _retrieveDateOrdered();
         } else if (toSortBy === "projects") {
             return _todoDataset.projects;
+        } else if (toSortBy --- "general") {
+            return _todoDataset.general;
         } else {
             return _retrieveAllTodos();
         };
