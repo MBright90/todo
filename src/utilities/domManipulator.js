@@ -130,7 +130,7 @@ const domManipulator = (() => {
 
     const _createHomeList = (toDoList) => {
 
-        const _createInteractiveCell = () => {
+        const _createInteractiveCell = (isImportant) => {
             const newCell = document.createElement("td");
 
             const tick = document.createElement("a");
@@ -139,6 +139,9 @@ const domManipulator = (() => {
 
             const star = document.createElement("a");
             const starIcon = _createElementClass("i", "fa-regular", "fa-star");
+            if (isImportant) {
+                star.classList.add("is-important")
+            };
             star.appendChild(starIcon);
 
             const edit = document.createElement("a");
@@ -149,7 +152,7 @@ const domManipulator = (() => {
             const trashIcon = _createElementClass("i", "fa-solid", "fa-trash");
             trash.appendChild(trashIcon);
 
-            appendChildren(newCell, tick, star, edit, trash);
+            _appendChildren(newCell, tick, star, edit, trash);
             return newCell;
         };
 
@@ -157,9 +160,9 @@ const domManipulator = (() => {
             const currentRow = document.createElement("tr");
 
             const toDoTitle = _createElementText("td", toDo.title);
-            const toDoDetails = _createElementText("td", toDo.details);
+            const toDoDetails = _createElementText("td", toDo.description);
             const toDoDue = _createElementText("td", toDo.dueDate);
-            const toDoInteractive = _createInteractiveCell();
+            const toDoInteractive = _createInteractiveCell(toDo.important);
 
             _appendChildren(currentRow, toDoTitle, toDoDetails, toDoDue, toDoInteractive);
             return currentRow;
