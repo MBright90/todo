@@ -1,16 +1,16 @@
 import { format } from "date-fns"
 
-format(new Date(), 'DD/MM/YYYY')
+format(new Date(), 'dd/MM/yyyy')
 
 const dataMaster = (() => {
-    todoIDLength = 8;
-    projectIDLength = 10;
+    const todoIDLength = 8;
+    const projectIDLength = 10;
 
     const _todoDataset = _retrieveLocalData();
 
     // Local storage functions //
 
-    const _retrieveLocalData = () => {
+    function _retrieveLocalData() {
         const localData = {
             general: [
                 {
@@ -40,7 +40,7 @@ const dataMaster = (() => {
                             dueDate: new Date(2022, 9, 11),
                             important: true,
                             toDoID: 23862122,
-                            complete: False,
+                            complete: false,
                         },
                         {
                             title: "project toDo two",
@@ -81,7 +81,7 @@ const dataMaster = (() => {
         return localData;
     };
 
-    const saveLocalData = () => {
+    function saveLocalData() {
         
     };
 
