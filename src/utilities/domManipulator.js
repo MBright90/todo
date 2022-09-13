@@ -30,7 +30,7 @@ const domManipulator = (() => {
     const _createListedLinks = (listContainer, linkArr) => {
         linkArr.forEach(link => {
             const li = document.createElement("li");
-            const liLink = createElementText("a", link);
+            const liLink = _createElementText("a", link);
             li.appendChild(liLink)
             listContainer.appendChild(li);
         });
@@ -93,11 +93,11 @@ const domManipulator = (() => {
 
         const headerLogo = _createElementText("h1", "You Do ToDo");
 
-        const addItemLink = createElementClass("a", "new-icon");
-        addItemIcon = _createElementClass("i", "fa-solid", "fa-plus");
+        const addItemLink = _createElementClass("a", "new-icon");
+        const addItemIcon = _createElementClass("i", "fa-solid", "fa-plus");
         addItemLink.appendChild(addItemIcon);
 
-        header.appendChildren(dropLink, headerLogo, addItemLink);
+        _appendChildren(header, dropLink, headerLogo, addItemLink);
         return header;
     };
 
@@ -115,7 +115,7 @@ const domManipulator = (() => {
         const projectUl = _createElementClass("ul", "project-links");
         _createListedLinks(projectUl, ["New Project", "Project Overview"])
 
-        const extraUl = createElementClass("ul", "extra-links");
+        const extraUl = _createElementClass("ul", "extra-links");
         _createListedLinks(extraUl, ["Contact Us", "About"]);
 
         _appendChildren(nav, homeHeader, dateUl, projectHeader, projectUl, extraUl);
@@ -282,14 +282,15 @@ const domManipulator = (() => {
 
     const removeCurrentMain = () => {
         const main = document.querySelector("main");
+        if (!main) return console.log("No main element found");
         main.remove();
-    }
+    };
 
-    return (
-        initDashboard,
-        initHomepage,
-        removeCurrentMain
-    );
+    return {
+        initDashboard: initDashboard,
+        initHomepage: initHomepage,
+        removeCurrentMain: removeCurrentMain
+    };
 
 })();
 
