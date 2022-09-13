@@ -1,9 +1,11 @@
 const domManipulator = (() => {
 
-    /* Utility functions */
     const body = document.body;
+    const mainLayout = _createElementClass("div", "main-layout")
 
-    const _createElementClass = (element, ...args) => {
+    /* Utility functions */
+
+    function _createElementClass(element, ...args) {
         const newElement = document.createElement(element);
         args.forEach(arg => {
             newElement.classList.add(arg);
@@ -11,7 +13,7 @@ const domManipulator = (() => {
         return newElement;
     };
 
-    const _createElementText = (element, text) => {
+    function _createElementText(element, text) {
         const newElement = document.createElement(element);
         try {
             newElement.textContent = text;
@@ -22,13 +24,13 @@ const domManipulator = (() => {
         return newElement;
     };
 
-    const _appendChildren = (element, ...args) => {
+    function _appendChildren(element, ...args) {
         args.forEach(arg => {
             element.appendChild(arg);
         });
     };
 
-    const _createListedLinks = (listContainer, linkArr) => {
+    function  _createListedLinks(listContainer, linkArr) {
         linkArr.forEach(link => {
             const li = document.createElement("li");
             const liLink = _createElementText("a", link);
@@ -67,19 +69,32 @@ const domManipulator = (() => {
         };
     };
 
+    const _appendToMainLayout = (...elements) => {
+        if (!document.querySelector(".main-layout")) {
+            throw new Error("No 'main-layout' element found");
+        } else {
+            elements.forEach(element => {
+                mainLayout.appendChild(element);
+            })
+        };
+    };
+
     const _initMain = () => {
         const main = document.createElement("main");
         return main;
     };
 
-    const _noDataMessage = (headingMessage, paraStrings) => {
+    const _noDataMessage = (headingMessage, ...paraStrings) => {
         // Pass in strings for an 'h1' element and arbitrary amount of 'p' elements in order to display.
         const noProjectContainer = _createElementClass("div", "empty-container");
+        const noProjectMessage = document.createElement("div");
+        noProjectContainer.appendChild(noProjectMessage);
+
         const noProjectHeading = _createElementText("h1", headingMessage);
-        noProjectContainer.appendChild(noProjectHeading);
+        noProjectMessage.appendChild(noProjectHeading);
 
         paraStrings.forEach(string => {
-            noProjectContainer.appendChild(_createElementText("p", string));
+            noProjectMessage.appendChild(_createElementText("p", string));
         });
 
         return noProjectContainer;
@@ -156,7 +171,7 @@ const domManipulator = (() => {
 
             const toDoTitle = _createElementText("td", toDo.title);
             const toDoDetails = _createElementText("td", toDo.description);
-            const toDoDue = _createElementText("td", toDo.dueDate);
+            const toDoDue = _createElementText("td", `${toDo.dueDate.getDate()}/${toDo.dueDate.getMonth()}/${toDo.dueDate.getFullYear()}`);
             const toDoInteractive = _createInteractiveCell(toDo.important);
 
             _appendChildren(currentRow, toDoTitle, toDoDetails, toDoDue, toDoInteractive);
@@ -188,15 +203,21 @@ const domManipulator = (() => {
 
     const _createHomeProjects = (topProjectList) => {
 
+        console.log(topProjectList);
+
         const _createProjectCard = (project) => {
             const projectCard = _createElementClass("div", "project-card");
             
             const projectImage = _createElementClass("div", "project-image");
-            projectImage.style.backgroundImage = `url("${project.imageUrl}")`;
+            if (project.projectImage) {
+                projectImage.style.backgroundImage = `url('${project.projectImage}')`;
+            };
+
             const projectTitle = _createElementClass("div", "project-title");
-            projectTitle.textContent = project.title;
+            projectTitle.textContent = project.projectTitle;
+
             const projectDescription = _createElementClass("div", "project-description");
-            projectDescription.textContent = project.description;
+            projectDescription.textContent = project.projectDescription;
 
             _appendChildren(projectCard, projectImage, projectTitle, projectDescription);
             return projectCard;
@@ -266,9 +287,9 @@ const domManipulator = (() => {
         _appendChildren(
             body, 
             _createHeader(),
-            _createNav(),
             _initMain(),
         );
+        _appendToMain(_createNav(), mainLayout);
     };
 
     const initHomepage = (toDoList, upcomingProjects, upcomingDeadlines) => {
@@ -277,7 +298,7 @@ const domManipulator = (() => {
         upcomingProjects = upcomingProjects || null;
         upcomingDeadlines = upcomingDeadlines || null;
 
-        _appendToMain(
+        _appendToMainLayout(
             _createHomeList(toDoList),
             _createHomeProjects(upcomingProjects),
             _createHomeDeadlines(upcomingDeadlines),
