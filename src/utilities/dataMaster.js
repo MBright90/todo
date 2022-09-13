@@ -171,7 +171,7 @@ const dataMaster = (() => {
         return _todoDataset.projects.findIndex(proj => proj.projectID === projectToFind);
     };
 
-    const _retrieveProject = (projectID) => {
+    const _retrieveSingleProject = (projectID) => {
         const foundProject = _todoDataset.projects.find(proj => proj.projectID === projectID);
         if (!foundProject) {
             throw new Error `No Project Found with ID ${projectID}`
@@ -190,7 +190,7 @@ const dataMaster = (() => {
         return allToDos;
     };
 
-    const _retrieveTodo = (todoID) => {
+    const _retrieveSingleTodo = (todoID) => {
         const foundTodo = _todoDataset.general.find(todo => todo.toDoID === todoID);
         if (!foundTodo) {
             _todoDataset.projects.forEach(proj => {
