@@ -4,14 +4,12 @@ import { dataMaster as data } from "./dataMaster.js";
 const pageInterface = (() => {
 
     const createHomepage = () => {
-
-        // Code black to retrieve data //
-
         dom.initDashboard();
         dom.initHomepage(
-            data.retrieveData("general"),
-            data.retrieveData("projects"),
-            data.retrieveData("date"));
+            data.retrieveData("date", 10),
+            data.retrieveData("projects", 3),
+            data.retrieveData("general", 5)
+            );
     };
 
     const showDashboard = () => {
