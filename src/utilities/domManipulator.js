@@ -165,10 +165,10 @@ const domManipulator = (() => {
             return currentRow;
         };
 
-        const _createTableData = (toDoDatabase) => {
+        const _createTableData = (toDoData) => {
             //Check length of object here
             const tableArr = [];
-            toDoDatabase.forEach(toDoItem => {
+            toDoData.forEach(toDoItem => {
                 const newRow = _createListRow(toDoItem);
                 tableArr.push(newRow)
             });
