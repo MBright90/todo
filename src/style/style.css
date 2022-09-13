@@ -220,6 +220,10 @@ main {
     width: 200px;
 }
 
+.main-layout .todo-list-home table tr td .is-important {
+    color: #e6e63f;
+}
+
 /* ------------------ Home project section ------------------ */
 
 .main-layout .project-list-home {
