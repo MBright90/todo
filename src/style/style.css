@@ -225,6 +225,10 @@ main {
     color: #e6e63f;
 }
 
+.main-layout table .overdue {
+    background-color: #E94560 !important;
+}
+
 /* ------------------ Home project section ------------------ */
 
 .main-layout .project-list-home {
