@@ -22,8 +22,8 @@ const pageInterface = (() => {
     // Functions to return
 
     return {
-        createHomepage,
-        showDashboard
+        createHomepage: createHomepage,
+        showDashboard: showDashboard,
     };
 
 })();
