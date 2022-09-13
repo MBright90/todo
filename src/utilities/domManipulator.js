@@ -1,3 +1,5 @@
+import { formatDistanceStrict } from 'date-fns';
+
 const domManipulator = (() => {
 
     const body = document.body;
@@ -250,15 +252,19 @@ const domManipulator = (() => {
     const _createHomeDeadlines = (upcomingDeadlines) => {
 
         const _createDeadlineRow = (deadline) => {
+            const daysUntilDue = formatDistanceStrict(deadline.dueDate, new Date(), {unit: "day"});
+
             const deadlineRow = document.createElement("tr");
             const deadlineTitle = _createElementText("td", deadline.title);
-            const deadlineDueDate = _createElementText("td", deadline.dueDate);
+            const deadlineDueDate = _createElementText("td", daysUntilDue);
 
             _appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
             return deadlineRow
         };
 
         const homeDeadlinesContainer = _createElementClass("div", "upcoming-deadlines-home");
+        const tableContainer = _createElementClass("div", "deadlines-container");
+
         if (!upcomingDeadlines) {
             const messageContainer = _noDataMessage(
                 "Great News",
@@ -277,7 +283,8 @@ const domManipulator = (() => {
             deadlinesTable.appendChild(_createDeadlineRow(deadline));
         });
 
-        _appendChildren(homeDeadlinesContainer, deadlinesTitle, deadlinesTable);
+        _appendChildren(tableContainer, deadlinesTitle, deadlinesTable);
+        homeDeadlinesContainer.appendChild(tableContainer);
         return homeDeadlinesContainer;
     };
 
