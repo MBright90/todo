@@ -3,12 +3,12 @@ const path = require("path");
 module.exports = {
     mode: 'development',
     entry: './src/index.js',
-    // plugins: [
-    //     new HtmlWebpackPlugin({
-    //         title: "The You Do ToDo Space",
-    //         favicon: "./src/assets/images/favicon.ico"
-    //     })
-    // ],
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: "The You Do ToDo Space",
+            favicon: "./src/assets/images/favicon.ico"
+        })
+    ],
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
