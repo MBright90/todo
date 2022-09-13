@@ -8,7 +8,10 @@ const pageInterface = (() => {
         // Code black to retrieve data //
 
         dom.initDashboard();
-        dom.initHomepage();
+        dom.initHomepage(
+            data.retrieveData("general"),
+            data.retrieveData("projects"),
+            data.retrieveData("date"));
     };
 
     const showDashboard = () => {
