@@ -7,6 +7,7 @@ const dataMaster = (() => {
     const projectIDLength = 10;
 
     const _todoDataset = _retrieveLocalData();
+    _checkAllOverdue(_todoDataset);
 
     // Local storage functions //
 
@@ -16,9 +17,10 @@ const dataMaster = (() => {
                 {
                     title: "toDo title",
                     description: "toDo description",
-                    dueDate: new Date(2022, 9, 25),
+                    dueDate: new Date(2022, 7, 25),
                     important: true,
-                    toDoID: 21862122
+                    toDoID: 21862122,
+                    overdue: true,
                 },
                 {
                     title: "toDo title two",
@@ -216,6 +218,16 @@ const dataMaster = (() => {
         );
         console.log(sortedByDate)
         return sortedByDate;
+    };
+
+    const _checkAllOverdue = () => {
+        const today = new Date();
+        const allToDos = _retrieveAllTodos();
+        allToDos.forEach(todo => {
+            if (todo.dueDate < today) {
+                todo.overdue = true;
+            };
+        });
     };
 
     // Functions to return
