@@ -1,4 +1,4 @@
-import { format } from "date-fns"
+import { format, compareAsc } from "date-fns"
 
 format(new Date(), 'dd/MM/yyyy')
 
@@ -31,7 +31,8 @@ const dataMaster = (() => {
             projects: [
                 {
                     projectTitle: "project one title",
-                    projectImage: "",
+                    projectImage: "https://media.istockphoto.com/photos/delivering-quality-construction-for-a-quality-lifestyle-picture-id1297780288?b=1&k=20&m=1297780288&s=170667a&w=0&h=NDdDs9BBGULLwYUDUt1AjIOroHuwmFY9N6ZEDAYV7sE=",
+                    projectDescription: "A description about my project.",
                     projectID: 1111219621,
                     projectToDos: [
                         {
@@ -54,7 +55,8 @@ const dataMaster = (() => {
                 },
                 {
                     projectTitle: "project two title",
-                    projectImage: "",
+                    projectImage: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGxhcHRvcHxlbnwwfHwwfHw%3D&w=1000&q=80",
+                    projectDescription: "Another description about a new project.",
                     projectID: 1111249621,
                     projectToDos: [
                         {
@@ -69,7 +71,7 @@ const dataMaster = (() => {
                             title: "project toDo two",
                             description: "project description two",
                             dueDate: new Date(2022, 10, 22),
-                            important: true,
+                            important: false,
                             toDoID: 2167125,
                             complete: true,
                         },
@@ -110,10 +112,11 @@ const dataMaster = (() => {
         return todoObject;
     };
 
-    const _createProjectObject = (newProjectTitle, newProjectImage) => {
+    const _createProjectObject = (newProjectTitle, newProjectDescription, newProjectImage) => {
         const projectObject = {
             projectTitle: newProjectTitle,
             projectImage: newProjectImage || null,
+            projectDescription: projectDescription,
             projectID: _createProjectID(),
         };
         return projectObject;
@@ -204,7 +207,10 @@ const dataMaster = (() => {
 
     const _retrieveDateOrdered = () => {
         const allToDos = _retrieveAllTodos();
-        const sortedByDate = allToDos.sort((a, b) => a.dueDate < b.dueDate);
+        const sortedByDate = allToDos.sort((a, b) => {
+            const dates = [a.dueDate, b.dueDate];
+            return dates.sort( compareAsc );
+        });
         return sortedByDate;
     };
 
@@ -226,14 +232,18 @@ const dataMaster = (() => {
         _appendProject(newProject);
     };
 
-    const retrieveData = (toSortBy) => {
-        // Pass in "date" to retrieve todos sorted in date order. Use "projects" to return all projects.
+    const retrieveData = (toSortBy, amount) => {
+        // Pass in "date" to retrieve all todos sorted in date order. 
+        // Use "projects" to return all projects.
+        // Use "general" to return all general todos
         toSortBy = toSortBy || null;
+        amount = amount || null;
+
         if (toSortBy === "date") {
             return _retrieveDateOrdered();
         } else if (toSortBy === "projects") {
             return _todoDataset.projects;
-        } else if (toSortBy --- "general") {
+        } else if (toSortBy === "general") {
             return _todoDataset.general;
         } else {
             return _retrieveAllTodos();
