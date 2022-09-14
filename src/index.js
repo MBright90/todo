@@ -5,10 +5,6 @@ import { pageInterface as page } from './utilities/utilities.js'
 
 page.createHomepage();
 
-// Menu icon! innerHTML = "<i class='fa-solid fa-bars'></i>"
-// New project icon = "<i class='fa-solid fa-plus'></i>"
-
-
 /* ******* 
 
 
