@@ -1,4 +1,4 @@
-import { formatDistance } from 'date-fns';
+import { formatDistanceStrict } from 'date-fns';
 
 const domManipulator = (() => {
 
@@ -173,7 +173,7 @@ const domManipulator = (() => {
 
             const toDoTitle = _createElementText("td", toDo.title);
             const toDoDetails = _createElementText("td", toDo.description);
-            const toDoDue = _createElementText("td", `${toDo.dueDate.getDate()}/${toDo.dueDate.getMonth()}/${toDo.dueDate.getFullYear()}`);
+            const toDoDue = _createElementText("td", `${toDo.dueDate.getDate()}/${toDo.dueDate.getMonth() + 1}/${toDo.dueDate.getFullYear()}`);
             const toDoInteractive = _createInteractiveCell(toDo.important);
 
             if (toDo.overdue) {
@@ -253,14 +253,17 @@ const domManipulator = (() => {
     const _createHomeDeadlines = (upcomingDeadlines) => {
 
         const _createDeadlineRow = (deadline) => {
-            const daysUntilDue = formatDistance(new Date(), deadline.dueDate, {unit: "day"});
+            const daysUntilDue = formatDistanceStrict(new Date(), deadline.dueDate, {unit: "day"});
 
             const deadlineRow = document.createElement("tr");
             const deadlineTitle = _createElementText("td", deadline.title);
-            const deadlineDueDate = _createElementText("td", daysUntilDue);
+            let deadlineDueDate;
 
-            if (toDo.overdue) {
-                currentRow.classList.add("overdue")
+            if (deadline.overdue) {
+                deadlineRow.classList.add("overdue")
+                deadlineDueDate = _createElementText("td", `Overdue: ${daysUntilDue}`);
+            } else {
+                deadlineDueDate = _createElementText("td", daysUntilDue);
             };
 
             _appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
