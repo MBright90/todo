@@ -58,10 +58,6 @@ const domManipulator = (() => {
         });
     };
 
-    const _rowIsOverdue = (todo) => {
-        return todo.dueDate < new Date();
-    };
-
     /* Manipulation functions */
 
     const _appendToMain = (...elements) => {
@@ -180,6 +176,10 @@ const domManipulator = (() => {
             const toDoDue = _createElementText("td", `${toDo.dueDate.getDate()}/${toDo.dueDate.getMonth()}/${toDo.dueDate.getFullYear()}`);
             const toDoInteractive = _createInteractiveCell(toDo.important);
 
+            if (toDo.overdue) {
+                currentRow.classList.add("overdue")
+            };
+
             _appendChildren(currentRow, toDoTitle, toDoDetails, toDoDue, toDoInteractive);
             return currentRow;
         };
@@ -258,6 +258,10 @@ const domManipulator = (() => {
             const deadlineRow = document.createElement("tr");
             const deadlineTitle = _createElementText("td", deadline.title);
             const deadlineDueDate = _createElementText("td", daysUntilDue);
+
+            if (toDo.overdue) {
+                currentRow.classList.add("overdue")
+            };
 
             _appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
             return deadlineRow
