@@ -1,4 +1,4 @@
-import { formatDistanceStrict } from 'date-fns';
+import { formatDistance } from 'date-fns';
 
 const domManipulator = (() => {
 
@@ -56,6 +56,10 @@ const domManipulator = (() => {
         tableRowArr.forEach(tableRow => {
             tableElement.appendChild(tableRow);
         });
+    };
+
+    const _rowIsOverdue = (todo) => {
+        return todo.dueDate < new Date();
     };
 
     /* Manipulation functions */
@@ -204,9 +208,6 @@ const domManipulator = (() => {
     };
 
     const _createHomeProjects = (topProjectList) => {
-
-        console.log(topProjectList);
-
         const _createProjectCard = (project) => {
             const projectCard = _createElementClass("div", "project-card");
             
@@ -252,7 +253,7 @@ const domManipulator = (() => {
     const _createHomeDeadlines = (upcomingDeadlines) => {
 
         const _createDeadlineRow = (deadline) => {
-            const daysUntilDue = formatDistanceStrict(deadline.dueDate, new Date(), {unit: "day"});
+            const daysUntilDue = formatDistance(new Date(), deadline.dueDate, {unit: "day"});
 
             const deadlineRow = document.createElement("tr");
             const deadlineTitle = _createElementText("td", deadline.title);
