@@ -1,4 +1,4 @@
-import { format, compareAsc } from "date-fns"
+import { format, addDays } from "date-fns"
 
 format(new Date(), 'dd/MM/yyyy')
 
@@ -214,9 +214,15 @@ const dataMaster = (() => {
         return sortedByDate;
     };
 
+    const _retrieveTimeTodos = (daysAhead) => {
+        const allToDos = _retrieveAllTodos();
+        const dateTarget = addDays(new Date(), daysAhead)
+        return allToDos.filter(todo => todo.dueDate < dateTarget)
+    };
+
     const _checkGeneralOverdue = (date) => {
         _todoDataset.general.forEach(todo => {
-            if (todo.dueDate < today) {
+            if (todo.dueDate < date) {
                 todo.overdue = true;
             };
         });
@@ -224,7 +230,7 @@ const dataMaster = (() => {
 
     const _checkProjectsOverdue = (date) => {
         _todoDataset.projects.forEach(proj => {
-            proj.todos.forEach(todo => {
+            proj.projectToDos.forEach(todo => {
                 if (todo.dueDate < date) {
                     todo.overdue = true;
                 };
@@ -306,9 +312,6 @@ const dataMaster = (() => {
     };
 
     const _todoDataset = _retrieveLocalData();
-    console.log(_retrieveLocalData())
-    console.log(_todoDataset);
-    // console.log(_todoDataset.general)
     _checkAllOverdue(_todoDataset);
 
     return {
