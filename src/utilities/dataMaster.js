@@ -214,14 +214,28 @@ const dataMaster = (() => {
         return sortedByDate;
     };
 
-    const _checkAllOverdue = () => {
-        const today = new Date();
-        const allToDos = _retrieveAllTodos();
-        allToDos.forEach(todo => {
+    const _checkGeneralOverdue = (date) => {
+        _todoDataset.general.forEach(todo => {
             if (todo.dueDate < today) {
                 todo.overdue = true;
             };
         });
+    }
+
+    const _checkProjectsOverdue = (date) => {
+        _todoDataset.projects.forEach(proj => {
+            proj.todos.forEach(todo => {
+                if (todo.dueDate < date) {
+                    todo.overdue = true;
+                };
+            });
+        });
+    };
+
+    const _checkAllOverdue = () => {
+        const today = new Date();
+        _checkGeneralOverdue(today);
+        _checkProjectsOverdue(today)
     };
 
     // Functions to return
@@ -245,7 +259,7 @@ const dataMaster = (() => {
     const retrieveData = (toSortBy, amount) => {
         // Pass in "date" to retrieve all todos sorted in date order. 
         // Use "projects" to return all projects.
-        // Use "general" to return all general todos
+        // Use "general" to return all general (non-project) todos.
         toSortBy = toSortBy || null;
         amount = amount || null;
 
@@ -295,7 +309,7 @@ const dataMaster = (() => {
     console.log(_retrieveLocalData())
     console.log(_todoDataset);
     // console.log(_todoDataset.general)
-    // _checkAllOverdue(_todoDataset);
+    _checkAllOverdue(_todoDataset);
 
     return {
         addNewTodo,
