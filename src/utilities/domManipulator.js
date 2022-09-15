@@ -431,7 +431,7 @@ const formMaster = (() => {
 
     return {
         createTodoForm,
-        newProjectForm
+        createProjectForm
     };
 
 })();
