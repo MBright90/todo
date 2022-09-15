@@ -1,41 +1,41 @@
 import { formatDistanceStrict } from 'date-fns';
 
+function createElementClass(element, ...args) {
+    const newElement = document.createElement(element);
+    args.forEach(arg => {
+        newElement.classList.add(arg);
+    });
+    return newElement;
+};
+
+function createElementText(element, text) {
+    const newElement = document.createElement(element);
+    try {
+        newElement.textContent = text;
+    }
+    catch(err) {
+        console.log("No text can be added to this element");
+    };
+    return newElement;
+};
+
+function appendChildren(element, ...args) {
+    args.forEach(arg => {
+        element.appendChild(arg);
+    });
+};
+
 const domManipulator = (() => {
 
     const body = document.body;
-    const mainLayout = _createElementClass("div", "main-layout")
+    const mainLayout = createElementClass("div", "main-layout")
 
     /* Utility functions */
-
-    function _createElementClass(element, ...args) {
-        const newElement = document.createElement(element);
-        args.forEach(arg => {
-            newElement.classList.add(arg);
-        });
-        return newElement;
-    };
-
-    function _createElementText(element, text) {
-        const newElement = document.createElement(element);
-        try {
-            newElement.textContent = text;
-        }
-        catch(err) {
-            console.log("No text can be added to this element");
-        };
-        return newElement;
-    };
-
-    function _appendChildren(element, ...args) {
-        args.forEach(arg => {
-            element.appendChild(arg);
-        });
-    };
 
     function  _createListedLinks(listContainer, linkArr) {
         linkArr.forEach(link => {
             const li = document.createElement("li");
-            const liLink = _createElementText("a", link);
+            const liLink = createElementText("a", link);
             li.appendChild(liLink)
             listContainer.appendChild(li);
         });
@@ -46,7 +46,7 @@ const domManipulator = (() => {
     const _createTableHeaders = (...headers) => {
         const tableHeaders = document.createElement("tr");
         headers.forEach(heading => {
-            const headingCell = _createElementText("th", heading);
+            const headingCell = createElementText("th", heading);
             tableHeaders.appendChild(headingCell);
         });
         return tableHeaders
@@ -88,15 +88,15 @@ const domManipulator = (() => {
 
     const _noDataMessage = (headingMessage, ...paraStrings) => {
         // Pass in strings for an 'h1' element and arbitrary amount of 'p' elements in order to display.
-        const noProjectContainer = _createElementClass("div", "empty-container");
+        const noProjectContainer = createElementClass("div", "empty-container");
         const noProjectMessage = document.createElement("div");
         noProjectContainer.appendChild(noProjectMessage);
 
-        const noProjectHeading = _createElementText("h1", headingMessage);
+        const noProjectHeading = createElementText("h1", headingMessage);
         noProjectMessage.appendChild(noProjectHeading);
 
         paraStrings.forEach(string => {
-            noProjectMessage.appendChild(_createElementText("p", string));
+            noProjectMessage.appendChild(createElementText("p", string));
         });
 
         return noProjectContainer;
@@ -105,17 +105,17 @@ const domManipulator = (() => {
     const _createHeader = () => {
         const header = document.createElement("header");
 
-        const dropLink = _createElementClass("a", "drop-link");
-        const dropLinkIcon = _createElementClass("i", "fa-solid", "fa-bars");
+        const dropLink = createElementClass("a", "drop-link");
+        const dropLinkIcon = createElementClass("i", "fa-solid", "fa-bars");
         dropLink.appendChild(dropLinkIcon);
 
-        const headerLogo = _createElementText("h1", "You Do ToDo");
+        const headerLogo = createElementText("h1", "You Do ToDo");
 
-        const addItemLink = _createElementClass("a", "new-icon");
-        const addItemIcon = _createElementClass("i", "fa-solid", "fa-plus");
+        const addItemLink = createElementClass("a", "new-icon");
+        const addItemIcon = createElementClass("i", "fa-solid", "fa-plus");
         addItemLink.appendChild(addItemIcon);
 
-        _appendChildren(header, dropLink, headerLogo, addItemLink);
+        appendChildren(header, dropLink, headerLogo, addItemLink);
         return header;
     };
 
@@ -123,20 +123,20 @@ const domManipulator = (() => {
         const nav = document.createElement("nav");
 
         const homeHeader = document.createElement("h1");
-        const homeHeaderLink = _createElementText("a", "Home");
+        const homeHeaderLink = createElementText("a", "Home");
         homeHeader.appendChild(homeHeaderLink);
 
-        const dateUl = _createElementClass("ul", "date-links");
+        const dateUl = createElementClass("ul", "date-links");
         _createListedLinks(dateUl, ["Upcoming", "Today", "This Week", "This Month"])
 
-        const projectHeader = _createElementText("h1", "Projects");
-        const projectUl = _createElementClass("ul", "project-links");
+        const projectHeader = createElementText("h1", "Projects");
+        const projectUl = createElementClass("ul", "project-links");
         _createListedLinks(projectUl, ["New Project", "Project Overview"])
 
-        const extraUl = _createElementClass("ul", "extra-links");
+        const extraUl = createElementClass("ul", "extra-links");
         _createListedLinks(extraUl, ["Contact Us", "About"]);
 
-        _appendChildren(nav, homeHeader, dateUl, projectHeader, projectUl, extraUl);
+        appendChildren(nav, homeHeader, dateUl, projectHeader, projectUl, extraUl);
         return nav;  
     };
 
@@ -146,41 +146,41 @@ const domManipulator = (() => {
             const newCell = document.createElement("td");
 
             const tick = document.createElement("a");
-            const tickIcon = _createElementClass("i", "fa-solid", "fa-check");
+            const tickIcon = createElementClass("i", "fa-solid", "fa-check");
             tick.appendChild(tickIcon);
 
             const star = document.createElement("a");
-            const starIcon = _createElementClass("i", "fa-regular", "fa-star");
+            const starIcon = createElementClass("i", "fa-regular", "fa-star");
             if (isImportant) {
                 star.classList.add("is-important")
             };
             star.appendChild(starIcon);
 
             const edit = document.createElement("a");
-            const editIcon = _createElementClass("i", "fa-regular", "fa-pen-to-square");
+            const editIcon = createElementClass("i", "fa-regular", "fa-pen-to-square");
             edit.appendChild(editIcon);
 
             const trash = document.createElement("a");
-            const trashIcon = _createElementClass("i", "fa-solid", "fa-trash");
+            const trashIcon = createElementClass("i", "fa-solid", "fa-trash");
             trash.appendChild(trashIcon);
 
-            _appendChildren(newCell, tick, star, edit, trash);
+            appendChildren(newCell, tick, star, edit, trash);
             return newCell;
         };
 
         const _createListRow = (toDo) => {
             const currentRow = document.createElement("tr");
 
-            const toDoTitle = _createElementText("td", toDo.title);
-            const toDoDetails = _createElementText("td", toDo.description);
-            const toDoDue = _createElementText("td", `${toDo.dueDate.getDate()}/${toDo.dueDate.getMonth() + 1}/${toDo.dueDate.getFullYear()}`);
+            const toDoTitle = createElementText("td", toDo.title);
+            const toDoDetails = createElementText("td", toDo.description);
+            const toDoDue = createElementText("td", `${toDo.dueDate.getDate()}/${toDo.dueDate.getMonth() + 1}/${toDo.dueDate.getFullYear()}`);
             const toDoInteractive = _createInteractiveCell(toDo.important);
 
             if (toDo.overdue) {
                 currentRow.classList.add("overdue")
             };
 
-            _appendChildren(currentRow, toDoTitle, toDoDetails, toDoDue, toDoInteractive);
+            appendChildren(currentRow, toDoTitle, toDoDetails, toDoDue, toDoInteractive);
             return currentRow;
         };
 
@@ -194,39 +194,39 @@ const domManipulator = (() => {
             return tableArr;
         }; // Could be unnecessary here? Data manipulation should be done by another module
 
-        const homeListContainer = _createElementClass("div", "todo-list-home");
-        const homeListHeader = _createElementText("h1", "Your ToDo List");
+        const homeListContainer = createElementClass("div", "todo-list-home");
+        const homeListHeader = createElementText("h1", "Your ToDo List");
 
         const homeListTable = document.createElement("table");
         homeListTable.appendChild(_createTableHeaders("ToDo", "Details", "Due Date", ""))
         _appendTableData(homeListTable, _createTableData(toDoList));
 
-        const allLink = _createElementText("a", "See all");
+        const allLink = createElementText("a", "See all");
 
-        _appendChildren(homeListContainer, homeListHeader, homeListTable, allLink);
+        appendChildren(homeListContainer, homeListHeader, homeListTable, allLink);
         return homeListContainer;
     };
 
     const _createHomeProjects = (topProjectList) => {
         const _createProjectCard = (project) => {
-            const projectCard = _createElementClass("div", "project-card");
+            const projectCard = createElementClass("div", "project-card");
             
-            const projectImage = _createElementClass("div", "project-image");
+            const projectImage = createElementClass("div", "project-image");
             if (project.projectImage) {
                 projectImage.style.backgroundImage = `url('${project.projectImage}')`;
             };
 
-            const projectTitle = _createElementClass("div", "project-title");
+            const projectTitle = createElementClass("div", "project-title");
             projectTitle.textContent = project.projectTitle;
 
-            const projectDescription = _createElementClass("div", "project-description");
+            const projectDescription = createElementClass("div", "project-description");
             projectDescription.textContent = project.projectDescription;
 
-            _appendChildren(projectCard, projectImage, projectTitle, projectDescription);
+            appendChildren(projectCard, projectImage, projectTitle, projectDescription);
             return projectCard;
         };
 
-        const homeProjectContainer = _createElementClass("div", "project-list-home");
+        const homeProjectContainer = createElementClass("div", "project-list-home");
         if (!topProjectList) {
             const messageContainer = _noDataMessage(
                 "Oh No!",
@@ -237,16 +237,16 @@ const domManipulator = (() => {
             return homeProjectContainer;
         };
 
-        const homeProjectHeading = _createElementText("h1", "Projects");
+        const homeProjectHeading = createElementText("h1", "Projects");
 
-        const projectGrid = _createElementClass("div", "project-grid");
+        const projectGrid = createElementClass("div", "project-grid");
         topProjectList.forEach(project => {
             projectGrid.appendChild(_createProjectCard(project));
         });
 
-        const allLink = _createElementText("a", "See all");
+        const allLink = createElementText("a", "See all");
 
-        _appendChildren(homeProjectContainer, homeProjectHeading, projectGrid, allLink);
+        appendChildren(homeProjectContainer, homeProjectHeading, projectGrid, allLink);
         return homeProjectContainer;
     };
 
@@ -256,22 +256,22 @@ const domManipulator = (() => {
             const daysUntilDue = formatDistanceStrict(new Date(), deadline.dueDate, {unit: "day"});
 
             const deadlineRow = document.createElement("tr");
-            const deadlineTitle = _createElementText("td", deadline.title);
+            const deadlineTitle = createElementText("td", deadline.title);
             let deadlineDueDate;
 
             if (deadline.overdue) {
                 deadlineRow.classList.add("overdue")
-                deadlineDueDate = _createElementText("td", `Overdue: ${daysUntilDue}`);
+                deadlineDueDate = createElementText("td", `Overdue: ${daysUntilDue}`);
             } else {
-                deadlineDueDate = _createElementText("td", daysUntilDue);
+                deadlineDueDate = createElementText("td", daysUntilDue);
             };
 
-            _appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
+            appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
             return deadlineRow
         };
 
-        const homeDeadlinesContainer = _createElementClass("div", "upcoming-deadlines-home");
-        const tableContainer = _createElementClass("div", "deadlines-container");
+        const homeDeadlinesContainer = createElementClass("div", "upcoming-deadlines-home");
+        const tableContainer = createElementClass("div", "deadlines-container");
 
         if (!upcomingDeadlines) {
             const messageContainer = _noDataMessage(
@@ -283,7 +283,7 @@ const domManipulator = (() => {
             return homeDeadlinesContainer;
         };
 
-        const deadlinesTitle = _createElementText("h1", "Upcoming Deadlines");
+        const deadlinesTitle = createElementText("h1", "Upcoming Deadlines");
 
         const deadlinesTable = document.createElement("table");
         deadlinesTable.appendChild(_createTableHeaders("ToDo", "Days Until Due"));
@@ -291,7 +291,7 @@ const domManipulator = (() => {
             deadlinesTable.appendChild(_createDeadlineRow(deadline));
         });
 
-        _appendChildren(tableContainer, deadlinesTitle, deadlinesTable);
+        appendChildren(tableContainer, deadlinesTitle, deadlinesTable);
         homeDeadlinesContainer.appendChild(tableContainer);
         return homeDeadlinesContainer;
     };
@@ -299,7 +299,7 @@ const domManipulator = (() => {
     /* Functions to return */
 
     const initDashboard = () => {
-        _appendChildren(
+        appendChildren(
             body, 
             _createHeader(),
             _initMain(),
@@ -327,11 +327,31 @@ const domManipulator = (() => {
     };
 
     return {
-        initDashboard: initDashboard,
-        initHomepage: initHomepage,
-        removeCurrentMain: removeCurrentMain
+        initDashboard,
+        initHomepage,
+        removeCurrentMain
     };
 
 })();
 
-export { domManipulator };
+// ********************************************* //
+// ********************************************* //
+// ********************************************* //
+
+const formMaster = (() => {
+
+    const addTodoForm = () => {
+        const formElement = createElementClass("form", "todoForm");
+
+        //label
+        //input
+    };
+
+    return {
+        newTodoForm,
+        newProjectForm
+    };
+
+})();
+
+export { domManipulator, formMaster };
