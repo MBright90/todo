@@ -1,4 +1,6 @@
-import { formatDistanceStrict } from 'date-fns';
+import { format, formatDistanceStrict, addDays } from 'date-fns';
+
+// *********** Overarching utility functions ************* //
 
 function createElementClass(element, ...args) {
     const newElement = document.createElement(element);
@@ -24,6 +26,16 @@ function appendChildren(element, ...args) {
         element.appendChild(arg);
     });
 };
+
+function setAttributes(element, attributes) {
+    attributes.forEach(key => {
+        element.setAttribute(key, attributes[key])
+    });
+};
+
+// ********************************************* //
+// ************** Dom Manipulator ************** //
+// ********************************************* //
 
 const domManipulator = (() => {
 
@@ -335,20 +347,70 @@ const domManipulator = (() => {
 })();
 
 // ********************************************* //
-// ********************************************* //
+// **************** Form Master **************** //
 // ********************************************* //
 
 const formMaster = (() => {
 
-    const addTodoForm = () => {
-        const formElement = createElementClass("form", "todoForm");
+    const _minDateInput = () => {
+        return format(new Date(), "yyyy-MM-dd");
+    };
 
-        //label
-        //input
+    const _maxDateInput = () => {
+        return format(addDays(new Date(), 730), "yyyy-MM-dd")
+    };
+
+    const createTodoForm = () => {
+        const formElement = createElementClass("form", "todoForm");
+        const fieldsetElement = document.createElement("fieldset");
+
+        const fieldsetLegend = createElementText("legend", "New ToDo");
+
+        const titleLabel = createElementText("label", "Title");
+        titleLabel.setAttribute("for", "title-input");
+        const titleInput = document.createElement("input");
+        setAttributes(titleInput, {
+            "type": "text",
+            "name": "title-input",
+            "id": "title-input",
+            "max": 50,
+        });
+
+        const descriptionLabel = createElementText("label", "Description");
+        descriptionLabel.setAttribute("for", "description-input");
+        const descriptionInput = document.createElement("textarea");
+        setAttributes(descriptionInput, {
+            "name": "descriptionInput",
+            "id": "description-input",
+            "max": 200,
+        });
+
+        const dueDateLabel = createElementText("label", "Due Date");
+        dueDateLabel.setAttribute("for", "due-date-input");
+        const dueDateInput = document.createElement("input");
+        setAttributes(dueDateInput, {
+            "type": "date",
+            "id": "due-date-input",
+            "min": _minDateInput(),
+            "max": _maxDateInput(),
+        });
+
+        appendChildren(fieldsetElement,
+            fieldsetLegend,
+            titleLabel,
+            titleInput,
+            descriptionLabel,
+            descriptionInput,
+            dueDateLabel,
+            dueDateInput,
+        );
+
+        formElement.appendChild(fieldsetElement);
+        return formElement;
     };
 
     return {
-        newTodoForm,
+        createTodoForm,
         newProjectForm
     };
 
