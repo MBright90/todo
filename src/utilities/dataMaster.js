@@ -1,6 +1,4 @@
-import { format, addDays } from "date-fns"
-
-format(new Date(), 'dd/MM/yyyy')
+import { addDays } from "date-fns"
 
 const dataMaster = (() => {
     const todoIDLength = 8;
@@ -226,7 +224,7 @@ const dataMaster = (() => {
                 todo.overdue = true;
             };
         });
-    }
+    };
 
     const _checkProjectsOverdue = (date) => {
         _todoDataset.projects.forEach(proj => {
