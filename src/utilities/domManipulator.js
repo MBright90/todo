@@ -409,6 +409,26 @@ const formMaster = (() => {
         return formElement;
     };
 
+    const createProjectForm = () => {
+        const formElement = createElementClass("form", "projectForm");
+        const fieldsetElement = document.createElement("fieldset");
+
+        const fieldsetLegend = createElementText("legend", "New Project");
+
+        // Title
+
+        // Description
+
+        //ImageURL
+
+        appendChildren(fieldsetElement,
+        
+        );
+
+        formElement.appendChild(fieldsetElement);
+        return formElement;
+    };
+
     return {
         createTodoForm,
         newProjectForm
