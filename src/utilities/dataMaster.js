@@ -309,6 +309,10 @@ const dataMaster = (() => {
         };
     };
 
+    const collectTodoForm = (form) => {}
+
+    const collectProjectForm = (form) => {}
+
     const _todoDataset = _retrieveLocalData();
     _checkAllOverdue(_todoDataset);
 
