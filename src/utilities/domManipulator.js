@@ -339,6 +339,10 @@ const domManipulator = (() => {
         main.remove();
     };
 
+    const showProjectsPage = () => {
+
+    };
+
     const showForm = (form) => {
         formBackground.style.display = flex;
         formBackground.appendChild(form)
@@ -353,6 +357,8 @@ const domManipulator = (() => {
         initDashboard,
         initHomepage,
         removeCurrentMain,
+
+        showProjectsPage,
 
         showForm,
         removeForm
@@ -432,6 +438,7 @@ const formMaster = (() => {
     };
 
     const createProjectForm = () => {
+        const formContainer = createElementClass("form", "form-container")
         const formElement = createElementClass("form", "projectForm");
         const fieldsetElement = document.createElement("fieldset");
 
@@ -479,7 +486,8 @@ const formMaster = (() => {
         );
 
         formElement.appendChild(fieldsetElement);
-        return formElement;
+        formContainer.appendChild(formElement);
+        return formContainer;
     };
 
     return {
