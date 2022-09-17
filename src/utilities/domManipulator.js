@@ -350,6 +350,8 @@ const domManipulator = (() => {
 // **************** Form Master **************** //
 // ********************************************* //
 
+
+
 const formMaster = (() => {
 
     const _minDateInput = () => {
@@ -358,6 +360,10 @@ const formMaster = (() => {
 
     const _maxDateInput = () => {
         return format(addDays(new Date(), 730), "yyyy-MM-dd")
+    };
+
+    const createSubmitButton = () => {
+        return createElementText("button", "Create");
     };
 
     const createTodoForm = () => {
@@ -390,6 +396,7 @@ const formMaster = (() => {
         const dueDateInput = document.createElement("input");
         setAttributes(dueDateInput, {
             "type": "date",
+            "name": "due-date-input",
             "id": "due-date-input",
             "min": _minDateInput(),
             "max": _maxDateInput(),
@@ -403,6 +410,7 @@ const formMaster = (() => {
             descriptionInput,
             dueDateLabel,
             dueDateInput,
+            createSubmitButton(),
         );
 
         formElement.appendChild(fieldsetElement);
@@ -416,16 +424,44 @@ const formMaster = (() => {
         const fieldsetLegend = createElementText("legend", "New Project");
 
         // Title
-        const titleLabel = createElementText("label", "Project Title") 
+        const titleLabel = createElementText("label", "Project Title");
+        titleLabel.setAttribute("for", "project-title-input");
+        const titleInput = document.createElement("input");
+        setAttributes(titleInput, {
+            "type": "text",
+            "name": "project-title-input",
+            "id": "project-title-input",
+        }); 
 
         // Description
         const descriptionLabel = createElementText("label", "Project Overview");
+        descriptionLabel.setAttribute("for", "project-description-input");
+        const descriptionInput = document.createElement("textarea");
+        setAttributes(descriptionInput, {
+            "name": "project-description-input",
+            "id": "project-description-input",
+            "max": 200
+        });
 
         //ImageURL
         const imageLabel = createElementText("label", "Image URL");
+        imageLabel.setAttribute("for", "image-input");
+        const imageInput = document.createElement("input");
+        setAttributes(imageInput, {
+            "type": "url",
+            "name": "image-input",
+            "id": "image-input",
+        });
 
         appendChildren(fieldsetElement,
-        
+            fieldsetLegend,
+            titleLabel,
+            titleInput,
+            descriptionLabel,
+            descriptionInput,
+            imageLabel,
+            imageInput,
+            createSubmitButton(),
         );
 
         formElement.appendChild(fieldsetElement);
