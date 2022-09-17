@@ -416,10 +416,13 @@ const formMaster = (() => {
         const fieldsetLegend = createElementText("legend", "New Project");
 
         // Title
+        const titleLabel = createElementText("label", "Project Title") 
 
         // Description
+        const descriptionLabel = createElementText("label", "Project Overview");
 
         //ImageURL
+        const imageLabel = createElementText("label", "Image URL");
 
         appendChildren(fieldsetElement,
         
