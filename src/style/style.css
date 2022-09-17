@@ -289,3 +289,7 @@ main .form-background {
     z-index: 1;
     display: none;
 }
+
+.form-background .form-container {
+    background-color: #FFFFFF;
+}
