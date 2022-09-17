@@ -40,7 +40,8 @@ function setAttributes(element, attributes) {
 const domManipulator = (() => {
 
     const body = document.body;
-    const mainLayout = createElementClass("div", "main-layout")
+    const mainLayout = createElementClass("div", "main-layout");
+    const formBackground = createElementClass("div", "form-background");
 
     /* Utility functions */
 
@@ -338,10 +339,23 @@ const domManipulator = (() => {
         main.remove();
     };
 
+    const showForm = (form) => {
+        formBackground.style.display = flex;
+        formBackground.appendChild(form)
+    };
+
+    const removeForm = () => {
+        const formToRemove = document.querySelector(".form-background > div");
+        formToRemove.remove();
+    };
+
     return {
         initDashboard,
         initHomepage,
-        removeCurrentMain
+        removeCurrentMain,
+
+        showForm,
+        removeForm
     };
 
 })();
