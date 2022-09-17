@@ -387,6 +387,7 @@ const formMaster = (() => {
     };
 
     const createTodoForm = () => {
+        const formContainer = createElementClass("div", "form-container");
         const formElement = createElementClass("form", "todoForm");
         const fieldsetElement = document.createElement("fieldset");
 
@@ -434,11 +435,12 @@ const formMaster = (() => {
         );
 
         formElement.appendChild(fieldsetElement);
-        return formElement;
+        formContainer.appendChild(formElement)
+        return formContainer;
     };
 
     const createProjectForm = () => {
-        const formContainer = createElementClass("form", "form-container")
+        const formContainer = createElementClass("div", "form-container")
         const formElement = createElementClass("form", "projectForm");
         const fieldsetElement = document.createElement("fieldset");
 
