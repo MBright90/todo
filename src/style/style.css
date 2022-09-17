@@ -275,3 +275,15 @@ main {
     color: #f0f0f0;
     margin: 5px;
 }
+
+/* Form layouts */
+
+main .form-background {
+    background-color: #363636;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
