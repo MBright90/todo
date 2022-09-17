@@ -1,4 +1,4 @@
-import { domManipulator as dom } from "./domManipulator";
+import { domManipulator as dom, formMaster as forms } from "./domManipulator";
 import { dataMaster as data } from "./dataMaster.js";
 
 const pageInterface = (() => {
@@ -17,10 +17,9 @@ const pageInterface = (() => {
     const _createAddLink = (aTag) => {
         aTag.addEventListener("click", () => {
             console.log("New link CLICKED!")
-            // Code block to show add form
+            dom.showForm(forms.createTodoForm());
         });
     };
-
 
     const _createTimeLinks = (linkList, ...args) => {
         for (let i = 0; i < linkList.length; i++) {
@@ -32,6 +31,27 @@ const pageInterface = (() => {
         };
     };
 
+    const _createProjectLink = (aTag) => {
+        aTag.addEventListener("click", () => {
+            dom.showForm(forms.createProjectForm());
+        });
+    };
+
+    const _showProjectsLink = (aTag) => {
+        aTag.addEventListener("click", () => {
+            dom.showProjectsPage();
+        });
+    };
+
+    const _createProjectLinksGroup = (linkList) => {
+        _createProjectLink(linkList[0]);
+        _showProjectsLink(linkList[1]);
+    };
+
+    // ********************************************* //
+    // *********** Event Listener groups *********** //
+    // ********************************************* //
+
     const _addHeaderListeners = () => {
         _createDropLink(document.querySelector(".drop-link"));
         _createAddLink(document.querySelector(".new-icon"));
@@ -39,16 +59,8 @@ const pageInterface = (() => {
 
     const _addSidebarListeners = () => {
         _createTimeLinks(document.querySelectorAll(".date-links li a"), "date", 1, 7, 31);
-    }
-
-    // const newListener = (element, action) => {}
-
-    // return {
-    //     addHeaderListeners,
-    //     addSidebarListeners,
-    //     addHomepageListeners,
-    //     addProjectsListeners,
-    // };
+        _createProjectLinksGroup(document.querySelectorAll(".project-links li a"));
+    };
 
     // ********************************************* //
     // ************** Dom creation IF ************** //
