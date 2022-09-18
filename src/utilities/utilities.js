@@ -15,7 +15,15 @@ const pageInterface = (() => {
     };
 
     const _closeFormListener = () => {
+        const closeButton = document.querySelector(".form-container > i");
+        closeButton.addEventListener("click", () => {
+            document.querySelector(".form-background").remove();
+        });
+    };
 
+    const _createFormListeners = () => {
+        _submitFormListener(),
+        _closeFormListener()
     };
 
     const _createDropLink = (aTag) => {
@@ -28,6 +36,7 @@ const pageInterface = (() => {
     const _createAddLink = (aTag) => {
         aTag.addEventListener("click", () => {
             dom.showForm(forms.createTodoForm());
+            _createFormListeners();
         });
     };
 
