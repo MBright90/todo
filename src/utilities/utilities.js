@@ -7,6 +7,14 @@ const pageInterface = (() => {
     // ************** Event Listeners ************** //
     // ********************************************* //
 
+    const _submitFormListener = () => {
+        
+    }
+
+    const _closeFormListener = () => {
+
+    }
+
     const _createDropLink = (aTag) => {
         aTag.addEventListener("click", () => {
             console.log("drop link CLICKED!")
@@ -16,7 +24,6 @@ const pageInterface = (() => {
 
     const _createAddLink = (aTag) => {
         aTag.addEventListener("click", () => {
-            console.log("New link CLICKED!")
             dom.showForm(forms.createTodoForm());
         });
     };
@@ -73,6 +80,8 @@ const pageInterface = (() => {
             data.retrieveData("projects", 3),
             data.retrieveData("general", 5)
             );
+        _addHeaderListeners();
+        _addSidebarListeners();
     };
 
     const showDashboard = () => {
