@@ -242,25 +242,27 @@ const dataMaster = (() => {
         _checkProjectsOverdue(today)
     };
 
-    // Functions to return
+    // Data adding functions
 
-    const addNewTodo = (title, description, dueDate, projectID) => {
+    const _addNewTodo = (title, description, dueDate, projectID) => {
         projectID = projectID || null; 
         const newTodo = _createTodoObject(title, description, dueDate);
         if(!projectID) {
             _appendGeneralTodo(newTodo);
         } else {
-            _appendProjectTodo(newToDo, projectID);
+            _appendProjectTodo(newTodo, projectID);
         };
     };
 
-    const addNewProject = (title, imageURL) => {
+    function _addNewProject (title, description, imageURL) {
         imageURL = imageURL || null;
-        const newProject = _createProjectObject(title, imageURL);
+        const newProject = _createProjectObject(title, description, imageURL);
         _appendProject(newProject);
     };
 
-    const retrieveData = (toSortBy, amount) => {
+    // Functions to return
+
+    function retrieveData (toSortBy, amount) {
         // Pass in "date" to retrieve all todos sorted in date order. 
         // Use "projects" to return all projects.
         // Use "general" to return all general (non-project) todos.
@@ -299,26 +301,52 @@ const dataMaster = (() => {
         };
     };
 
-    const deleteData = (IDtoDelete) => {
+    function deleteData (IDtoDelete) {
         if (IDtoDelete.length === projectIDLength) {
             _deleteProject(IDtoDelete)
-        } else if (IDtoDelete.length === todoIDlength) {
+        } else if (IDtoDelete.length === todoIDLength) {
             if (!_deleteGeneralTodo(IDtoDelete)) {
                 _deleteProjectTodo(IDtoDelete)
             };
         };
     };
 
-    const collectTodoForm = (form) => {}
+    function parseNewTodo (projectId) {
+        projectId = projectId || null;
 
-    const collectProjectForm = (form) => {}
+        const titleInput = document.querySelector("#title-input");
+        const todoTitle = titleInput.value;
 
+        const descriptionInput = document.querySelector("#description-input");
+        const todoDescription = descriptionInput.value;
+
+        const dueDateInput = document.querySelector("#due-date-input");
+        const dateArray = dueDateInput.value.split("-");
+        const dueDate = new Date(dateArray[0], dateArray[1], dateArray[2]);
+
+        _addNewTodo(todoTitle, todoDescription, dueDate, projectId)
+    };
+
+    function parseNewProject () {
+        const projectTitleInput = document.querySelector("#project-title-input");
+        const projectTitle = projectTitleInput.value;
+
+        const projectDescriptionInput = document.querySelector("#project-description-input");
+        const projectDescription = projectDescriptionInput.value;
+
+        const projectImageInput = document.querySelector("#image-input");
+        const projectImageURL = projectImageInput.value;
+
+        _createProjectObject(projectTitle, projectDescription, projectImageURL);
+    };
+
+    // Initiate data from storage
     const _todoDataset = _retrieveLocalData();
     _checkAllOverdue(_todoDataset);
 
     return {
-        addNewTodo,
-        addNewProject,
+        parseNewTodo,
+        parseNewProject,
         retrieveData,
         deleteData,
     };
