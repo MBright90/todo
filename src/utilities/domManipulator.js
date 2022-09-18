@@ -197,14 +197,13 @@ const domManipulator = (() => {
         };
 
         const _createTableData = (toDoData) => {
-            //Check length of object here
             const tableArr = [];
             toDoData.forEach(toDoItem => {
                 const newRow = _createListRow(toDoItem);
                 tableArr.push(newRow)
             });
             return tableArr;
-        }; // Could be unnecessary here? Data manipulation should be done by another module
+        };
 
         const homeListContainer = createElementClass("div", "todo-list-home");
         const homeListHeader = createElementText("h1", "Your ToDo List");
