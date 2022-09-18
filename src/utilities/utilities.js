@@ -8,12 +8,15 @@ const pageInterface = (() => {
     // ********************************************* //
 
     const _submitFormListener = () => {
-        
-    }
+        const formButton = document.querySelector("form > fieldset > button");
+        formButton.addEventListener("click", () => {
+            formButton.parseTodoForm();
+        });
+    };
 
     const _closeFormListener = () => {
 
-    }
+    };
 
     const _createDropLink = (aTag) => {
         aTag.addEventListener("click", () => {
