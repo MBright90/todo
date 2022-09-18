@@ -463,7 +463,6 @@ const formMaster = (() => {
 
         const fieldsetLegend = createElementText("legend", "New Project");
 
-        // Title
         const titleLabel = createElementText("label", "Project Title");
         titleLabel.setAttribute("for", "project-title-input");
         const titleInput = document.createElement("input");
@@ -473,7 +472,6 @@ const formMaster = (() => {
             "id": "project-title-input",
         }); 
 
-        // Description
         const descriptionLabel = createElementText("label", "Project Overview");
         descriptionLabel.setAttribute("for", "project-description-input");
         const descriptionInput = document.createElement("textarea");
@@ -483,7 +481,6 @@ const formMaster = (() => {
             "max": 200
         });
 
-        //ImageURL
         const imageLabel = createElementText("label", "Image URL");
         imageLabel.setAttribute("for", "image-input");
         const imageInput = document.createElement("input");
