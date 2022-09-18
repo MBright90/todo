@@ -28,9 +28,9 @@ function appendChildren(element, ...args) {
 };
 
 function setAttributes(element, attributes) {
-    attributes.forEach(key => {
+    for (const key in attributes) {
         element.setAttribute(key, attributes[key])
-    });
+    };
 };
 
 // ********************************************* //
@@ -41,7 +41,6 @@ const domManipulator = (() => {
 
     const body = document.body;
     const mainLayout = createElementClass("div", "main-layout");
-    const formBackground = createElementClass("div", "form-background");
 
     /* Utility functions */
 
@@ -333,10 +332,16 @@ const domManipulator = (() => {
         );
     };
 
-    const removeCurrentMain = () => {
-        const main = document.querySelector("main");
-        if (!main) return console.log("No main element found");
-        main.remove();
+    const removeMainLayout = () => {
+        const mainList = document.querySelectorAll(".main-layout > div");
+        if (!mainList) return console.log("No main element found");
+        mainList.forEach(div => {
+            div.remove();
+        });
+    };
+
+    const showTodoPage = () => {
+
     };
 
     const showProjectsPage = () => {
@@ -344,20 +349,22 @@ const domManipulator = (() => {
     };
 
     const showForm = (form) => {
-        formBackground.style.display = flex;
-        formBackground.appendChild(form)
+        const formBackground = createElementClass("div", "form-background");
+        formBackground.appendChild(form);
+        _appendToMain(formBackground);
     };
 
     const removeForm = () => {
-        const formToRemove = document.querySelector(".form-background > div");
+        const formToRemove = document.querySelector(".form-background");
         formToRemove.remove();
     };
 
     return {
         initDashboard,
         initHomepage,
-        removeCurrentMain,
+        removeMainLayout,
 
+        showTodoPage,
         showProjectsPage,
 
         showForm,
@@ -382,8 +389,14 @@ const formMaster = (() => {
         return format(addDays(new Date(), 730), "yyyy-MM-dd")
     };
 
-    const createSubmitButton = () => {
-        return createElementText("button", "Create");
+    const _createSubmitButton = () => {
+        const button = createElementText("button", "Create");
+        button.setAttribute("type", "button");
+        return button;
+    };
+
+    const _createCloseButton = () => {
+        return createElementClass("i", "fa-solid", "fa-xmark" , "close-form");
     };
 
     const createTodoForm = () => {
@@ -409,6 +422,8 @@ const formMaster = (() => {
         setAttributes(descriptionInput, {
             "name": "descriptionInput",
             "id": "description-input",
+            "cols": 30,
+            "rows": 10,
             "max": 200,
         });
 
@@ -431,11 +446,13 @@ const formMaster = (() => {
             descriptionInput,
             dueDateLabel,
             dueDateInput,
-            createSubmitButton(),
+            _createSubmitButton(),
         );
 
         formElement.appendChild(fieldsetElement);
-        formContainer.appendChild(formElement)
+        appendChildren(formContainer,
+            formElement,
+            _createCloseButton());
         return formContainer;
     };
 
@@ -484,12 +501,14 @@ const formMaster = (() => {
             descriptionInput,
             imageLabel,
             imageInput,
-            createSubmitButton(),
+            _createSubmitButton(),
         );
 
         formElement.appendChild(fieldsetElement);
-        formContainer.appendChild(formElement);
-        return formContainer;
+        appendChildren(formContainer,
+            formElement,
+            _createCloseButton());
+        return formContainer;formContainer.appendChild(formElement)
     };
 
     return {
