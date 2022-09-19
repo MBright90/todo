@@ -7,8 +7,8 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: "The You Do ToDo Space",
-            favicon: "./src/assets/images/favicon.ico"
-        })
+            favicon: "./src/assets/images/favicon.ico",
+        }),
     ],
     output: {
         filename: 'main.js',
