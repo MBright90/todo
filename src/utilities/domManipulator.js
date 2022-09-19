@@ -53,6 +53,14 @@ const domManipulator = (() => {
         });
     };
 
+    function _createAlert(alertString) {
+        const alertContainer = createElementClass("div", "alert-container");
+        const alertPara = createElementText("p", alertString);
+        const confirmButton = createElementText("button", "Ok");
+        appendChildren(alertContainer, alertPara, confirmButton)
+        return alertContainer;
+    };
+
     /* Table functions */
 
     const _createTableHeaders = (...headers) => {
@@ -365,15 +373,13 @@ const domManipulator = (() => {
     };
 
     function showAlert(alertString) {
-        const alertContainer = createElementClass("div", ".alert-container");
-        const alertPara = createElementText("p", alertString);
-        const confirmButton = document.createElement("button");
-        appendChildren(alertContainer, alertPara, confirmButton)
-        return alertContainer;
+        const alertBackground = createElementClass("div", "alert-background");
+        alertBackground.appendChild(_createAlert(alertString))
+        _appendToMain(alertBackground);
     };
 
     function removeAlert() {
-        const alertContainer = document.querySelector(".alert-container");
+        const alertContainer = document.querySelector(".alert-background");
         alertContainer.remove();
     };
 
@@ -440,7 +446,9 @@ const formMaster = (() => {
             "type": "text",
             "name": "title-input",
             "id": "title-input",
-            "max": 50,
+            "min": 3,
+            "max": 30,
+            "required": "",
         });
 
         const descriptionLabel = createElementText("label", "Description");
@@ -452,6 +460,7 @@ const formMaster = (() => {
             "cols": 30,
             "rows": 10,
             "max": 200,
+            "required": "",
         });
 
         const dueDateLabel = createElementText("label", "Due Date");
@@ -463,6 +472,7 @@ const formMaster = (() => {
             "id": "due-date-input",
             "min": _minDateInput(),
             "max": _maxDateInput(),
+            "required": "",
         });
 
         appendChildren(fieldsetElement,
@@ -497,6 +507,9 @@ const formMaster = (() => {
             "type": "text",
             "name": "project-title-input",
             "id": "project-title-input",
+            "min": 3,
+            "max": 30,
+            "required": "",
         }); 
 
         const descriptionLabel = createElementText("label", "Project Overview");
@@ -505,7 +518,11 @@ const formMaster = (() => {
         setAttributes(descriptionInput, {
             "name": "project-description-input",
             "id": "project-description-input",
-            "max": 200
+            "cols": 30,
+            "rows": 10,
+            "min": 5,
+            "max": 200,
+            "required": "",
         });
 
         const imageLabel = createElementText("label", "Image URL");
@@ -553,7 +570,6 @@ const formMaster = (() => {
         if (formType = "project") {
             const projectTitleInput = document.querySelector("#project-title-input");
             const projectDescriptionInput = document.querySelector("#project-description-input");
-            const projectImageInput = document.querySelector("#image-input");
 
             if (!projectTitleInput.checkValidity()) {
                 return "Please input a valid project title"
