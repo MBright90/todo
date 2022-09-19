@@ -11,6 +11,7 @@ const pageInterface = (() => {
         const formButton = document.querySelector("form > fieldset > button");
         formButton.addEventListener("click", () => {
             formButton.parseTodoForm();
+            dom.removeForm();
         });
     };
 
