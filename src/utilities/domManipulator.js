@@ -116,6 +116,7 @@ const domManipulator = (() => {
 
         const _createTableData = (toDoData) => {
             const tableArr = [];
+            console.log(typeof(toDoData))
             toDoData.forEach(toDoItem => {
                 const newRow = _createListRow(toDoItem);
                 tableArr.push(newRow)
@@ -364,7 +365,7 @@ const domManipulator = (() => {
     };
 
     function updateTable(todoList) {
-        const container = document.querySelector(".")
+        const container = document.querySelector(".todo-table-container")
         document.querySelector(".todo-table").remove()
         container.appendChild(createTodoTable(todoList));
     };
