@@ -11,9 +11,13 @@ const pageInterface = (() => {
         const formButton = document.querySelector("form > fieldset > button");
         formButton.addEventListener("click", (e) => {
             if (e.composedPath()[2].classList.contains('todo-form')) {
-                data.parseNewTodo();
+                if (forms.checkFormValidity("todo")) {
+                    data.parseNewTodo();
+                };
             } else if (e.composedPath()[2].classlist.contains('project-form')) {
-                data.parseNewProject();
+                if (forms.checkFormValidity("project")) {
+                    data.parseNewProject();
+                };
             };
             dom.removeForm();
             dom.updateTable(data.retrieveData("date", 10));
@@ -24,7 +28,7 @@ const pageInterface = (() => {
         const closeButton = document.querySelector(".form-container > i");
         closeButton.addEventListener("click", () => {
             document.querySelector(".form-background").remove();
-        });
+        }, {once: true});
     };
 
     const _createFormListeners = () => {
