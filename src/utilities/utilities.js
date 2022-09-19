@@ -11,11 +11,12 @@ const pageInterface = (() => {
         const formButton = document.querySelector("form > fieldset > button");
         formButton.addEventListener("click", (e) => {
             if (e.composedPath()[2].classList.contains('todo-form')) {
-                forms.parseNewTodo();
+                data.parseNewTodo();
             } else if (e.composedPath()[2].classlist.contains('project-form')) {
-                forms.parseNewProject();
+                data.parseNewProject();
             };
             dom.removeForm();
+            dom.updateTable(data.retrieveData("date", 10));
         });
     };
 
@@ -95,7 +96,7 @@ const pageInterface = (() => {
         dom.initHomepage(
             data.retrieveData("date", 10),
             data.retrieveData("projects", 3),
-            data.retrieveData("general", 5)
+            data.retrieveData("date", 5)
             );
         _addHeaderListeners();
         _addSidebarListeners();
@@ -106,15 +107,21 @@ const pageInterface = (() => {
         dom.initHomepage();
     };
 
-    // const showAllTodos = () => {}
-    // const showProjects = () => {}
+    const showProjects = () => {
 
+    };
+
+    const showAllTodos = () => {
+
+    };
 
     // Functions to return
 
     return {
         createHomepage: createHomepage,
         showDashboard: showDashboard,
+        showProjects: showProjects,
+        showAllTodos: showAllTodos,
     };
 
 })();
