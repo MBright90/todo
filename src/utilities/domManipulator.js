@@ -365,8 +365,8 @@ const domManipulator = (() => {
 
     function updateTable(todoList) {
         const container = document.querySelector(".")
-        const tableToRemove = document.querySelector(".todo-table");
-        const newTable = createTodoTable(todoList);
+        document.querySelector(".todo-table").remove()
+        container.appendChild(createTodoTable(todoList));
     };
 
     return {
@@ -412,7 +412,7 @@ const formMaster = (() => {
 
     const createTodoForm = () => {
         const formContainer = createElementClass("div", "form-container");
-        const formElement = createElementClass("form", "todoForm");
+        const formElement = createElementClass("form", "todo-form");
         const fieldsetElement = document.createElement("fieldset");
 
         const fieldsetLegend = createElementText("legend", "New ToDo");
@@ -469,7 +469,7 @@ const formMaster = (() => {
 
     const createProjectForm = () => {
         const formContainer = createElementClass("div", "form-container")
-        const formElement = createElementClass("form", "projectForm");
+        const formElement = createElementClass("form", "project-form");
         const fieldsetElement = document.createElement("fieldset");
 
         const fieldsetLegend = createElementText("legend", "New Project");
