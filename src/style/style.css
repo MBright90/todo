@@ -322,6 +322,7 @@ main .form-background {
 
 .form-background .form-container form fieldset input,
 .form-background .form-container form fieldset textarea {
+    font-family: 'juice-regular';
     margin-top: -5px;
     padding: 5px;
     width: 300px;
