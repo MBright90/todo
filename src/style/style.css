@@ -229,7 +229,7 @@ main {
 }
 
 .main-layout table .overdue {
-    background-color: #E94560 !important;
+    background-color: rgb(233, 69, 96, 0.5) !important;
 }
 
 /* ------------------ Home project section ------------------ */
