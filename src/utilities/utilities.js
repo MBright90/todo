@@ -4,23 +4,47 @@ import { dataMaster as data } from "./dataMaster.js";
 const pageInterface = (() => {
 
     // ********************************************* //
+    // ******************* Alerts ****************** //
+    // ********************************************* //    
+
+    function _addAlertListener() {
+        const alertButton = document.querySelector(".alert-container > button");
+        alertButton.addEventListener("click", () => {
+            dom.removeAlert();
+        }, {once: true});
+    };
+
+    function _createAlert(alertString) {
+        dom.showAlert(alertString);
+        _addAlertListener()
+    };
+
+    // ********************************************* //
     // ************** Event Listeners ************** //
     // ********************************************* //
 
     const _submitFormListener = () => {
         const formButton = document.querySelector("form > fieldset > button");
         formButton.addEventListener("click", (e) => {
+            let validityCheck;
             if (e.composedPath()[2].classList.contains('todo-form')) {
-                if (forms.checkFormValidity("todo")) {
+                validityCheck = forms.checkFormValidity("todo")
+                if (validityCheck === true) {
                     data.parseNewTodo();
+                    dom.removeForm();
+                    dom.updateTable(data.retrieveData("date", 10));
+                } else {
+                    _createAlert(validityCheck)
                 };
             } else if (e.composedPath()[2].classlist.contains('project-form')) {
-                if (forms.checkFormValidity("project")) {
+                validityCheck = forms.checkValidity("project");
+                if (validityCheck === true) {
                     data.parseNewProject();
+                    dom.removeForm();
+                } else {
+                    _createAlert(validityCheck);
                 };
             };
-            dom.removeForm();
-            dom.updateTable(data.retrieveData("date", 10));
         });
     };
 
@@ -81,12 +105,12 @@ const pageInterface = (() => {
     // *********** Event Listener groups *********** //
     // ********************************************* //
 
-    const _addHeaderListeners = () => {
+    function _addHeaderListeners() {
         _createDropLink(document.querySelector(".drop-link"));
         _createAddLink(document.querySelector(".new-icon"));
     };
 
-    const _addSidebarListeners = () => {
+    function _addSidebarListeners() {
         _createTimeLinks(document.querySelectorAll(".date-links li a"), "date", 1, 7, 31);
         _createProjectLinksGroup(document.querySelectorAll(".project-links li a"));
     };
