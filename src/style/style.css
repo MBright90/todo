@@ -124,6 +124,7 @@ main {
     flex-direction: column;
     position: relative;
     padding: 20px;
+    padding-bottom: 40px;
     height: 100%;
     width: 100%;
 }
@@ -134,9 +135,11 @@ main {
 
 .main-layout div > a {
     border-bottom: 2px solid white;
-    align-self: flex-end;
-    flex-grow: 0;
-    margin-top: auto;
+    /* align-self: flex-end;
+    margin-top: auto; */
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 
     transition: all ease-in-out .2s;
 }
