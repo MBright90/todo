@@ -99,11 +99,10 @@ const dataMaster = (() => {
     };
 
     const _createTodoObject = (todoTitle, todoDescription, todoDueDate, isImportant) => {
-        const dateArray = todoDueDate.split("/")
         const todoObject = {
             title: todoTitle,
             description: todoDescription,
-            dueDate: new Date(todoDueDate),
+            dueDate: todoDueDate,
             important: isImportant,
             toDoID: _createTodoID(),
         };
@@ -172,17 +171,8 @@ const dataMaster = (() => {
         return _todoDataset.projects.findIndex(proj => proj.projectID === projectToFind);
     };
 
-    const _retrieveSingleProject = (projectID) => {
-        const foundProject = _todoDataset.projects.find(proj => proj.projectID === projectID);
-        if (!foundProject) {
-            throw new Error `No Project Found with ID ${projectID}`
-        } else {
-            return foundProject;
-        };
-    };
-
     const _retrieveAllTodos = () => {
-        const allToDos = _todoDataset.general;
+        const allToDos = [..._todoDataset.general];
         _todoDataset.projects.forEach(project => {
             project.projectToDos.forEach(toDo => {
                 allToDos.push(toDo);
@@ -249,6 +239,7 @@ const dataMaster = (() => {
         const newTodo = _createTodoObject(title, description, dueDate);
         if(!projectID) {
             _appendGeneralTodo(newTodo);
+            console.log(_todoDataset);
         } else {
             _appendProjectTodo(newTodo, projectID);
         };
@@ -301,6 +292,15 @@ const dataMaster = (() => {
         };
     };
 
+    const retrieveSingleProject = (projectID) => {
+        const foundProject = _todoDataset.projects.find(proj => proj.projectID === projectID);
+        if (!foundProject) {
+            throw new Error `No Project Found with ID ${projectID}`
+        } else {
+            return foundProject;
+        };
+    };
+
     function deleteData (IDtoDelete) {
         if (IDtoDelete.length === projectIDLength) {
             _deleteProject(IDtoDelete)
@@ -345,10 +345,11 @@ const dataMaster = (() => {
     _checkAllOverdue(_todoDataset);
 
     return {
+        retrieveData,
+        retrieveSingleProject,
+        deleteData,
         parseNewTodo,
         parseNewProject,
-        retrieveData,
-        deleteData,
     };
 
 })();
