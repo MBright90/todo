@@ -87,6 +87,7 @@ const pageInterface = (() => {
     const _createProjectLink = (aTag) => {
         aTag.addEventListener("click", () => {
             dom.showForm(forms.createProjectForm());
+            _createFormListeners();
         });
     };
 
