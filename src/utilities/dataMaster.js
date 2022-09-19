@@ -130,17 +130,20 @@ const dataMaster = (() => {
         } else {;
             _todoDataset.general.splice(todoToDelete, 1);
         };
+        _saveData();
     };
 
     const _deleteProjectTodo = (projectID, IDtoDelete) => {
         const projectIndex = _retrieveProjectIndex(projectID);
         const todoIndex = _retrieveTodoIndex(IDtoDelete);
         _todoDataset.projects[projectIndex].projectToDos.splice[todoIndex, 1];
+        _saveData();
     };
 
     const _deleteProject = (projectToDelete) => {
         const projectIndex = _retrieveProjectIndex(projectToDelete);
         _todoDataset.projects.splice(projectIndex, 1);
+        _saveData();
     };
 
     // Dataset appending functions
