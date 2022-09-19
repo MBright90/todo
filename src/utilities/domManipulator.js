@@ -520,9 +520,38 @@ const formMaster = (() => {
         return formContainer;formContainer.appendChild(formElement)
     };
 
+    function checkFormValidity(formType) {
+        if (formType = "todo") {
+            const titleInput = document.querySelector("#title-input");
+            const descriptionInput = document.querySelector("#description-input");
+            const dueDateInput = document.querySelector("#due-date-input");
+
+            if (!titleInput.checkValidity()) {
+                return "Please input a valid title"
+            } else if (!descriptionInput.checkValidity()) {
+                return "Please input a valid description"
+            } else if (!dueDateInput.checkValidity()) {
+                return "Please choose a date within the next two years"
+            } else return true;
+        };
+
+        if (formType = "project") {
+            const projectTitleInput = document.querySelector("#project-title-input");
+            const projectDescriptionInput = document.querySelector("#project-description-input");
+            const projectImageInput = document.querySelector("#image-input");
+
+            if (!projectTitleInput.checkValidity()) {
+                return "Please input a valid project title"
+            } else if (!projectDescriptionInput.checkValidity()) {
+                return "Please input a valid description"
+            } else return true;
+        };
+    };
+
     return {
         createTodoForm,
-        createProjectForm
+        createProjectForm,
+        checkFormValidity
     };
 
 })();
