@@ -239,7 +239,6 @@ const dataMaster = (() => {
         const newTodo = _createTodoObject(title, description, dueDate);
         if(!projectID) {
             _appendGeneralTodo(newTodo);
-            console.log(_todoDataset);
         } else {
             _appendProjectTodo(newTodo, projectID);
         };
