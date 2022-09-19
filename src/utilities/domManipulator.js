@@ -364,6 +364,19 @@ const domManipulator = (() => {
         formToRemove.remove();
     };
 
+    function showAlert(alertString) {
+        const alertContainer = createElementClass("div", ".alert-container");
+        const alertPara = createElementText("p", alertString);
+        const confirmButton = document.createElement("button");
+        appendChildren(alertContainer, alertPara, confirmButton)
+        return alertContainer;
+    };
+
+    function removeAlert() {
+        const alertContainer = document.querySelector(".alert-container");
+        alertContainer.remove();
+    };
+
     function updateTable(todoList) {
         const container = document.querySelector(".todo-table-container")
         document.querySelector(".todo-table").remove()
@@ -380,7 +393,9 @@ const domManipulator = (() => {
         showProjectsPage,
 
         showForm,
-        removeForm
+        removeForm,
+        showAlert,
+        removeAlert,
     };
 
 })();
