@@ -9,8 +9,12 @@ const pageInterface = (() => {
 
     const _submitFormListener = () => {
         const formButton = document.querySelector("form > fieldset > button");
-        formButton.addEventListener("click", () => {
-            formButton.parseTodoForm();
+        formButton.addEventListener("click", (e) => {
+            if (e.composedPath()[2].classList.contains('todo-form')) {
+                forms.parseNewTodo();
+            } else if (e.composedPath()[2].classlist.contains('project-form')) {
+                forms.parseNewProject();
+            };
             dom.removeForm();
         });
     };
