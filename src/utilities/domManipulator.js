@@ -70,6 +70,64 @@ const domManipulator = (() => {
         });
     };
 
+    function createTodoTable (toDoList) {
+
+        const _createInteractiveCell = (isImportant) => {
+            const newCell = document.createElement("td");
+
+            const tick = document.createElement("a");
+            const tickIcon = createElementClass("i", "fa-solid", "fa-check");
+            tick.appendChild(tickIcon);
+
+            const star = document.createElement("a");
+            const starIcon = createElementClass("i", "fa-regular", "fa-star");
+            if (isImportant) {
+                star.classList.add("is-important")
+            };
+            star.appendChild(starIcon);
+
+            const edit = document.createElement("a");
+            const editIcon = createElementClass("i", "fa-regular", "fa-pen-to-square");
+            edit.appendChild(editIcon);
+
+            const trash = document.createElement("a");
+            const trashIcon = createElementClass("i", "fa-solid", "fa-trash");
+            trash.appendChild(trashIcon);
+
+            appendChildren(newCell, tick, star, edit, trash);
+            return newCell;
+        };
+
+        const _createListRow = (toDo) => {
+            const currentRow = document.createElement("tr");
+
+            const toDoTitle = createElementText("td", toDo.title);
+            const toDoDetails = createElementText("td", toDo.description);
+            const toDoDue = createElementText("td", `${toDo.dueDate.getDate()}/${toDo.dueDate.getMonth() + 1}/${toDo.dueDate.getFullYear()}`);
+            const toDoInteractive = _createInteractiveCell(toDo.important);
+
+            if (toDo.overdue) {
+                currentRow.classList.add("overdue")
+            };
+
+            appendChildren(currentRow, toDoTitle, toDoDetails, toDoDue, toDoInteractive);
+            return currentRow;
+        };
+
+        const _createTableData = (toDoData) => {
+            const tableArr = [];
+            toDoData.forEach(toDoItem => {
+                const newRow = _createListRow(toDoItem);
+                tableArr.push(newRow)
+            });
+            return tableArr;
+        };
+        const homeListTable = createElementClass("table", "todo-table");
+        homeListTable.appendChild(_createTableHeaders("ToDo", "Details", "Due Date", ""))
+        _appendTableData(homeListTable, _createTableData(toDoList));
+        return homeListTable;
+    };
+
     /* Manipulation functions */
 
     const _appendToMain = (...elements) => {
@@ -152,65 +210,12 @@ const domManipulator = (() => {
         return nav;  
     };
 
-    const _createHomeList = (toDoList) => {
+    const _createHomeList = (todoList) => {
 
-        const _createInteractiveCell = (isImportant) => {
-            const newCell = document.createElement("td");
-
-            const tick = document.createElement("a");
-            const tickIcon = createElementClass("i", "fa-solid", "fa-check");
-            tick.appendChild(tickIcon);
-
-            const star = document.createElement("a");
-            const starIcon = createElementClass("i", "fa-regular", "fa-star");
-            if (isImportant) {
-                star.classList.add("is-important")
-            };
-            star.appendChild(starIcon);
-
-            const edit = document.createElement("a");
-            const editIcon = createElementClass("i", "fa-regular", "fa-pen-to-square");
-            edit.appendChild(editIcon);
-
-            const trash = document.createElement("a");
-            const trashIcon = createElementClass("i", "fa-solid", "fa-trash");
-            trash.appendChild(trashIcon);
-
-            appendChildren(newCell, tick, star, edit, trash);
-            return newCell;
-        };
-
-        const _createListRow = (toDo) => {
-            const currentRow = document.createElement("tr");
-
-            const toDoTitle = createElementText("td", toDo.title);
-            const toDoDetails = createElementText("td", toDo.description);
-            const toDoDue = createElementText("td", `${toDo.dueDate.getDate()}/${toDo.dueDate.getMonth() + 1}/${toDo.dueDate.getFullYear()}`);
-            const toDoInteractive = _createInteractiveCell(toDo.important);
-
-            if (toDo.overdue) {
-                currentRow.classList.add("overdue")
-            };
-
-            appendChildren(currentRow, toDoTitle, toDoDetails, toDoDue, toDoInteractive);
-            return currentRow;
-        };
-
-        const _createTableData = (toDoData) => {
-            const tableArr = [];
-            toDoData.forEach(toDoItem => {
-                const newRow = _createListRow(toDoItem);
-                tableArr.push(newRow)
-            });
-            return tableArr;
-        };
-
-        const homeListContainer = createElementClass("div", "todo-list-home");
+        const homeListContainer = createElementClass("div", "todo-list-home", "todo-table-container");
         const homeListHeader = createElementText("h1", "Your ToDo List");
 
-        const homeListTable = document.createElement("table");
-        homeListTable.appendChild(_createTableHeaders("ToDo", "Details", "Due Date", ""))
-        _appendTableData(homeListTable, _createTableData(toDoList));
+        const homeListTable = createTodoTable(todoList)
 
         const allLink = createElementText("a", "See all");
 
@@ -358,9 +363,16 @@ const domManipulator = (() => {
         formToRemove.remove();
     };
 
+    function updateTable(todoList) {
+        const container = document.querySelector(".")
+        const tableToRemove = document.querySelector(".todo-table");
+        const newTable = createTodoTable(todoList);
+    };
+
     return {
         initDashboard,
         initHomepage,
+        updateTable,
         removeMainLayout,
 
         showTodoPage,
