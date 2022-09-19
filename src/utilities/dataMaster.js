@@ -80,8 +80,9 @@ const dataMaster = (() => {
         return localData;
     };
 
-    function saveLocalData() {
-        // Save to current data structure to local storage
+    function _saveData() {
+        localStorage.setItem('dataset', _todoDataset);
+        console.log("Data saved");
     };
 
     // Data creation functions
@@ -146,15 +147,18 @@ const dataMaster = (() => {
 
     const _appendGeneralTodo = (todoObject) => {
         _todoDataset.general.push(todoObject);
+        _saveData();
     };
 
     const _appendProjectTodo = (todoObject, findProjectID) => {
         todoObject.complete = False;
         _todoDataset.projects.find(proj => proj.projectID === findProjectID).projectToDos.push(todoObject);
+        _saveData();
     };
 
     const _appendProject = (projectToAppend) => {
         _todoDataset.projects.push(projectToAppend);
+        _saveData();
     };
 
     // Data retrieving functions
