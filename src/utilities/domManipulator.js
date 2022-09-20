@@ -53,6 +53,33 @@ const domManipulator = (() => {
         });
     };
 
+    const _createProjectCard = (project) => {
+        const projectCard = createElementClass("div", "project-card");
+        projectCard.dataset.projectId = project.projectID;
+        
+        const projectImage = createElementClass("div", "project-image");
+        if (project.projectImage) {
+            projectImage.style.backgroundImage = `url('${project.projectImage}')`;
+        };
+
+        const projectTitle = createElementClass("div", "project-title");
+        projectTitle.textContent = project.projectTitle;
+
+        const projectDescription = createElementClass("div", "project-description");
+        projectDescription.textContent = project.projectDescription;
+
+        appendChildren(projectCard, projectImage, projectTitle, projectDescription);
+        return projectCard;
+    };
+
+    const _createProjectGrid = (projects) => {
+        const projectGrid = createElementClass("div", "project-grid");
+        projects.forEach(project => {
+            projectGrid.appendChild(_createProjectCard(project));
+        });
+        return projectGrid;
+    }
+
     function _createAlert(alertString) {
         const alertContainer = createElementClass("div", "alert-container");
         const alertPara = createElementText("p", alertString);
@@ -132,7 +159,6 @@ const domManipulator = (() => {
 
         const _createTableData = (toDoData) => {
             const tableArr = [];
-            console.log(typeof(toDoData))
             toDoData.forEach(toDoItem => {
                 const newRow = _createTableRow(toDoItem);
                 tableArr.push(newRow)
@@ -270,23 +296,6 @@ const domManipulator = (() => {
     };
 
     const _createHomeProjects = (topProjectList) => {
-        const _createProjectCard = (project) => {
-            const projectCard = createElementClass("div", "project-card");
-            
-            const projectImage = createElementClass("div", "project-image");
-            if (project.projectImage) {
-                projectImage.style.backgroundImage = `url('${project.projectImage}')`;
-            };
-
-            const projectTitle = createElementClass("div", "project-title");
-            projectTitle.textContent = project.projectTitle;
-
-            const projectDescription = createElementClass("div", "project-description");
-            projectDescription.textContent = project.projectDescription;
-
-            appendChildren(projectCard, projectImage, projectTitle, projectDescription);
-            return projectCard;
-        };
 
         const homeProjectContainer = createElementClass("div", "project-list-home");
         const homeProjectHeading = createElementText("h1", "Projects");
@@ -300,10 +309,7 @@ const domManipulator = (() => {
             return homeProjectContainer;
         };
 
-        const projectGrid = createElementClass("div", "project-grid");
-        topProjectList.forEach(project => {
-            projectGrid.appendChild(_createProjectCard(project));
-        });
+        const projectGrid = _createProjectGrid(topProjectList);
 
         const allLink = createElementText("a", "See all");
 
@@ -366,21 +372,42 @@ const domManipulator = (() => {
         });
     };
 
-    const showTodoPage = () => {
+    function showTodoPage() {
 
     };
 
-    const showProjectsPage = () => {
+    function showProjectsPage() {
 
     };
 
-    const showForm = (form) => {
+    function showAllProjects(projects) {
+        const projectContainer = createElementClass("div", "all-project-container");
+        const projectHeading = createElementText("h1", "All projects");
+        if (projects.length < 1) {
+            appendChildren(projectContainer,
+                projectHeading,
+                _noDataMessage(
+                    "Oh No!",
+                    "You have no current projects",
+                    "Create a new project from the sidebar"
+                )
+            );
+        } else {
+            appendChildren(projectContainer,
+                projectHeading,
+                _createProjectGrid(projects)
+            );
+        };
+        _appendToMainLayout(projectContainer);
+    };
+
+    function showForm(form) {
         const formBackground = createElementClass("div", "form-background");
         formBackground.appendChild(form);
         _appendToMain(formBackground);
     };
 
-    const removeForm = () => {
+    function removeForm() {
         const formToRemove = document.querySelector(".form-background");
         formToRemove.remove();
     };
@@ -402,21 +429,29 @@ const domManipulator = (() => {
         container.appendChild(_createTodoTable(todoList));
     };
 
+    function updateHomeProjects(projectList) {
+        const container = document.querySelector(".project-list-home");
+        document.querySelector(".project-grid").remove();
+        container.appendChild(_createProjectGrid(projectList));
+    };
+
     function updateDeadlines(todoList) {
         const container = document.querySelector(".deadlines-container");
         document.querySelector(".deadlines-table").remove();
         container.appendChild(_createDeadlinesTable(todoList))
-    }
+    };
 
     return {
         initDashboard,
         initHomepage,
         updateTable,
         updateDeadlines,
+        updateHomeProjects,
         removeMainLayout,
 
         showTodoPage,
         showProjectsPage,
+        showAllProjects,
 
         showForm,
         removeForm,
@@ -568,11 +603,11 @@ const formMaster = (() => {
         appendChildren(formContainer,
             formElement,
             _createCloseButton());
-        return formContainer;formContainer.appendChild(formElement)
+        return formContainer;
     };
 
     function checkFormValidity(formType) {
-        if (formType = "todo") {
+        if (formType === "todo") {
             const titleInput = document.querySelector("#title-input");
             const descriptionInput = document.querySelector("#description-input");
             const dueDateInput = document.querySelector("#due-date-input");
@@ -586,7 +621,7 @@ const formMaster = (() => {
             } else return true;
         };
 
-        if (formType = "project") {
+        if (formType === "project") {
             const projectTitleInput = document.querySelector("#project-title-input");
             const projectDescriptionInput = document.querySelector("#project-description-input");
 
