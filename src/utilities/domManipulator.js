@@ -83,22 +83,22 @@ const domManipulator = (() => {
         const _createInteractiveCell = (isImportant) => {
             const newCell = document.createElement("td");
 
-            const tick = document.createElement("a");
+            const tick = createElementClass("a", "complete-icon");
             const tickIcon = createElementClass("i", "fa-solid", "fa-check");
             tick.appendChild(tickIcon);
 
-            const star = document.createElement("a");
+            const star = createElementClass("a", "favorite-icon");
             const starIcon = createElementClass("i", "fa-regular", "fa-star");
             if (isImportant) {
                 star.classList.add("is-important")
             };
             star.appendChild(starIcon);
 
-            const edit = document.createElement("a");
+            const edit = createElementClass("a", "edit-icon");
             const editIcon = createElementClass("i", "fa-regular", "fa-pen-to-square");
             edit.appendChild(editIcon);
 
-            const trash = document.createElement("a");
+            const trash = createElementClass("a", "trash-icon");
             const trashIcon = createElementClass("i", "fa-solid", "fa-trash");
             trash.appendChild(trashIcon);
 
@@ -106,8 +106,9 @@ const domManipulator = (() => {
             return newCell;
         };
 
-        const _createListRow = (toDo) => {
+        const _createTableRow = (toDo) => {
             const currentRow = document.createElement("tr");
+            currentRow.dataset.todoId = toDo.toDoID;
 
             const toDoTitle = createElementText("td", toDo.title);
             const toDoDetails = createElementText("td", toDo.description);
@@ -133,7 +134,7 @@ const domManipulator = (() => {
             const tableArr = [];
             console.log(typeof(toDoData))
             toDoData.forEach(toDoItem => {
-                const newRow = _createListRow(toDoItem);
+                const newRow = _createTableRow(toDoItem);
                 tableArr.push(newRow)
             });
             return tableArr;
@@ -288,17 +289,16 @@ const domManipulator = (() => {
         };
 
         const homeProjectContainer = createElementClass("div", "project-list-home");
-        if (!topProjectList) {
+        const homeProjectHeading = createElementText("h1", "Projects");
+        if (topProjectList.length < 1) {
             const messageContainer = _noDataMessage(
                 "Oh No!",
                 "You have no current projects",
                 "Create a new project from the sidebar"
             );
-            homeProjectContainer.appendChild(messageContainer);
+            appendChildren(homeProjectContainer, homeProjectHeading, messageContainer);
             return homeProjectContainer;
         };
-
-        const homeProjectHeading = createElementText("h1", "Projects");
 
         const projectGrid = createElementClass("div", "project-grid");
         topProjectList.forEach(project => {
@@ -313,10 +313,10 @@ const domManipulator = (() => {
 
     const _createHomeDeadlines = (upcomingDeadlines) => {
 
-        const homeDeadlinesContainer = createElementClass("div", "upcoming-deadlines-home", "deadlines-table-container");
+        const homeDeadlinesContainer = createElementClass("div", "upcoming-deadlines-home");
         const deadlinesTitle = createElementText("h1", "Upcoming Deadlines");
         
-        if (!upcomingDeadlines) {
+        if (upcomingDeadlines.length < 1) {
             const messageContainer = _noDataMessage(
                 "Great News",
                 "You have no upcoming deadlines",
@@ -402,10 +402,10 @@ const domManipulator = (() => {
         container.appendChild(_createTodoTable(todoList));
     };
 
-    function updateDeadlines() {
-        const container = document.querySelector(".deadlines-table-container");
+    function updateDeadlines(todoList) {
+        const container = document.querySelector(".deadlines-container");
         document.querySelector(".deadlines-table").remove();
-        container.appendChild(_createDeadlinesTable())
+        container.appendChild(_createDeadlinesTable(todoList))
     }
 
     return {
@@ -426,11 +426,10 @@ const domManipulator = (() => {
 
 })();
 
+
 // ********************************************* //
 // **************** Form Master **************** //
 // ********************************************* //
-
-
 
 const formMaster = (() => {
 
