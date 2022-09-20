@@ -159,7 +159,7 @@ const domManipulator = (() => {
 
         const _createTableData = (toDoData) => {
             const tableArr = [];
-            toDoData.forEach(toDoItem => {
+            toDoData?.forEach(toDoItem => {
                 const newRow = _createTableRow(toDoItem);
                 tableArr.push(newRow)
             });
@@ -341,6 +341,16 @@ const domManipulator = (() => {
         return homeDeadlinesContainer;
     };
 
+    const _projectHeaderInfo = (project) => {
+        const projectInfo = createElementClass("div", "project-header-info");
+        
+        const projectHeading = createElementText("h1", project.projectTitle);
+        const projectDescription = createElementText("p", project.projectDescription);
+        const newProjectTodo = createElementClass("i", "fa-solid", "fa-plus", "project-plus");
+        appendChildren(projectInfo, projectHeading, projectDescription, newProjectTodo);
+        return projectInfo;
+    };
+
     /* Functions to return */
 
     const initDashboard = () => {
@@ -379,9 +389,29 @@ const domManipulator = (() => {
 
     function showProjectPage(project) {
         const projectContainer = createElementClass("div", "single-project-container");
-        const projectHeading = createElementText("h1", project.projectTitle);
+        projectContainer.dataset.projectId = project.projectID;
 
-        _appendToMainLayout(projectContainer)
+        const projectHeader = createElementClass("div", "project-header");
+
+        const projectImage = createElementClass("div", "project-header-image")
+        projectImage.style.backgroundImage = `url('${project.projectImage}')`
+        const projectInfo = _projectHeaderInfo(project);
+
+        appendChildren(projectHeader, projectImage, projectInfo);
+        console.log(project)
+        if (project.projectToDos?.length > 0) {
+            const projectTable = _createTodoTable(project.projectToDos)
+            appendChildren(projectContainer, projectHeader, projectTable);
+        } else {
+            const noDataMessage = _noDataMessage(
+                "Oh No!",
+                "This project does not contain any ToDos",
+                "Add a ToDo to this project and work towards your goals"
+            );
+            appendChildren(projectContainer, projectHeader, noDataMessage);
+        };
+        
+        _appendToMainLayout(projectContainer);
     };
 
     function showAllProjects(projects) {
@@ -480,9 +510,11 @@ const formMaster = (() => {
         return format(addDays(new Date(), 730), "yyyy-MM-dd")
     };
 
-    const _createSubmitButton = () => {
+    const _createSubmitButton = (projectId) => {
+        projectId = projectId || null;
         const button = createElementText("button", "Create");
         button.setAttribute("type", "button");
+        if (projectId) button.dataset.projectToLink = projectId;
         return button;
     };
 
@@ -490,7 +522,9 @@ const formMaster = (() => {
         return createElementClass("i", "fa-solid", "fa-xmark" , "close-form");
     };
 
-    const createTodoForm = () => {
+    const createTodoForm = (projectToLink) => {
+        projectToLink = projectToLink || null;
+        
         const formContainer = createElementClass("div", "form-container");
         const formElement = createElementClass("form", "todo-form");
         const fieldsetElement = document.createElement("fieldset");
@@ -541,7 +575,7 @@ const formMaster = (() => {
             descriptionInput,
             dueDateLabel,
             dueDateInput,
-            _createSubmitButton(),
+            _createSubmitButton(projectToLink),
         );
 
         formElement.appendChild(fieldsetElement);
