@@ -295,6 +295,13 @@ main {
     margin: 5px;
 }
 
+.main-layout .all-projects-container .fa-plus {
+    font-size: 1.6rem;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
 /* single project layout */
 
 .main-layout .single-project-container {
