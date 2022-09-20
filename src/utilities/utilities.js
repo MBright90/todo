@@ -97,7 +97,6 @@ const pageInterface = (() => {
         for (let i = 0; i < linkList.length; i++) {
             linkList[i].addEventListener("click", () => {
                 const requestedData = data.retrieveData(args[i]);
-                console.log(requestedData);
                 // Code block to display requested data
             });
         };
