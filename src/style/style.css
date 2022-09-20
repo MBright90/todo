@@ -110,7 +110,6 @@ main {
 .main-layout {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-template-rows: repeat(2, 1fr);
     gap: 20px;
     padding: 20px;
     width: 100%;
@@ -190,8 +189,8 @@ main {
 .main-layout .todo-list-home table th,
 .main-layout .todo-list-home table td,
 .main-layout .deadlines-container table td,
-.main-layout .deadlines-container table th
- {
+.main-layout .deadlines-container table th {
+    max-height: 50px;
     padding: 15px 5px;
 }
 
@@ -242,39 +241,55 @@ main {
     align-self: center;
 }
 
-.main-layout .project-list-home .project-grid {
+.main-layout .project-grid {
     flex: 1 0 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
 
-.main-layout .project-list-home .project-grid .project-card {
+.main-layout .project-grid .project-card {
     background-color: #319DA0;
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    transition: all ease-in .2s;
+    -webkit-transition: all ease-in .2s;
+    -moz-transition: all ease-in .2s;
 }
 
-.main-layout .project-list-home .project-grid .project-card .project-image {
+.main-layout .all-projects-container .project-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.main-layout .all-projects-container .project-grid .project-card {
+    min-height: 500px;
+}
+
+.main-layout .project-grid .project-card:hover {
+    transform: scale(1.1);
+}
+
+.main-layout .project-grid .project-card .project-image {
     background-image: url('../assets/images/to-do-list.jpg');
     background-size: cover;
     background-position: center;
     height: 40%;
 }
 
-.main-layout .project-list-home .project-grid .project-card .project-title {
+.main-layout .project-grid .project-card .project-title {
     font-family: 'juice-bold', sans-serif;
     font-weight: bold;
 }
 
-.main-layout .project-list-home .project-grid .project-card .project-description {
+.main-layout .project-grid .project-card .project-description {
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.main-layout .project-list-home .project-grid .project-card .project-title,
-.main-layout .project-list-home .project-grid .project-card .project-description {
+.main-layout .project-grid .project-card .project-title,
+.main-layout .project-grid .project-card .project-description {
     color: #f0f0f0;
     margin: 5px;
 }
