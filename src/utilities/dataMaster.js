@@ -172,7 +172,6 @@ const dataMaster = (() => {
     const _appendProjectTodo = (todoObject, findProjectID) => {
         todoObject.complete = false;
         const project = _todoDataset.projects.find(proj => proj.projectID === findProjectID);
-        console.log(project);
         if (!project.projectToDos) {
             project.projectToDos = [];
         };
