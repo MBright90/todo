@@ -73,11 +73,15 @@ const pageInterface = (() => {
                 if (validityCheck === true) {
                     if (e.target.dataset.projectToLink) {
                         data.parseNewTodo(e.target.dataset.projectToLink);
+                        dom.removeForm();
+                        const selectedProject = data.retrieveSingleProject(e.target.dataset.projectToLink);
+                        dom.removeMainLayout()
+                        dom.showProjectPage(selectedProject);
                     } else {
                         data.parseNewTodo();
+                        dom.removeForm();
+                        dom.updateTable(data.retrieveData("date", 10));
                     };
-                    dom.removeForm();
-                    dom.updateTable(data.retrieveData("date", 10));
                 } else {
                     _createAlert(validityCheck)
                 };
@@ -154,6 +158,7 @@ const pageInterface = (() => {
         element.addEventListener("click", (e) => {
             const projectId = _findIdStep(e.composedPath());
             showSingleProject(projectId);
+            _createAddLink(document.querySelector(".project-header-info > .fa-plus"))
         });
     };
 
