@@ -20,7 +20,6 @@ const dataMaster = (() => {
         };
 
         let storageData = JSON.parse(localStorage.getItem("dataset"));
-        console.log(storageData)
         if (!storageData) {
             return {
                 general: [
