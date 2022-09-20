@@ -253,6 +253,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-height: 300px;
 
     transition: all ease-in .2s;
     -webkit-transition: all ease-in .2s;
@@ -268,7 +269,7 @@ main {
 }
 
 .main-layout .project-grid .project-card:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .main-layout .project-grid .project-card .project-image {
@@ -292,6 +293,43 @@ main {
 .main-layout .project-grid .project-card .project-description {
     color: #f0f0f0;
     margin: 5px;
+}
+
+/* single project layout */
+
+.main-layout .single-project-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-layout .single-project-container .project-header {
+    display: flex;
+    margin-bottom: 10px;
+    min-height: 300px;
+    position: relative;
+}
+
+.main-layout .single-project-container .project-header .project-header-image {
+    background-color: #000000;
+    border: 3px solid #319DA0;
+    width: 50%;
+}
+
+.main-layout .single-project-container .project-header .project-header-info {
+    background-color: #319DA0;
+    color: #FFFFFF;
+    padding: 20px 10px;
+}
+
+.main-layout .single-project-container .project-header .project-header-info p {
+    margin-bottom: 15px;
+}
+
+.main-layout .single-project-container .project-header .project-header-info i {
+    font-size: 1.6rem;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
 }
 
 /* Form layouts */
