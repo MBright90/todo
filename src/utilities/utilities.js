@@ -20,6 +20,24 @@ const pageInterface = (() => {
     };
 
     // ********************************************* //
+    // *************** Page navigation************** //
+    // ********************************************* //   
+
+    const showDashboard = () => {
+        dom.removeCurrentMainLayout();
+        dom.initHomepage();
+    };
+
+    const showProjects = () => {
+        dom.removeMainLayout();
+        dom.showAllProjects(data.retrieveData("projects"));
+    };
+
+    const showAllTodos = () => {
+
+    };
+
+    // ********************************************* //
     // ************** Event Listeners ************** //
     // ********************************************* //
 
@@ -27,7 +45,7 @@ const pageInterface = (() => {
         const formButton = document.querySelector("form > fieldset > button");
         formButton.addEventListener("click", (e) => {
             let validityCheck;
-            if (e.composedPath()[2].classList.contains('todo-form')) {
+            if (e.composedPath()[2].classList.contains("todo-form")) {
                 validityCheck = forms.checkFormValidity("todo")
                 if (validityCheck === true) {
                     data.parseNewTodo();
@@ -36,11 +54,12 @@ const pageInterface = (() => {
                 } else {
                     _createAlert(validityCheck)
                 };
-            } else if (e.composedPath()[2].classlist.contains('project-form')) {
-                validityCheck = forms.checkValidity("project");
+            } else if (e.composedPath()[2].classList.contains("project-form")) {
+                validityCheck = forms.checkFormValidity("project");
                 if (validityCheck === true) {
                     data.parseNewProject();
                     dom.removeForm();
+                    dom.updateHomeProjects(data.retrieveData("projects", 3))
                 } else {
                     _createAlert(validityCheck);
                 };
@@ -93,7 +112,7 @@ const pageInterface = (() => {
 
     const _showProjectsLink = (aTag) => {
         aTag.addEventListener("click", () => {
-            dom.showProjectsPage();
+            showProjects();
         });
     };
 
@@ -117,7 +136,7 @@ const pageInterface = (() => {
     };
 
     // ********************************************* //
-    // ************** Dom creation IF ************** //
+    // ******* Dom creation return functions ******* //
     // ********************************************* //
 
     const createHomepage = () => {
@@ -129,19 +148,6 @@ const pageInterface = (() => {
             );
         _addHeaderListeners();
         _addSidebarListeners();
-    };
-
-    const showDashboard = () => {
-        dom.removeCurrentMain();
-        dom.initHomepage();
-    };
-
-    const showProjects = () => {
-
-    };
-
-    const showAllTodos = () => {
-
     };
 
     // Functions to return
