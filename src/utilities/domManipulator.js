@@ -398,7 +398,6 @@ const domManipulator = (() => {
         const projectInfo = _projectHeaderInfo(project);
 
         appendChildren(projectHeader, projectImage, projectInfo);
-        console.log(project)
         if (project.projectToDos?.length > 0) {
             const projectTable = _createTodoTable(project.projectToDos)
             const tableContainer = createElementClass("div", "todo-table-container");
@@ -420,8 +419,10 @@ const domManipulator = (() => {
     function showAllProjects(projects) {
         const projectContainer = createElementClass("div", "all-projects-container");
         const projectHeading = createElementText("h1", "All Projects");
+        const addProjectLink = createElementClass("i", "fa-solid", "fa-plus"); 
         if (projects.length < 1) {
             appendChildren(projectContainer,
+                addProjectLink,
                 projectHeading,
                 _noDataMessage(
                     "Oh No!",
@@ -431,6 +432,7 @@ const domManipulator = (() => {
             );
         } else {
             appendChildren(projectContainer,
+                addProjectLink,
                 projectHeading,
                 _createProjectGrid(projects)
             );
