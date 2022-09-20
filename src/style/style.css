@@ -174,51 +174,51 @@ main {
     grid-area: 2 / 2 / 3 / 3;
 }
 
-.main-layout .todo-list-home table,
-.main-layout .deadlines-container table {
+.main-layout table,
+.main-layout table {
     text-align: left;
     width: 100%;
 }
 
-.main-layout .todo-list-home table td,
-.main-layout .deadlines-container table td {
+.main-layout table td,
+.main-layout table td {
     border-top: 2px solid #319DA0;
     height: 30px;
 }
 
-.main-layout .todo-list-home table th,
-.main-layout .todo-list-home table td,
-.main-layout .deadlines-container table td,
-.main-layout .deadlines-container table th {
+.main-layout table th,
+.main-layout table td,
+.main-layout table td,
+.main-layout table th {
     max-height: 50px;
     padding: 15px 5px;
 }
 
-.main-layout .todo-list-home table td,
-.main-layout .deadlines-container table td
+.main-layout table td,
+.main-layout table td
  {
     vertical-align: top;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.main-layout .todo-list-home table th,
-.main-layout .deadlines-container table th {
+.main-layout table th,
+.main-layout table th {
     background-color: #dadfd1;
 }
 
-.main-layout .todo-list-home table tr:nth-of-type(2n),
-.main-layout .deadlines-container table tr:nth-of-type(2n) {
+.main-layout table tr:nth-of-type(2n),
+.main-layout table tr:nth-of-type(2n) {
     background-color: #f0f0f0;
 }
 
-.main-layout .todo-list-home tr td:nth-of-type(4) {
+.main-layout tr td:nth-of-type(4) {
     text-align: center;
     width: 100px;
 }
 
-.main-layout .deadlines-container table tr td:nth-of-type(2),
-.main-layout .deadlines-container table tr th:nth-of-type(2) {
+.main-layout .deadlines-table table tr td:nth-of-type(2),
+.main-layout .deadlines-table table tr th:nth-of-type(2) {
     text-align: right;
     width: 200px;
 }
@@ -310,7 +310,9 @@ main {
 }
 
 .main-layout .single-project-container .project-header .project-header-image {
-    background-color: #000000;
+    background-image: url('../assets/images/to-do-list.jpg');
+    background-size:cover;
+    background-position: center;
     border: 3px solid #319DA0;
     width: 50%;
 }
@@ -319,6 +321,7 @@ main {
     background-color: #319DA0;
     color: #FFFFFF;
     padding: 20px 10px;
+    width: 50%;
 }
 
 .main-layout .single-project-container .project-header .project-header-info p {
