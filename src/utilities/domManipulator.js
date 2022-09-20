@@ -266,6 +266,7 @@ const domManipulator = (() => {
 
         const homeHeader = document.createElement("h1");
         const homeHeaderLink = createElementText("a", "Home");
+        homeHeaderLink.classList.add("home-link");
         homeHeader.appendChild(homeHeaderLink);
 
         const dateUl = createElementClass("ul", "date-links");
