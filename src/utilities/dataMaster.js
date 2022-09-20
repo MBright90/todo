@@ -106,6 +106,7 @@ const dataMaster = (() => {
             dueDate: todoDueDate,
             important: isImportant,
             toDoID: _createTodoID(),
+            isComplete: false,
         };
         return todoObject;
     };
