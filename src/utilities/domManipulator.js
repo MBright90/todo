@@ -376,8 +376,11 @@ const domManipulator = (() => {
 
     };
 
-    function showProjectsPage() {
+    function showProjectPage(project) {
+        const projectContainer = createElementClass("div", "single-project-container");
+        const projectHeading = createElementText("h1", project.projectTitle);
 
+        _appendToMainLayout(projectContainer)
     };
 
     function showAllProjects(projects) {
@@ -450,7 +453,7 @@ const domManipulator = (() => {
         removeMainLayout,
 
         showTodoPage,
-        showProjectsPage,
+        showProjectPage,
         showAllProjects,
 
         showForm,
