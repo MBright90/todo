@@ -1,88 +1,103 @@
 import { addDays } from "date-fns"
 
 const dataMaster = (() => {
-    const todoIDLength = 8;
+    const todoIDLength = 12;
     const projectIDLength = 10;
 
     // Local storage functions //
 
     function _retrieveLocalData() {
-        const localData = {
-            general: [
-                {
-                    title: "toDo title",
-                    description: "toDo description",
-                    dueDate: new Date(2022, 7, 25),
-                    important: true,
-                    toDoID: 21862122,
-                    overdue: true,
-                },
-                {
-                    title: "toDo title two",
-                    description: "toDo description two",
-                    dueDate: new Date(2022, 9, 27),
-                    important: false,
-                    toDoID: 24862122
-                }
-            ],
-            projects: [
-                {
-                    projectTitle: "project one title",
-                    projectImage: "https://media.istockphoto.com/photos/delivering-quality-construction-for-a-quality-lifestyle-picture-id1297780288?b=1&k=20&m=1297780288&s=170667a&w=0&h=NDdDs9BBGULLwYUDUt1AjIOroHuwmFY9N6ZEDAYV7sE=",
-                    projectDescription: "A description about my project.",
-                    projectID: 1111219621,
-                    projectToDos: [
-                        {
-                            title: "project 1 toDo 1",
-                            description: "project description one",
-                            dueDate: new Date(2022, 9, 11),
-                            important: true,
-                            toDoID: 23862122,
-                            complete: false,
-                        },
-                        {
-                            title: "project 1 toDo 2",
-                            description: "project description two",
-                            dueDate: new Date(2022, 10, 3),
-                            important: true,
-                            toDoID: 22862122,
-                            complete: false,
-                        },
-                    ]
-                },
-                {
-                    projectTitle: "project two title",
-                    projectImage: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGxhcHRvcHxlbnwwfHwwfHw%3D&w=1000&q=80",
-                    projectDescription: "Another description about a new project.",
-                    projectID: 1111249621,
-                    projectToDos: [
-                        {
-                            title: "project 2 toDo 1",
-                            description: "project description one",
-                            dueDate: new Date(2022, 9, 30),
-                            important: true,
-                            toDoID: 21827281,
-                            complete: false,
-                        },
-                        {
-                            title: "project 2 toDo 2",
-                            description: "project description two",
-                            dueDate: new Date(2022, 10, 22),
-                            important: false,
-                            toDoID: 2167125,
-                            complete: true,
-                        },
-                    ]
-                },
-            ]
+
+        function parseStorageDates(data) {
+            data.general?.forEach(todo => {
+                todo.dueDate = new Date(todo.dueDate);
+            });
+            data.projects.forEach(project => {
+                project.projectToDos?.forEach(todo => {
+                    todo.dueDate = new Date(todo.dueDate);
+                });
+            });
         };
 
-        return localData;
+        let storageData = JSON.parse(localStorage.getItem("dataset"));
+        console.log(storageData)
+        if (!storageData) {
+            return {
+                general: [
+                    {
+                        title: "toDo title",
+                        description: "toDo description",
+                        dueDate: new Date(2022, 7, 25),
+                        important: true,
+                        toDoID: '012342143567',
+                        overdue: true,
+                    },
+                    {
+                        title: "toDo title two",
+                        description: "toDo description two",
+                        dueDate: new Date(2022, 9, 27),
+                        important: false,
+                        toDoID: '0123454321672',
+                    }
+                ],
+                projects: [
+                    {
+                        projectTitle: "project one title",
+                        projectImage: "https://media.istockphoto.com/photos/delivering-quality-construction-for-a-quality-lifestyle-picture-id1297780288?b=1&k=20&m=1297780288&s=170667a&w=0&h=NDdDs9BBGULLwYUDUt1AjIOroHuwmFY9N6ZEDAYV7sE=",
+                        projectDescription: "A description about my project.",
+                        projectID: '1234512345',
+                        projectToDos: [
+                            {
+                                title: "project 1 toDo 1",
+                                description: "project description one",
+                                dueDate: new Date(2022, 9, 11),
+                                important: true,
+                                toDoID: '092837261526',
+                                complete: false,
+                            },
+                            {
+                                title: "project 1 toDo 2",
+                                description: "project description two",
+                                dueDate: new Date(2022, 10, 3),
+                                important: true,
+                                toDoID: '064736251673',
+                                complete: false,
+                            },
+                        ]
+                    },
+                    {
+                        projectTitle: "project two title",
+                        projectImage: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGxhcHRvcHxlbnwwfHwwfHw%3D&w=1000&q=80",
+                        projectDescription: "Another description about a new project.",
+                        projectID: '1234512346',
+                        projectToDos: [
+                            {
+                                title: "project 2 toDo 1",
+                                description: "project description one",
+                                dueDate: new Date(2022, 9, 30),
+                                important: true,
+                                toDoID: '218272816354',
+                                complete: false,
+                            },
+                            {
+                                title: "project 2 toDo 2",
+                                description: "project description two",
+                                dueDate: new Date(2022, 10, 22),
+                                important: false,
+                                toDoID: '216712525362',
+                                complete: true,
+                            },
+                        ]
+                    }
+                ]
+            };
+        };
+        parseStorageDates(storageData);
+        return storageData;
     };
 
     function _saveData() {
-        localStorage.setItem('dataset', _todoDataset);
-        console.log("Data saved");
+        localStorage.setItem('dataset', JSON.stringify(_todoDataset));
     };
 
     // Data creation functions
@@ -182,7 +197,7 @@ const dataMaster = (() => {
     const _retrieveAllTodos = () => {
         const allToDos = [..._todoDataset.general];
         _todoDataset.projects.forEach(project => {
-            project.projectToDos.forEach(toDo => {
+            project.projectToDos?.forEach(toDo => {
                 allToDos.push(toDo);
             });
         });
@@ -226,7 +241,7 @@ const dataMaster = (() => {
 
     const _checkProjectsOverdue = (date) => {
         _todoDataset.projects.forEach(proj => {
-            proj.projectToDos.forEach(todo => {
+            proj.projectToDos?.forEach(todo => {
                 if (todo.dueDate < date) {
                     todo.overdue = true;
                 };
@@ -344,7 +359,7 @@ const dataMaster = (() => {
         const projectImageInput = document.querySelector("#image-input");
         const projectImageURL = projectImageInput.value;
 
-        _createProjectObject(projectTitle, projectDescription, projectImageURL);
+        _addNewProject(projectTitle, projectDescription, projectImageURL);
     };
 
     // Initiate data from storage
