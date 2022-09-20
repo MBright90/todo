@@ -47,6 +47,7 @@ const pageInterface = (() => {
         dom.removeMainLayout();
         dom.showAllProjects(data.retrieveData("projects"));
         _ProjectCardLinks();
+        _createProjectLink(document.querySelector(".all-projects-container > .fa-plus"));
     };
 
     function showSingleProject(projectId) {
