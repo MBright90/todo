@@ -78,7 +78,7 @@ const domManipulator = (() => {
         });
     };
 
-    function createTodoTable (toDoList) {
+    function _createTodoTable (toDoList) {
 
         const _createInteractiveCell = (isImportant) => {
             const newCell = document.createElement("td");
@@ -111,7 +111,14 @@ const domManipulator = (() => {
 
             const toDoTitle = createElementText("td", toDo.title);
             const toDoDetails = createElementText("td", toDo.description);
-            const toDoDue = createElementText("td", `${toDo.dueDate.getDate()}/${toDo.dueDate.getMonth() + 1}/${toDo.dueDate.getFullYear()}`);
+
+            let date = toDo.dueDate.getDate();
+            if (date < 10) date = `0${date}`;
+
+            let month = toDo.dueDate.getMonth();
+            if (month < 10) month = `0${month}`;
+
+            const toDoDue = createElementText("td", `${date}/${month}/${toDo.dueDate.getFullYear()}`);
             const toDoInteractive = _createInteractiveCell(toDo.important);
 
             if (toDo.overdue) {
@@ -135,6 +142,35 @@ const domManipulator = (() => {
         homeListTable.appendChild(_createTableHeaders("ToDo", "Details", "Due Date", ""))
         _appendTableData(homeListTable, _createTableData(toDoList));
         return homeListTable;
+    };
+
+    function _createDeadlinesTable(upcomingDeadlines) {
+
+        const _createDeadlineRow = (deadline) => {
+            const daysUntilDue = formatDistanceStrict(new Date(), deadline.dueDate, {unit: "day"});
+
+            const deadlineRow = document.createElement("tr");
+            const deadlineTitle = createElementText("td", deadline.title);
+            let deadlineDueDate;
+
+            if (deadline.overdue) {
+                deadlineRow.classList.add("overdue")
+                deadlineDueDate = createElementText("td", `Overdue: ${daysUntilDue}`);
+            } else {
+                deadlineDueDate = createElementText("td", daysUntilDue);
+            };
+
+            appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
+            return deadlineRow
+        };
+
+        const deadlinesTable = createElementClass("table", "deadlines-table");
+        deadlinesTable.appendChild(_createTableHeaders("ToDo", "Days Until Due"));
+        upcomingDeadlines.forEach(deadline => {
+            deadlinesTable.appendChild(_createDeadlineRow(deadline));
+        });
+
+        return deadlinesTable;
     };
 
     /* Manipulation functions */
@@ -224,7 +260,7 @@ const domManipulator = (() => {
         const homeListContainer = createElementClass("div", "todo-list-home", "todo-table-container");
         const homeListHeader = createElementText("h1", "Your ToDo List");
 
-        const homeListTable = createTodoTable(todoList)
+        const homeListTable = _createTodoTable(todoList)
 
         const allLink = createElementText("a", "See all");
 
@@ -277,47 +313,24 @@ const domManipulator = (() => {
 
     const _createHomeDeadlines = (upcomingDeadlines) => {
 
-        const _createDeadlineRow = (deadline) => {
-            const daysUntilDue = formatDistanceStrict(new Date(), deadline.dueDate, {unit: "day"});
-
-            const deadlineRow = document.createElement("tr");
-            const deadlineTitle = createElementText("td", deadline.title);
-            let deadlineDueDate;
-
-            if (deadline.overdue) {
-                deadlineRow.classList.add("overdue")
-                deadlineDueDate = createElementText("td", `Overdue: ${daysUntilDue}`);
-            } else {
-                deadlineDueDate = createElementText("td", daysUntilDue);
-            };
-
-            appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
-            return deadlineRow
-        };
-
-        const homeDeadlinesContainer = createElementClass("div", "upcoming-deadlines-home");
-        const tableContainer = createElementClass("div", "deadlines-container");
-
+        const homeDeadlinesContainer = createElementClass("div", "upcoming-deadlines-home", "deadlines-table-container");
+        const deadlinesTitle = createElementText("h1", "Upcoming Deadlines");
+        
         if (!upcomingDeadlines) {
             const messageContainer = _noDataMessage(
                 "Great News",
                 "You have no upcoming deadlines",
                 "Sit back and relax, or add a new ToDo for this week",
             );
-            homeDeadlinesContainer.appendChild(messageContainer);
+            appendChildren(homeDeadlinesContainer, deadlinesTitle, messageContainer);
             return homeDeadlinesContainer;
         };
 
-        const deadlinesTitle = createElementText("h1", "Upcoming Deadlines");
+        const tableContainer = createElementClass("div", "deadlines-container");
+        const deadlinesTable = _createDeadlinesTable(upcomingDeadlines);
 
-        const deadlinesTable = document.createElement("table");
-        deadlinesTable.appendChild(_createTableHeaders("ToDo", "Days Until Due"));
-        upcomingDeadlines.forEach(deadline => {
-            deadlinesTable.appendChild(_createDeadlineRow(deadline));
-        });
-
-        appendChildren(tableContainer, deadlinesTitle, deadlinesTable);
-        homeDeadlinesContainer.appendChild(tableContainer);
+        tableContainer.appendChild(deadlinesTable);
+        appendChildren(homeDeadlinesContainer, deadlinesTitle, tableContainer);
         return homeDeadlinesContainer;
     };
 
@@ -384,15 +397,22 @@ const domManipulator = (() => {
     };
 
     function updateTable(todoList) {
-        const container = document.querySelector(".todo-table-container")
-        document.querySelector(".todo-table").remove()
-        container.appendChild(createTodoTable(todoList));
+        const container = document.querySelector(".todo-table-container");
+        document.querySelector(".todo-table").remove();
+        container.appendChild(_createTodoTable(todoList));
     };
+
+    function updateDeadlines() {
+        const container = document.querySelector(".deadlines-table-container");
+        document.querySelector(".deadlines-table").remove();
+        container.appendChild(_createDeadlinesTable())
+    }
 
     return {
         initDashboard,
         initHomepage,
         updateTable,
+        updateDeadlines,
         removeMainLayout,
 
         showTodoPage,
