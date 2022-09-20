@@ -394,14 +394,17 @@ const domManipulator = (() => {
         const projectHeader = createElementClass("div", "project-header");
 
         const projectImage = createElementClass("div", "project-header-image")
-        projectImage.style.backgroundImage = `url('${project.projectImage}')`
+        if (project.projectImage) projectImage.style.backgroundImage = `url('${project.projectImage}')`;
         const projectInfo = _projectHeaderInfo(project);
 
         appendChildren(projectHeader, projectImage, projectInfo);
         console.log(project)
         if (project.projectToDos?.length > 0) {
             const projectTable = _createTodoTable(project.projectToDos)
-            appendChildren(projectContainer, projectHeader, projectTable);
+            const tableContainer = createElementClass("div", "todo-table-container");
+
+            tableContainer.appendChild(projectTable);
+            appendChildren(projectContainer, projectHeader, tableContainer);
         } else {
             const noDataMessage = _noDataMessage(
                 "Oh No!",
