@@ -8,7 +8,7 @@ const dataMaster = (() => {
 
     function _retrieveLocalData() {
 
-        function parseStorageDates(data) {
+        function _parseStorageDates(data) {
             data.general?.forEach(todo => {
                 todo.dueDate = new Date(todo.dueDate);
             });
@@ -91,7 +91,8 @@ const dataMaster = (() => {
                 ]
             };
         };
-        parseStorageDates(storageData);
+        
+        _parseStorageDates(storageData);
         return storageData;
     };
 
@@ -169,8 +170,13 @@ const dataMaster = (() => {
     };
 
     const _appendProjectTodo = (todoObject, findProjectID) => {
-        todoObject.complete = False;
-        _todoDataset.projects.find(proj => proj.projectID === findProjectID).projectToDos.push(todoObject);
+        todoObject.complete = false;
+        const project = _todoDataset.projects.find(proj => proj.projectID === findProjectID);
+        console.log(project);
+        if (!project.projectToDos) {
+            project.projectToDos = [];
+        };
+        project.projectToDos.push(todoObject);
         _saveData();
     };
 
@@ -316,7 +322,7 @@ const dataMaster = (() => {
     const retrieveSingleProject = (projectID) => {
         const foundProject = _todoDataset.projects.find(proj => proj.projectID === projectID);
         if (!foundProject) {
-            throw new Error `No Project Found with ID ${projectID}`
+            throw new Error(`No Project Found with ID ${projectID}`)
         } else {
             return foundProject;
         };
