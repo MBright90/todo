@@ -3,6 +3,16 @@ import { dataMaster as data } from "./dataMaster.js";
 
 const pageInterface = (() => {
 
+    const _findIdStep = (nodeList) => {
+        let identifier;
+        nodeList.slice(0, 2).forEach(node => {
+            if (node.classList.contains("project-card")) {
+                identifier = node.dataset.projectId;
+            };
+        }); 
+        return identifier || console.log("No project ID found");
+    };
+
     // ********************************************* //
     // ******************* Alerts ****************** //
     // ********************************************* //    
@@ -23,21 +33,30 @@ const pageInterface = (() => {
     // *************** Page Navigation ************* //
     // ********************************************* //   
 
-    const showDashboard = () => {
+    function showDashboard() {
         dom.removeMainLayout();
         dom.initHomepage(
             data.retrieveData("date", 10),
             data.retrieveData("projects", 3),
             data.retrieveData("date", 5)
         );
+        _ProjectCardLinks();
     };
 
-    const showProjects = () => {
+    function showProjects() {
         dom.removeMainLayout();
         dom.showAllProjects(data.retrieveData("projects"));
+        _ProjectCardLinks();
     };
 
-    const showAllTodos = () => {
+    function showSingleProject(projectId) {
+        const selectedProject = data.retrieveSingleProject(projectId);
+        dom.removeMainLayout();
+        dom.showProjectPage(selectedProject);
+    };
+
+    function showAllTodos() {
+        dom.removeMainLayout();
 
     };
 
@@ -52,7 +71,11 @@ const pageInterface = (() => {
             if (e.composedPath()[2].classList.contains("todo-form")) {
                 validityCheck = forms.checkFormValidity("todo")
                 if (validityCheck === true) {
-                    data.parseNewTodo();
+                    if (e.target.dataset.projectToLink) {
+                        data.parseNewTodo(e.target.dataset.projectToLink);
+                    } else {
+                        data.parseNewTodo();
+                    };
                     dom.removeForm();
                     dom.updateTable(data.retrieveData("date", 10));
                 } else {
@@ -78,27 +101,26 @@ const pageInterface = (() => {
         }, {once: true});
     };
 
-    const _createFormListeners = () => {
-        _submitFormListener(),
-        _closeFormListener()
-    };
-
-    const _createDropLink = (aTag) => {
-        aTag.addEventListener("click", () => {
+    const _createDropLink = (element) => {
+        element.addEventListener("click", () => {
             console.log("drop link CLICKED!")
             // Code block to show menu
         });
     };
 
-    const _createAddLink = (aTag) => {
-        aTag.addEventListener("click", () => {
-            dom.showForm(forms.createTodoForm());
+    const _createAddLink = (element) => {
+        element.addEventListener("click", () => {
+            let project;
+            if (document.querySelector(".single-project-container")) {
+                project = document.querySelector(".single-project-container").dataset.projectId;
+            };
+            dom.showForm(forms.createTodoForm(project));
             _createFormListeners();
         });
     };
 
-    const _createHomeLink = (aTag) => {
-        aTag.addEventListener("click", showDashboard)
+    const _createHomeLink = (element) => {
+        element.addEventListener("click", showDashboard)
     };
 
     const _createTimeLinks = (linkList, ...args) => {
@@ -110,15 +132,15 @@ const pageInterface = (() => {
         };
     };
 
-    const _createProjectLink = (aTag) => {
-        aTag.addEventListener("click", () => {
+    const _createProjectLink = (element) => {
+        element.addEventListener("click", (e) => {
             dom.showForm(forms.createProjectForm());
             _createFormListeners();
         });
     };
 
-    const _showProjectsLink = (aTag) => {
-        aTag.addEventListener("click", () => {
+    const _showProjectsLink = (element) => {
+        element.addEventListener("click", () => {
             showProjects();
         });
     };
@@ -126,6 +148,13 @@ const pageInterface = (() => {
     const _createProjectLinksGroup = (linkList) => {
         _createProjectLink(linkList[0]);
         _showProjectsLink(linkList[1]);
+    };
+
+    const _singleProjectLink = (element) => {
+        element.addEventListener("click", (e) => {
+            const projectId = _findIdStep(e.composedPath());
+            showSingleProject(projectId);
+        });
     };
 
     // ********************************************* //
@@ -144,7 +173,14 @@ const pageInterface = (() => {
     };
 
     function _ProjectCardLinks() {
-        
+        document.querySelectorAll(".project-card").forEach(card => {
+            _singleProjectLink(card);
+        });
+    };
+
+    function _createFormListeners() {
+        _submitFormListener(),
+        _closeFormListener()
     };
 
     // ********************************************* //
@@ -160,6 +196,7 @@ const pageInterface = (() => {
             );
         _addHeaderListeners();
         _addSidebarListeners();
+        _ProjectCardLinks();
     };
 
     // Functions to return
