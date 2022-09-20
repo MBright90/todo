@@ -20,12 +20,16 @@ const pageInterface = (() => {
     };
 
     // ********************************************* //
-    // *************** Page navigation************** //
+    // *************** Page Navigation ************* //
     // ********************************************* //   
 
     const showDashboard = () => {
-        dom.removeCurrentMainLayout();
-        dom.initHomepage();
+        dom.removeMainLayout();
+        dom.initHomepage(
+            data.retrieveData("date", 10),
+            data.retrieveData("projects", 3),
+            data.retrieveData("date", 5)
+        );
     };
 
     const showProjects = () => {
@@ -93,6 +97,10 @@ const pageInterface = (() => {
         });
     };
 
+    const _createHomeLink = (aTag) => {
+        aTag.addEventListener("click", showDashboard)
+    };
+
     const _createTimeLinks = (linkList, ...args) => {
         for (let i = 0; i < linkList.length; i++) {
             linkList[i].addEventListener("click", () => {
@@ -130,8 +138,13 @@ const pageInterface = (() => {
     };
 
     function _addSidebarListeners() {
+        _createHomeLink(document.querySelector(".home-link"));
         _createTimeLinks(document.querySelectorAll(".date-links li a"), "date", 1, 7, 31);
         _createProjectLinksGroup(document.querySelectorAll(".project-links li a"));
+    };
+
+    function _ProjectCardLinks() {
+        
     };
 
     // ********************************************* //
@@ -153,9 +166,6 @@ const pageInterface = (() => {
 
     return {
         createHomepage: createHomepage,
-        showDashboard: showDashboard,
-        showProjects: showProjects,
-        showAllTodos: showAllTodos,
     };
 
 })();
