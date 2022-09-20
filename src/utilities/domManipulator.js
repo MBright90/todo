@@ -381,8 +381,8 @@ const domManipulator = (() => {
     };
 
     function showAllProjects(projects) {
-        const projectContainer = createElementClass("div", "all-project-container");
-        const projectHeading = createElementText("h1", "All projects");
+        const projectContainer = createElementClass("div", "all-projects-container");
+        const projectHeading = createElementText("h1", "All Projects");
         if (projects.length < 1) {
             appendChildren(projectContainer,
                 projectHeading,
