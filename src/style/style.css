@@ -295,12 +295,15 @@ main {
     margin: 5px;
 }
 
-.main-layout .all-projects-container .fa-plus {
+.main-layout .all-projects-container .fa-plus,
+.main-layout .all-projects-container .fa-trash {
     font-size: 1.6rem;
     position: absolute;
     top: 5px;
     right: 5px;
 }
+
+
 
 /* single project layout */
 
@@ -338,8 +341,15 @@ main {
 .main-layout .single-project-container .project-header .project-header-info i {
     font-size: 1.6rem;
     position: absolute;
-    right: 5px;
     bottom: 5px;
+}
+
+.main-layout .single-project-container .project-header .project-header-info .project-plus {
+    right: 5px;
+}
+
+.main-layout .single-project-container .project-header .project-header-info .project-delete {
+    right: 35px;
 }
 
 /* Form layouts */
