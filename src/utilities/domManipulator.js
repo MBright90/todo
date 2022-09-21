@@ -273,11 +273,12 @@ const domManipulator = (() => {
         _createListedLinks(dateUl, ["Upcoming", "Today", "This Week", "This Month"])
 
         const projectHeader = createElementText("h1", "Projects");
+        projectHeader.classList.add("projects-link")
         const projectUl = createElementClass("ul", "project-links");
         _createListedLinks(projectUl, ["New Project", "Project Overview"])
 
         const extraUl = createElementClass("ul", "extra-links");
-        _createListedLinks(extraUl, ["Contact Us", "About"]);
+        _createListedLinks(extraUl, ["Settings", "Contact Us", "About"]);
 
         appendChildren(nav, homeHeader, dateUl, projectHeader, projectUl, extraUl);
         return nav;  
@@ -347,7 +348,8 @@ const domManipulator = (() => {
         const projectHeading = createElementText("h1", project.projectTitle);
         const projectDescription = createElementText("p", project.projectDescription);
         const newProjectTodo = createElementClass("i", "fa-solid", "fa-plus", "project-plus");
-        appendChildren(projectInfo, projectHeading, projectDescription, newProjectTodo);
+        const deleteProjectLink = createElementClass("i", "fa-solid", "fa-trash", "project-delete") 
+        appendChildren(projectInfo, projectHeading, projectDescription, newProjectTodo, deleteProjectLink);
         return projectInfo;
     };
 
@@ -383,8 +385,22 @@ const domManipulator = (() => {
         });
     };
 
-    function showTodoPage() {
-
+    function showTodoPage(todoData) {
+        const todoContainer = createElementClass("div", "all-todos-container", "todo-table-container");
+        const todoHeading = createElementText("h1", "All ToDos");
+        if (todoData.length > 0) {
+            const todoTable = _createTodoTable(todoData);
+            appendChildren(todoContainer, todoHeading, todoTable);
+        } else {
+            const noDataMessage = _noDataMessage(
+                "Oh No!",
+                "You currently have no ToDos",
+                "Add a ToDo and begin working towards your goals"
+            );
+            appendChildren(todoContainer, todoHeading, noDataMessage);
+        };
+        
+        _appendToMainLayout(todoContainer);
     };
 
     function showProjectPage(project) {
@@ -419,7 +435,7 @@ const domManipulator = (() => {
     function showAllProjects(projects) {
         const projectContainer = createElementClass("div", "all-projects-container");
         const projectHeading = createElementText("h1", "All Projects");
-        const addProjectLink = createElementClass("i", "fa-solid", "fa-plus"); 
+        const addProjectLink = createElementClass("i", "fa-solid", "fa-plus");
         if (projects.length < 1) {
             appendChildren(projectContainer,
                 addProjectLink,
