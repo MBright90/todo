@@ -26,8 +26,13 @@ const pageInterface = (() => {
 
     function _createAlert(alertString) {
         dom.showAlert(alertString);
-        _addAlertListener()
+        _addAlertListener();
     };
+
+    // function _createConfirm(confirmString) {
+    //     dom.showConfirm(confirmString);
+    //     _addConfirmListeners();
+    // };
 
     // ********************************************* //
     // *************** Page Navigation ************* //
@@ -41,6 +46,7 @@ const pageInterface = (() => {
             data.retrieveData("date", 5)
         );
         _ProjectCardLinks();
+        _seeAllLinks();
     };
 
     function showProjects() {
@@ -54,11 +60,12 @@ const pageInterface = (() => {
         const selectedProject = data.retrieveSingleProject(projectId);
         dom.removeMainLayout();
         dom.showProjectPage(selectedProject);
+        _projectManipulationLinks();
     };
 
-    function showAllTodos() {
+    function showAllTodos(todoData) {
         dom.removeMainLayout();
-
+        dom.showTodoPage(todoData);
     };
 
     // ********************************************* //
@@ -124,6 +131,17 @@ const pageInterface = (() => {
         });
     };
 
+    const _createDeleteLink = (element) => {
+        element.addEventListener("click", (e) => {
+            console.log("To delete")
+            let idToDelete;
+            if (document.querySelector(".single-project-container")) {
+                data.deleteData(document.querySelector(".single-project-container").dataset.projectId);
+                showDashboard();
+            };
+        });
+    };
+
     const _createHomeLink = (element) => {
         element.addEventListener("click", showDashboard)
     };
@@ -145,22 +163,30 @@ const pageInterface = (() => {
     };
 
     const _showProjectsLink = (element) => {
+        element.addEventListener("click", showProjects);
+    };
+
+    function _showTodosLink(element, data) {
         element.addEventListener("click", () => {
-            showProjects();
+            showAllTodos(data);
         });
     };
 
-    const _createProjectLinksGroup = (linkList) => {
+    function _createProjectLinksGroup(linkList) {
         _createProjectLink(linkList[0]);
         _showProjectsLink(linkList[1]);
     };
 
-    const _singleProjectLink = (element) => {
+    function _singleProjectLink (element) {
         element.addEventListener("click", (e) => {
             const projectId = _findIdStep(e.composedPath());
             showSingleProject(projectId);
-            _createAddLink(document.querySelector(".project-header-info > .fa-plus"))
         });
+    };
+
+    function _seeAllLinks() {
+        _showProjectsLink(document.querySelector(".project-list-home a"));
+        _showTodosLink(document.querySelector(".todo-list-home > a"), data.retrieveData("date"));
     };
 
     // ********************************************* //
@@ -174,6 +200,7 @@ const pageInterface = (() => {
 
     function _addSidebarListeners() {
         _createHomeLink(document.querySelector(".home-link"));
+        _showProjectsLink(document.querySelector(".projects-link"));
         _createTimeLinks(document.querySelectorAll(".date-links li a"), "date", 1, 7, 31);
         _createProjectLinksGroup(document.querySelectorAll(".project-links li a"));
     };
@@ -183,6 +210,11 @@ const pageInterface = (() => {
             _singleProjectLink(card);
         });
     };
+
+    function _projectManipulationLinks() {
+        _createAddLink(document.querySelector(".project-header-info > .project-plus"));
+        _createDeleteLink(document.querySelector((".project-header-info > .project-delete")))
+    }
 
     function _createFormListeners() {
         _submitFormListener(),
@@ -203,6 +235,7 @@ const pageInterface = (() => {
         _addHeaderListeners();
         _addSidebarListeners();
         _ProjectCardLinks();
+        _seeAllLinks();
     };
 
     // Functions to return
