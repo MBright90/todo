@@ -24,6 +24,18 @@ const pageInterface = (() => {
         }, {once: true});
     };
 
+    function _addConfirmListeners() {
+        const buttonList = document.querySelectorAll(".confirm-buttons > button");
+        buttonList[0].addEventListener("click", () => {
+            data.deleteData(document.querySelector(".single-project-container").dataset.projectId);
+            dom.removeConfirm();
+            showDashboard();
+        });
+        buttonList[1].addEventListener("click", () => {
+            dom.removeConfirm();
+        });
+    };
+
     function _createAlert(alertString) {
         dom.showAlert(alertString);
         _addAlertListener();
@@ -98,7 +110,7 @@ const pageInterface = (() => {
                 if (validityCheck === true) {
                     data.parseNewProject();
                     dom.removeForm();
-                    dom.updateHomeProjects(data.retrieveData("projects", 3))
+                    showProjects();
                 } else {
                     _createAlert(validityCheck);
                 };
@@ -133,11 +145,10 @@ const pageInterface = (() => {
 
     const _createDeleteLink = (element) => {
         element.addEventListener("click", (e) => {
-            console.log("To delete")
             let idToDelete;
             if (document.querySelector(".single-project-container")) {
-                data.deleteData(document.querySelector(".single-project-container").dataset.projectId);
-                showDashboard();
+                dom.showConfirm("This will permanently delete your project including all ToDos linked to it");
+                _addConfirmListeners();
             };
         });
     };
