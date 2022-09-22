@@ -88,6 +88,19 @@ const domManipulator = (() => {
         return alertContainer;
     };
 
+    function _createConfirm(confirmString) {
+        const confirmContainer = createElementClass("div", "confirm-container");
+        const confirmPara = createElementText("p", confirmString);
+        const continuePara = createElementText("p", "Are you sure you would like to continue?")
+        const buttonContainer = createElementClass("div", "confirm-buttons");
+        const confirmButton = createElementText("button", "Continue");
+        const cancelButton = createElementText("button", "Cancel");
+
+        appendChildren(buttonContainer, confirmButton, cancelButton);
+        appendChildren(confirmContainer, confirmPara, continuePara, buttonContainer);
+        return confirmContainer;
+    };
+
     /* Table functions */
 
     const _createTableHeaders = (...headers) => {
@@ -469,13 +482,24 @@ const domManipulator = (() => {
 
     function showAlert(alertString) {
         const alertBackground = createElementClass("div", "alert-background");
-        alertBackground.appendChild(_createAlert(alertString))
+        alertBackground.appendChild(_createAlert(alertString));
         _appendToMain(alertBackground);
     };
 
     function removeAlert() {
         const alertContainer = document.querySelector(".alert-background");
         alertContainer.remove();
+    };
+
+    function showConfirm(confirmString) {
+        const confirmBackground = createElementClass("div", "confirm-background")
+        confirmBackground.appendChild(_createConfirm(confirmString));
+        _appendToMain(confirmBackground);
+    };
+
+    function removeConfirm() {
+        const confirmBackground = document.querySelector(".confirm-background");
+        confirmBackground.remove();
     };
 
     function updateTable(todoList) {
@@ -512,6 +536,8 @@ const domManipulator = (() => {
         removeForm,
         showAlert,
         removeAlert,
+        showConfirm,
+        removeConfirm,
     };
 
 })();
