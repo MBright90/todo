@@ -41,10 +41,10 @@ const pageInterface = (() => {
         _addAlertListener();
     };
 
-    // function _createConfirm(confirmString) {
-    //     dom.showConfirm(confirmString);
-    //     _addConfirmListeners();
-    // };
+    function _createConfirm(confirmString) {
+        dom.showConfirm(confirmString);
+        _addConfirmListeners();
+    };
 
     // ********************************************* //
     // *************** Page Navigation ************* //
@@ -147,8 +147,7 @@ const pageInterface = (() => {
         element.addEventListener("click", (e) => {
             let idToDelete;
             if (document.querySelector(".single-project-container")) {
-                dom.showConfirm("This will permanently delete your project including all ToDos linked to it");
-                _addConfirmListeners();
+                _createConfirm("This will permanently delete your project including all ToDos linked to it");
             };
         });
     };
