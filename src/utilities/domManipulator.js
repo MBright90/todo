@@ -671,6 +671,7 @@ const formMaster = (() => {
             "type": "url",
             "name": "image-input",
             "id": "image-input",
+            "placeholder": "[Optional]"
         });
 
         appendChildren(fieldsetElement,
