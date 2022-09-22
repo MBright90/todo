@@ -355,7 +355,8 @@ main {
 /* Form layouts */
 
 main .form-background,
-.alert-background {
+.alert-background,
+.confirm-background {
     background-color: rgba(54, 54, 54, 0.6);
     display: grid;
     align-content: center;
@@ -403,7 +404,8 @@ main .form-background,
 }
 
 .form-background .form-container form fieldset button,
-.alert-background .alert-container button {
+.alert-background .alert-container button,
+.confirm-background .confirm-container .confirm-buttons button {
     font-family: 'amerika';
     letter-spacing: 3px;
     margin: 10px auto 0;
@@ -411,14 +413,16 @@ main .form-background,
     width: 100px;
 }
 
-/* Alert styles */
+/* Alert/Confirm styles */
 
-.alert-background {
+.alert-background,
+.confirm-background {
     background-color: rgba(54, 54, 54, 0.6);
     z-index: 10;
 }
 
-.alert-background .alert-container {
+.alert-background .alert-container,
+.confirm-background .confirm-container {
     background-color: #319DA0;
     border-radius: 3px;
     display: flex;
@@ -428,7 +432,17 @@ main .form-background,
     width: 300px;
 }
 
-.alert-background .alert-container p {
+.confirm-background .confirm-container {
+    gap: 10px;
+}
+
+.alert-background .alert-container p,
+.confirm-background .confirm-container p {
     color: #FFFFFF;
     text-align: center;
+}
+
+.confirm-background .confirm-container .confirm-buttons {
+    display: flex;
+    justify-content: space-evenly;
 }
