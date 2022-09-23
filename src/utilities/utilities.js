@@ -80,6 +80,12 @@ const pageInterface = (() => {
         dom.showTodoPage(todoData);
     };
 
+    function showUpcoming(heading, daysDifference) {
+        const requestedData = data.retrieveDeadlines(daysDifference);
+        dom.removeMainLayout();
+        dom.showUpcomingPage(heading, requestedData);
+    };  
+
     // ********************************************* //
     // ************** Event Listeners ************** //
     // ********************************************* //
@@ -159,8 +165,7 @@ const pageInterface = (() => {
     const _createTimeLinks = (linkList, ...args) => {
         for (let i = 0; i < linkList.length; i++) {
             linkList[i].addEventListener("click", () => {
-                const requestedData = data.retrieveDeadlines(args[i]);
-                console.log(requestedData)
+                showUpcoming(linkList[i].textContent, args[i])
             });
         };
     };
