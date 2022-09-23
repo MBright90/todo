@@ -1,4 +1,4 @@
-import { addDays } from "date-fns"
+import { formatDistanceStrict, addDays } from "date-fns"
 
 const dataMaster = (() => {
     const todoIDLength = 12;
@@ -318,6 +318,14 @@ const dataMaster = (() => {
         };
     };
 
+    function retrieveDeadlines (daysDifference) {
+        let data = retrieveData("date");
+        const targetDate = addDays(new Date(), daysDifference);
+        console.log(targetDate)
+        return data.filter(todo => 
+            parseInt(formatDistanceStrict(todo.dueDate, targetDate, {unit: "day"}).split(" ")[0]) <= daysDifference);
+    };
+
     const retrieveSingleProject = (projectID) => {
         const foundProject = _todoDataset.projects.find(proj => proj.projectID === projectID);
         if (!foundProject) {
@@ -372,6 +380,7 @@ const dataMaster = (() => {
 
     return {
         retrieveData,
+        retrieveDeadlines,
         retrieveSingleProject,
         deleteData,
         parseNewTodo,
