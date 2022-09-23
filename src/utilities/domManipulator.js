@@ -471,18 +471,18 @@ const domManipulator = (() => {
 
     function showUpcomingPage(heading, data) {
         const upcomingContainer = createElementClass("Div", "all-todos-container");
-        const heading = createElementClass("h1", heading);
+        const containerHeading = createElementText("h1", heading);
         const table = _createDeadlinesTable(data);
         if (data.length < 1) {
             const message = _noDataMessage("Feeling productive?",
                 "Add some ToDos to this time frame");
-            appendChildren(upcomingContainer, heading, table, message);
+            appendChildren(upcomingContainer, containerHeading, table, message);
         } else if (data.length < 10) {
             const message = _noDataMessage("Feeling energized?",
                 "Add even more ToDos and get cracking!")
-                appendChildren(upcomingContainer, heading, table, message);
+                appendChildren(upcomingContainer, containerHeading, table, message);
         } else {
-            appendChildren(upcomingContainer, heading, table);
+            appendChildren(upcomingContainer, containerHeading, table);
         };
         _appendToMainLayout(upcomingContainer); 
     };
