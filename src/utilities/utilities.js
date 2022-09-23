@@ -159,8 +159,8 @@ const pageInterface = (() => {
     const _createTimeLinks = (linkList, ...args) => {
         for (let i = 0; i < linkList.length; i++) {
             linkList[i].addEventListener("click", () => {
-                const requestedData = data.retrieveData(args[i]);
-                // Code block to display requested data
+                const requestedData = data.retrieveDeadlines(args[i]);
+                console.log(requestedData)
             });
         };
     };
@@ -211,7 +211,7 @@ const pageInterface = (() => {
     function _addSidebarListeners() {
         _createHomeLink(document.querySelector(".home-link"));
         _showProjectsLink(document.querySelector(".projects-link"));
-        _createTimeLinks(document.querySelectorAll(".date-links li a"), "date", 1, 7, 31);
+        _createTimeLinks(document.querySelectorAll(".date-links li a"), 730, 1, 7, 31);
         _createProjectLinksGroup(document.querySelectorAll(".project-links li a"));
     };
 
