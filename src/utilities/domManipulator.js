@@ -469,6 +469,24 @@ const domManipulator = (() => {
         _appendToMainLayout(projectContainer);
     };
 
+    function showUpcomingPage(heading, data) {
+        const upcomingContainer = createElementClass("Div", "all-todos-container");
+        const heading = createElementClass("h1", heading);
+        const table = _createDeadlinesTable(data);
+        if (data.length < 1) {
+            const message = _noDataMessage("Feeling productive?",
+                "Add some ToDos to this time frame");
+            appendChildren(upcomingContainer, heading, table, message);
+        } else if (data.length < 10) {
+            const message = _noDataMessage("Feeling energized?",
+                "Add even more ToDos and get cracking!")
+                appendChildren(upcomingContainer, heading, table, message);
+        } else {
+            appendChildren(upcomingContainer, heading, table);
+        };
+        _appendToMainLayout(upcomingContainer); 
+    };
+
     function showForm(form) {
         const formBackground = createElementClass("div", "form-background");
         formBackground.appendChild(form);
@@ -531,6 +549,7 @@ const domManipulator = (() => {
         showTodoPage,
         showProjectPage,
         showAllProjects,
+        showUpcomingPage,
 
         showForm,
         removeForm,
