@@ -219,6 +219,11 @@ main {
     width: 100px;
 }
 
+.main-layout .todo-table tr td:last-of-type {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .main-layout .deadlines-table tr td:last-of-type,
 .main-layout .deadlines-table tr th:last-of-type {
     text-align: right;
