@@ -120,19 +120,12 @@ const domManipulator = (() => {
 
     function _createTodoTable (toDoList) {
 
-        const _createInteractiveCell = (isImportant) => {
+        const _createInteractiveCell = () => {
             const newCell = document.createElement("td");
 
             const tick = createElementClass("a", "complete-icon");
             const tickIcon = createElementClass("i", "fa-solid", "fa-check");
             tick.appendChild(tickIcon);
-
-            const star = createElementClass("a", "favorite-icon");
-            const starIcon = createElementClass("i", "fa-regular", "fa-star");
-            if (isImportant) {
-                star.classList.add("is-important")
-            };
-            star.appendChild(starIcon);
 
             const edit = createElementClass("a", "edit-icon");
             const editIcon = createElementClass("i", "fa-regular", "fa-pen-to-square");
@@ -142,7 +135,7 @@ const domManipulator = (() => {
             const trashIcon = createElementClass("i", "fa-solid", "fa-trash");
             trash.appendChild(trashIcon);
 
-            appendChildren(newCell, tick, star, edit, trash);
+            appendChildren(newCell, tick, edit, trash);
             return newCell;
         };
 
@@ -160,7 +153,7 @@ const domManipulator = (() => {
             if (month < 10) month = `0${month}`;
 
             const toDoDue = createElementText("td", `${date}/${month}/${toDo.dueDate.getFullYear()}`);
-            const toDoInteractive = _createInteractiveCell(toDo.important);
+            const toDoInteractive = _createInteractiveCell();
 
             if (toDo.overdue) {
                 currentRow.classList.add("overdue")
@@ -291,7 +284,7 @@ const domManipulator = (() => {
         _createListedLinks(projectUl, ["New Project", "Project Overview"])
 
         const extraUl = createElementClass("ul", "extra-links");
-        _createListedLinks(extraUl, ["Settings", "Contact Us", "About"]);
+        _createListedLinks(extraUl, ["Completed", "Settings", "Contact Us", "About"]);
 
         appendChildren(nav, homeHeader, dateUl, projectHeader, projectUl, extraUl);
         return nav;  
