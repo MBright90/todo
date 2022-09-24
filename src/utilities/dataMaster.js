@@ -100,6 +100,10 @@ const dataMaster = (() => {
         localStorage.setItem('dataset', JSON.stringify(_todoDataset));
     };
 
+    function _deleteStorage() {
+        localStorage.clear();
+    };
+
     // Data creation functions
 
     const _createTodoID = () => {
@@ -335,6 +339,10 @@ const dataMaster = (() => {
         };
     };
 
+    function editData (dataId) {
+
+    };
+
     function deleteData (IDtoDelete) {
         if (IDtoDelete.length === projectIDLength) {
             _deleteProject(IDtoDelete)
@@ -374,6 +382,10 @@ const dataMaster = (() => {
         _addNewProject(projectTitle, projectDescription, projectImageURL);
     };
 
+    function resetSiteData () {
+        _deleteStorage();
+    };
+
     // Initiate data from storage
     const _todoDataset = _retrieveLocalData();
     _checkAllOverdue(_todoDataset);
@@ -382,9 +394,11 @@ const dataMaster = (() => {
         retrieveData,
         retrieveDeadlines,
         retrieveSingleProject,
+        editData,
         deleteData,
         parseNewTodo,
         parseNewProject,
+        resetSiteData,
     };
 
 })();
