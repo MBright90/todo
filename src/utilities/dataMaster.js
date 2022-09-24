@@ -340,6 +340,8 @@ const dataMaster = (() => {
     };
 
     function editData (dataId) {
+        const todoIndex = _retrieveTodoIndex(dataId);
+        console.log(todoIndex);
 
     };
 
