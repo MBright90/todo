@@ -58,6 +58,7 @@ const pageInterface = (() => {
             data.retrieveData("date", 5)
         );
         _ProjectCardLinks();
+        _interactiveCellListeners();
         _seeAllLinks();
     };
 
@@ -73,6 +74,7 @@ const pageInterface = (() => {
         dom.removeMainLayout();
         dom.showProjectPage(selectedProject);
         _projectManipulationLinks();
+        _interactiveCellListeners();
     };
 
     function showAllTodos(todoData) {
@@ -106,7 +108,7 @@ const pageInterface = (() => {
                     } else {
                         data.parseNewTodo();
                         dom.removeForm();
-                        dom.updateTable(data.retrieveData("date", 10));
+                        showDashboard();
                     };
                 } else {
                     _createAlert(validityCheck)
@@ -204,6 +206,41 @@ const pageInterface = (() => {
         _showTodosLink(document.querySelector(".todo-list-home > a"), data.retrieveData("date"));
     };
 
+    function _interactiveCellListeners() {
+
+        const _addEditListeners = () => {
+            const editIconList = document.querySelectorAll(".edit-icon");
+            editIconList.forEach(icon => {
+                icon.addEventListener("click", (e) => {
+                    console.log(e.composedPath()[3].dataset.todoId);
+                });
+            });
+        };
+
+        const _addDeleteListeners = () => {
+            const deleteIconList = document.querySelectorAll(".trash-icon");
+            deleteIconList.forEach(icon => {
+                icon.addEventListener("click", (e) => {
+                    console.log(e.composedPath()[3].dataset.todoId);
+                });
+            });
+        };
+
+        const _addCompleteListeners = () => {
+            const completeIconList = document.querySelectorAll(".complete-icon");
+            completeIconList.forEach(icon => {
+                icon.addEventListener("click", (e) => {
+                    _createAlert("Congratulations");
+                    console.log(e.composedPath()[3].dataset.todoId);
+                });
+            }); 
+        };
+
+        _addEditListeners();
+        _addDeleteListeners();
+        _addCompleteListeners()
+    };
+
     // ********************************************* //
     // *********** Event Listener groups *********** //
     // ********************************************* //
@@ -250,6 +287,7 @@ const pageInterface = (() => {
         _addHeaderListeners();
         _addSidebarListeners();
         _ProjectCardLinks();
+        _interactiveCellListeners();
         _seeAllLinks();
     };
 
