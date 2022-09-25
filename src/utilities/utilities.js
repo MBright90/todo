@@ -86,7 +86,13 @@ const pageInterface = (() => {
         const requestedData = data.retrieveDeadlines(daysDifference);
         dom.removeMainLayout();
         dom.showUpcomingPage(heading, requestedData);
-    };  
+    };
+
+    function showSettings() {
+        dom.removeMainLayout();
+        dom.showSettings();
+        _createSettingsListeners();
+    };
 
     // ********************************************* //
     // ************** Event Listeners ************** //
@@ -183,15 +189,24 @@ const pageInterface = (() => {
         element.addEventListener("click", showProjects);
     };
 
+    function _createProjectLinksGroup(linkList) {
+            _createProjectLink(linkList[0]);
+            _showProjectsLink(linkList[1]);
+        };
+
     function _showTodosLink(element, data) {
         element.addEventListener("click", () => {
             showAllTodos(data);
         });
     };
 
-    function _createProjectLinksGroup(linkList) {
-        _createProjectLink(linkList[0]);
-        _showProjectsLink(linkList[1]);
+    function _showSettingsLink(element) {
+        element.addEventListener("click", showSettings);
+    };
+
+    function _siteInfoListeners(elementList) {
+        console.log(elementList);
+        _showSettingsLink(elementList[1]);
     };
 
     function _singleProjectLink (element) {
@@ -204,6 +219,10 @@ const pageInterface = (() => {
     function _seeAllLinks() {
         _showProjectsLink(document.querySelector(".project-list-home a"));
         _showTodosLink(document.querySelector(".todo-list-home > a"), data.retrieveData("date"));
+    };
+
+    function _createSiteDeleteLink(element) {
+        element.addEventListener("click", data.resetSiteData)
     };
 
     function _interactiveCellListeners() {
@@ -255,6 +274,7 @@ const pageInterface = (() => {
         _showProjectsLink(document.querySelector(".projects-link"));
         _createTimeLinks(document.querySelectorAll(".date-links li a"), 730, 1, 7, 31);
         _createProjectLinksGroup(document.querySelectorAll(".project-links li a"));
+        _siteInfoListeners(document.querySelectorAll(".extra-links a"));
     };
 
     function _ProjectCardLinks() {
@@ -271,6 +291,10 @@ const pageInterface = (() => {
     function _createFormListeners() {
         _submitFormListener(),
         _closeFormListener()
+    };
+
+    function _createSettingsListeners() {
+        _createSiteDeleteLink(document.querySelector(".clear-button"));
     };
 
     // ********************************************* //
