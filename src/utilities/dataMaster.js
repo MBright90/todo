@@ -19,75 +19,25 @@ const dataMaster = (() => {
             });
         };
 
-        let storageData = JSON.parse(localStorage.getItem("dataset"));
+        // let storageData;
+        // try {
+        //     storageData = JSON.parse(localStorage.getItem("dataset"));
+        //     _parseStorageDates(storageData);
+        // }
+        // catch(err) {
+        //     console.log(err)
+        // }
+        // finally {
+        //     return storageData || null;
+        // }
+        let storageData;
         if (!storageData) {
             return {
                 general: [
-                    {
-                        title: "toDo title",
-                        description: "toDo description",
-                        dueDate: new Date(2022, 7, 25),
-                        important: true,
-                        toDoID: '012342143567',
-                        overdue: true,
-                    },
-                    {
-                        title: "toDo title two",
-                        description: "toDo description two",
-                        dueDate: new Date(2022, 9, 27),
-                        important: false,
-                        toDoID: '0123454321672',
-                    }
+
                 ],
                 projects: [
-                    {
-                        projectTitle: "project one title",
-                        projectImage: "https://media.istockphoto.com/photos/delivering-quality-construction-for-a-quality-lifestyle-picture-id1297780288?b=1&k=20&m=1297780288&s=170667a&w=0&h=NDdDs9BBGULLwYUDUt1AjIOroHuwmFY9N6ZEDAYV7sE=",
-                        projectDescription: "A description about my project.",
-                        projectID: '1234512345',
-                        projectToDos: [
-                            {
-                                title: "project 1 toDo 1",
-                                description: "project description one",
-                                dueDate: new Date(2022, 9, 11),
-                                important: true,
-                                toDoID: '092837261526',
-                                complete: false,
-                            },
-                            {
-                                title: "project 1 toDo 2",
-                                description: "project description two",
-                                dueDate: new Date(2022, 10, 3),
-                                important: true,
-                                toDoID: '064736251673',
-                                complete: false,
-                            },
-                        ]
-                    },
-                    {
-                        projectTitle: "project two title",
-                        projectImage: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGxhcHRvcHxlbnwwfHwwfHw%3D&w=1000&q=80",
-                        projectDescription: "Another description about a new project.",
-                        projectID: '1234512346',
-                        projectToDos: [
-                            {
-                                title: "project 2 toDo 1",
-                                description: "project description one",
-                                dueDate: new Date(2022, 9, 30),
-                                important: true,
-                                toDoID: '218272816354',
-                                complete: false,
-                            },
-                            {
-                                title: "project 2 toDo 2",
-                                description: "project description two",
-                                dueDate: new Date(2022, 10, 22),
-                                important: false,
-                                toDoID: '216712525362',
-                                complete: true,
-                            },
-                        ]
-                    }
+
                 ]
             };
         };
@@ -101,7 +51,7 @@ const dataMaster = (() => {
     };
 
     function _deleteStorage() {
-        localStorage.clear();
+        localStorage.setItem('dataset', "");
     };
 
     // Data creation functions
