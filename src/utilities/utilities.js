@@ -186,7 +186,9 @@ const pageInterface = (() => {
     };
 
     const _showProjectsLink = (element) => {
-        element.addEventListener("click", showProjects);
+        if (element) {
+            element.addEventListener("click", showProjects);
+        }
     };
 
     function _createProjectLinksGroup(linkList) {
