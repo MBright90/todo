@@ -296,10 +296,17 @@ const domManipulator = (() => {
         const homeListHeader = createElementText("h1", "Your ToDo List");
 
         const homeListTable = _createTodoTable(todoList)
-
         const allLink = createElementText("a", "See all");
-
-        appendChildren(homeListContainer, homeListHeader, homeListTable, allLink);
+        if (todoList.length < 1) {
+            const noDataMessage = _noDataMessage(
+                "Oh No!",
+                "You currently have no ToDos",
+                "Add a ToDo and begin working towards your goals"
+            );
+            appendChildren(homeListContainer, homeListHeader, homeListTable,noDataMessage, allLink)
+        } else {;
+            appendChildren(homeListContainer, homeListHeader, homeListTable, allLink);
+        };
         return homeListContainer;
     };
 
@@ -463,7 +470,7 @@ const domManipulator = (() => {
     };
 
     function showUpcomingPage(heading, data) {
-        const upcomingContainer = createElementClass("Div", "all-todos-container");
+        const upcomingContainer = createElementClass("div", "all-todos-container");
         const containerHeading = createElementText("h1", heading);
         const table = _createDeadlinesTable(data);
         if (data.length < 1) {
@@ -478,6 +485,19 @@ const domManipulator = (() => {
             appendChildren(upcomingContainer, containerHeading, table);
         };
         _appendToMainLayout(upcomingContainer); 
+    };
+
+    function showSettings(currentSettings) {
+        const settingsContainer = createElementClass("div", "settings-container");
+        const containerHeading = createElementText("h1", "Settings");
+        // Light and dark mode toggle
+        const clearButton = createElementText("button", "Clear ToDos");
+        setAttributes(clearButton, {
+            "class": "clear-button",
+            "type": "button",
+        });
+        appendChildren(settingsContainer, containerHeading, clearButton);
+        _appendToMainLayout(settingsContainer);
     };
 
     function showForm(form) {
@@ -543,6 +563,7 @@ const domManipulator = (() => {
         showProjectPage,
         showAllProjects,
         showUpcomingPage,
+        showSettings,
 
         showForm,
         removeForm,
