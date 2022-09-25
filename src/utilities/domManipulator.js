@@ -1,4 +1,4 @@
-import { format, formatDistanceStrict, addDays } from 'date-fns';
+import { format, formatDistanceStrict, addDays, subMonths } from 'date-fns';
 
 // *********** Overarching utility functions ************* //
 
@@ -149,7 +149,7 @@ const domManipulator = (() => {
             let date = toDo.dueDate.getDate();
             if (date < 10) date = `0${date}`;
 
-            let month = toDo.dueDate.getMonth();
+            let month = toDo.dueDate.getMonth() + 1;
             if (month < 10) month = `0${month}`;
 
             const toDoDue = createElementText("td", `${date}/${month}/${toDo.dueDate.getFullYear()}`);
