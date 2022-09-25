@@ -1,4 +1,4 @@
-import { formatDistanceStrict, addDays } from "date-fns"
+import { formatDistanceStrict, addDays, addMonths, subMonths } from "date-fns"
 
 const dataMaster = (() => {
     const todoIDLength = 12;
@@ -19,18 +19,15 @@ const dataMaster = (() => {
             });
         };
 
-        // let storageData;
-        // try {
-        //     storageData = JSON.parse(localStorage.getItem("dataset"));
-        //     _parseStorageDates(storageData);
-        // }
-        // catch(err) {
-        //     console.log(err)
-        // }
-        // finally {
-        //     return storageData || null;
-        // }
         let storageData;
+        try {
+            storageData = JSON.parse(localStorage.getItem("dataset"));
+            _parseStorageDates(storageData);
+        }
+        catch(err) {
+            console.log(err)
+        }
+
         if (!storageData) {
             return {
                 general: [
@@ -42,7 +39,6 @@ const dataMaster = (() => {
             };
         };
         
-        _parseStorageDates(storageData);
         return storageData;
     };
 
@@ -275,7 +271,7 @@ const dataMaster = (() => {
     function retrieveDeadlines (daysDifference) {
         let data = retrieveData("date");
         const targetDate = addDays(new Date(), daysDifference);
-        console.log(targetDate)
+        console.log(data[0].dueDate);
         return data.filter(todo => 
             parseInt(formatDistanceStrict(todo.dueDate, targetDate, {unit: "day"}).split(" ")[0]) <= daysDifference);
     };
@@ -316,7 +312,7 @@ const dataMaster = (() => {
 
         const dueDateInput = document.querySelector("#due-date-input");
         const dateArray = dueDateInput.value.split("-");
-        const dueDate = new Date(dateArray[0], dateArray[1], dateArray[2]);
+        const dueDate = subMonths(new Date(dateArray[0], dateArray[1], dateArray[2]), 1);
 
         _addNewTodo(todoTitle, todoDescription, dueDate, projectId)
     };
