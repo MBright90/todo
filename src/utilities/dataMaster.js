@@ -45,7 +45,7 @@ const dataMaster = (() => {
     function _retrieveCompleteData() {
         let completeData;
         try {
-            completeData = Json.parse(localStorage.getItem("complete"));
+            completeData = JSON.parse(localStorage.getItem("complete"));
         }
         catch(err) {
             console.log(err)
@@ -64,6 +64,9 @@ const dataMaster = (() => {
 
     function _deleteStorage() {
         localStorage.setItem('dataset', "");
+        // Empty current dataset
+        _todoDataset.general?.splice(0, _todoDataset.general.length);
+        _todoDataset.projects?.splice(0, _todoDataset.projects.length);
     };
 
     // Data creation functions
@@ -369,6 +372,14 @@ const dataMaster = (() => {
         const projectImageURL = projectImageInput.value;
 
         _addNewProject(projectTitle, projectDescription, projectImageURL);
+    };
+
+    function parseEditTodo() {
+
+    };
+
+    function parseEditProject() {
+    
     };
 
     function resetSiteData () {
