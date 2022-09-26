@@ -312,8 +312,7 @@ const dataMaster = (() => {
         if (IDtoDelete.length === projectIDLength) {
             _deleteProject(IDtoDelete)
         } else {
-            if (_deleteGeneralTodo(IDtoDelete)) {
-            } else {
+            if (!_deleteGeneralTodo(IDtoDelete)) {
                 _deleteProjectTodo(IDtoDelete)
             };
         };
