@@ -366,6 +366,28 @@ const domManipulator = (() => {
         return projectInfo;
     };
 
+    const _createSettingsToggle = (currentSettings) => {
+        currentSettings = "light";
+        const toggleDiv = createElementClass("div", "toggle-settings-div");
+        const toggleHeading = createElementText("h2", "View Mode");
+        // code to create toggle switch element
+        appendChildren(toggleDiv, toggleHeading);
+        return toggleDiv;
+    };
+
+    const _createSettingsReset = () => {
+        const resetDiv = createElementClass("div", "reset-settings-div");
+        const resetHeading = createElementText("h2", "Data Settings");
+        const resetPara = createElementText("p", "By choosing to clear your ToDos, all data stored locally will be deleted and you will start with a blank slate. All complete and incomplete ToDos will disappear permanently. This action cannot be undone.")
+        const clearButton = createElementText("button", "Clear ToDos");
+        setAttributes(clearButton, {
+            "class": "clear-button",
+            "type": "button",
+        });
+        appendChildren(resetDiv, resetHeading,resetPara, clearButton)
+        return resetDiv;
+    };
+
     /* Functions to return */
 
     const initDashboard = () => {
@@ -490,13 +512,9 @@ const domManipulator = (() => {
     function showSettings(currentSettings) {
         const settingsContainer = createElementClass("div", "settings-container");
         const containerHeading = createElementText("h1", "Settings");
-        // Light and dark mode toggle
-        const clearButton = createElementText("button", "Clear ToDos");
-        setAttributes(clearButton, {
-            "class": "clear-button",
-            "type": "button",
-        });
-        appendChildren(settingsContainer, containerHeading, clearButton);
+        const toggleContainer = _createSettingsToggle(null);
+        const resetContainer = _createSettingsReset();
+        appendChildren(settingsContainer, containerHeading, toggleContainer, resetContainer);
         _appendToMainLayout(settingsContainer);
     };
 
