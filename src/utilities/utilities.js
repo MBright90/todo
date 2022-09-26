@@ -24,10 +24,10 @@ const pageInterface = (() => {
         }, {once: true});
     };
 
-    function _addConfirmListeners() {
+    function _addConfirmListeners(dataId) {
         const buttonList = document.querySelectorAll(".confirm-buttons > button");
         buttonList[0].addEventListener("click", () => {
-            data.deleteData(document.querySelector(".single-project-container").dataset.projectId);
+            data.deleteData(dataId);
             dom.removeConfirm();
             showDashboard();
         });
@@ -41,9 +41,9 @@ const pageInterface = (() => {
         _addAlertListener();
     };
 
-    function _createConfirm(confirmString) {
+    function _createConfirm(confirmString, dataId) {
         dom.showConfirm(confirmString);
-        _addConfirmListeners();
+        _addConfirmListeners(dataId);
     };
 
     // ********************************************* //
@@ -159,9 +159,13 @@ const pageInterface = (() => {
 
     const _createDeleteLink = (element) => {
         element.addEventListener("click", (e) => {
-            let idToDelete;
+            let dataId;
             if (document.querySelector(".single-project-container")) {
-                _createConfirm("This will permanently delete your project including all ToDos linked to it");
+                dataId = document.querySelector(".single-project-container").dataset.projectId;
+                _createConfirm("This will permanently delete your project including all ToDos linked to it", dataId);
+            } else {
+                dataId = e.composedPath()[3].dataset.todoId;
+                _createConfirm("This will permanently delete this todo", dataId);
             };
         });
     };
@@ -207,7 +211,6 @@ const pageInterface = (() => {
     };
 
     function _siteInfoListeners(elementList) {
-        console.log(elementList);
         _showSettingsLink(elementList[1]);
     };
 
@@ -241,6 +244,7 @@ const pageInterface = (() => {
         const _addDeleteListeners = () => {
             const deleteIconList = document.querySelectorAll(".trash-icon");
             deleteIconList.forEach(icon => {
+                _createDeleteLink(icon);
                 icon.addEventListener("click", (e) => {
                     console.log(e.composedPath()[3].dataset.todoId);
                 });
