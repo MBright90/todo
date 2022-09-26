@@ -166,6 +166,17 @@ main {
     text-align: center;
 }
 
+.form-background .form-container form fieldset button,
+.alert-background .alert-container button,
+.confirm-background .confirm-container .confirm-buttons button,
+.settings-container div button {
+    font-family: 'amerika';
+    letter-spacing: 3px;
+    margin: 10px auto 0;
+    padding: 5px;
+    min-width: 100px;
+}
+
 /* ------------------ Home table sections ------------------ */
 
 .main-layout .todo-list-home {
@@ -268,7 +279,7 @@ main {
 }
 
 .main-layout .all-projects-container .project-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 }
 
 .main-layout .all-projects-container .project-grid .project-card {
@@ -410,14 +421,24 @@ main .form-background,
     width: 300px;
 }
 
-.form-background .form-container form fieldset button,
-.alert-background .alert-container button,
-.confirm-background .confirm-container .confirm-buttons button {
-    font-family: 'amerika';
-    letter-spacing: 3px;
-    margin: 10px auto 0;
-    padding: 5px;
-    width: 100px;
+/* Settings layout */
+
+.settings-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-container div {
+    margin: 10px;
+}
+
+.settings-container div h2 {
+    margin-left: -10px;
+    margin-bottom: 10px;
+}
+
+.settings-container div p {
+    line-height: 1.5;
 }
 
 /* Alert/Confirm styles */
