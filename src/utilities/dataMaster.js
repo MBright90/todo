@@ -30,10 +30,10 @@ const dataMaster = (() => {
 
         if (!storageData) {
             return {
-                general: [
+                "general": [
 
                 ],
-                projects: [
+                "projects": [
 
                 ]
             };
@@ -332,6 +332,14 @@ const dataMaster = (() => {
 
     function resetSiteData () {
         _deleteStorage();
+        _todoDataset = {
+            "general": [
+
+            ],
+            "projects": [
+
+            ],
+        };
     };
 
     // Initiate data from storage
