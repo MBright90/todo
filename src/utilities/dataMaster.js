@@ -104,7 +104,6 @@ const dataMaster = (() => {
         const projectId = _retrieveTodosProjectId(IDtoDelete);
         const projectIndex = _retrieveProjectIndex(projectId);
         const todoIndex = _retrieveTodoIndex(IDtoDelete, projectIndex);
-        console.log(_todoDataset.projects[projectIndex].projectToDos[todoIndex]);
         _todoDataset.projects[projectIndex].projectToDos.splice(todoIndex, 1);
         _saveData();
     };
@@ -291,7 +290,6 @@ const dataMaster = (() => {
     function retrieveDeadlines (daysDifference) {
         let data = retrieveData("date");
         const targetDate = addDays(new Date(), daysDifference);
-        console.log(data[0].dueDate);
         return data.filter(todo => 
             parseInt(formatDistanceStrict(todo.dueDate, targetDate, {unit: "day"}).split(" ")[0]) <= daysDifference);
     };
@@ -308,7 +306,6 @@ const dataMaster = (() => {
     function editData (dataId) {
         const todoIndex = _retrieveTodoIndex(dataId);
         console.log(todoIndex);
-
     };
 
     function deleteData (IDtoDelete) {
@@ -316,9 +313,7 @@ const dataMaster = (() => {
             _deleteProject(IDtoDelete)
         } else {
             if (_deleteGeneralTodo(IDtoDelete)) {
-                console.log("generalDeleted")
             } else {
-                console.log("projectTodoDeleted")
                 _deleteProjectTodo(IDtoDelete)
             };
         };
