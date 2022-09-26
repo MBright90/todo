@@ -55,7 +55,7 @@ const pageInterface = (() => {
         dom.initHomepage(
             data.retrieveData("date", 10),
             data.retrieveData("projects", 3),
-            data.retrieveData("date", 5)
+            data.retrieveDeadlines(7)
         );
         _ProjectCardLinks();
         _interactiveCellListeners();
@@ -241,7 +241,10 @@ const pageInterface = (() => {
     };
 
     function _createSiteDeleteLink(element) {
-        element.addEventListener("click", data.resetSiteData)
+        element.addEventListener("click", () => {
+            data.resetSiteData();
+            showDashboard();
+        });
     };
 
     function _interactiveCellListeners() {
