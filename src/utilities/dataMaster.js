@@ -91,20 +91,21 @@ const dataMaster = (() => {
 
     const _deleteGeneralTodo = (IDtoDelete) => {
         const todoToDelete = _retrieveTodoIndex(IDtoDelete);
-        if (!todoToDelete) {
-            console.log("No toDo found with that ID");
+        if (_todoDataset.general[todoToDelete]?.toDoID != IDtoDelete) {
             return false;
         } else {;
             _todoDataset.general.splice(todoToDelete, 1);
+            _saveData();
+            return true;
         };
-        _saveData();
     };
 
-    const _deleteProjectTodo = (projectID, IDtoDelete) => {
-        const project = _findTodosProject(IDtoDelete)
-        const projectIndex = _retrieveProjectIndex(projectID);
-        const todoIndex = _retrieveTodoIndex(IDtoDelete);
-        _todoDataset.projects[projectIndex].projectToDos.splice[todoIndex, 1];
+    const _deleteProjectTodo = (IDtoDelete) => {
+        const projectId = _retrieveTodosProjectId(IDtoDelete);
+        const projectIndex = _retrieveProjectIndex(projectId);
+        const todoIndex = _retrieveTodoIndex(IDtoDelete, projectIndex);
+        console.log(_todoDataset.projects[projectIndex].projectToDos[todoIndex]);
+        _todoDataset.projects[projectIndex].projectToDos.splice(todoIndex, 1);
         _saveData();
     };
 
@@ -138,23 +139,28 @@ const dataMaster = (() => {
 
     // Data retrieving functions
 
-    const _retrieveTodoIndex = (todoToFind) => {
-        return _todoDataset.general.findIndex(todo => todo.todoID === todoToFind) ||
-            _todoDataset.projects.forEach(proj => {
-                proj.projectToDos.forEach(projTodo => projTodo.toDoID === todoToFind);
-            }
-        );
+    const _retrieveTodoIndex = (todoToFind, projectIndex) => {
+        projectIndex = null || projectIndex;
+        let todoIndex;
+        todoIndex = _todoDataset.general.findIndex(todo => todo.toDoID === todoToFind);
+
+        if (todoIndex === -1) {
+            if (projectIndex >= 0) {
+                todoIndex = _todoDataset.projects[projectIndex].projectToDos.findIndex(todo => todo.toDoID === todoToFind)
+            };              
+        };
+        return todoIndex;
     };
 
-    function _findTodosProject(todoToFind) {
+    function _retrieveTodosProjectId(todoToFind) {
         let projectId;
         _todoDataset.projects.forEach(proj => {
             proj.projectToDos.forEach(todo => {
-                if (todo.toDoId === todoToFind) {
+                if (todo.toDoID === todoToFind) {
                     projectId = proj.projectID
                 };
             });
-        });
+        });  
         return projectId;
     };
 
@@ -306,11 +312,13 @@ const dataMaster = (() => {
     };
 
     function deleteData (IDtoDelete) {
-        console.log(IDtoDelete.length);
         if (IDtoDelete.length === projectIDLength) {
             _deleteProject(IDtoDelete)
         } else {
-            if (!_deleteGeneralTodo(IDtoDelete)) {
+            if (_deleteGeneralTodo(IDtoDelete)) {
+                console.log("generalDeleted")
+            } else {
+                console.log("projectTodoDeleted")
                 _deleteProjectTodo(IDtoDelete)
             };
         };
