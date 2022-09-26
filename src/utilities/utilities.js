@@ -98,7 +98,7 @@ const pageInterface = (() => {
     // ************** Event Listeners ************** //
     // ********************************************* //
 
-    const _submitFormListener = () => {
+    const _submitNewFormListener = () => {
         const formButton = document.querySelector("form > fieldset > button");
         formButton.addEventListener("click", (e) => {
             let validityCheck;
@@ -132,6 +132,20 @@ const pageInterface = (() => {
         });
     };
 
+    const _submitEditFormListener =() => {
+        const formButton = document.querySelector("form > fieldset > button");
+        formButton.addEventListener("click", (e) => {
+            let validityCheck;
+            if (e.composedPath()[2].classList.contains("todo-form")) {
+                validityCheck = forms.checkFormValidity("todo")
+                    // parseEditTodo
+                    dom.removeForm();
+                    // if part of project - show project
+                    // else show dashboard
+            }
+        })
+    };
+
     const _closeFormListener = () => {
         const closeButton = document.querySelector(".form-container > i");
         closeButton.addEventListener("click", () => {
@@ -153,7 +167,7 @@ const pageInterface = (() => {
                 project = document.querySelector(".single-project-container").dataset.projectId;
             };
             dom.showForm(forms.createTodoForm(project));
-            _createFormListeners();
+            _createNewFormListeners();
         });
     };
 
@@ -185,7 +199,7 @@ const pageInterface = (() => {
     const _createProjectLink = (element) => {
         element.addEventListener("click", (e) => {
             dom.showForm(forms.createProjectForm());
-            _createFormListeners();
+            _createNewFormListeners();
         });
     };
 
@@ -294,8 +308,8 @@ const pageInterface = (() => {
         _createDeleteLink(document.querySelector((".project-header-info > .project-delete")))
     }
 
-    function _createFormListeners() {
-        _submitFormListener(),
+    function _createNewFormListeners() {
+        _submitNewFormListener(),
         _closeFormListener()
     };
 
