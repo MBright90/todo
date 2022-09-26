@@ -6,7 +6,7 @@ const dataMaster = (() => {
 
     // Local storage functions //
 
-    function _retrieveLocalData() {
+    function _retrieveTodoData() {
 
         function _parseStorageDates(data) {
             data.general?.forEach(todo => {
@@ -40,6 +40,22 @@ const dataMaster = (() => {
         };
         
         return storageData;
+    };
+
+    function _retrieveCompleteData() {
+        let completeData;
+        try {
+            completeData = Json.parse(localStorage.getItem("complete"));
+        }
+        catch(err) {
+            console.log(err)
+        };
+
+        if (!completeData) {
+            return [];
+        };
+
+        return completeData;
     };
 
     function _saveData() {
@@ -134,6 +150,10 @@ const dataMaster = (() => {
     const _appendProject = (projectToAppend) => {
         _todoDataset.projects.push(projectToAppend);
         _saveData();
+    };
+
+    const _appendToComplete = (todo) => {
+        // append to completion dataset
     };
 
     // Data retrieving functions
@@ -318,6 +338,10 @@ const dataMaster = (() => {
         };
     };
 
+    function setComplete(dataId) {
+        const todo = _retrieveSingleTodo(dataId);
+    }
+
     function parseNewTodo (projectId) {
         projectId = projectId || null;
 
@@ -360,17 +384,23 @@ const dataMaster = (() => {
     };
 
     // Initiate data from storage
-    const _todoDataset = _retrieveLocalData();
+    const _todoDataset = _retrieveTodoData();
+    const _completeDataset = _retrieveCompleteData();
     _checkAllOverdue(_todoDataset);
 
     return {
         retrieveData,
         retrieveDeadlines,
         retrieveSingleProject,
+
         editData,
         deleteData,
+        setComplete,
+
         parseNewTodo,
         parseNewProject,
+        parseEditTodo,
+        parseEditProject,
         resetSiteData,
     };
 
