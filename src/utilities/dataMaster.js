@@ -82,6 +82,7 @@ const dataMaster = (() => {
             projectImage: newProjectImage || null,
             projectDescription: newProjectDescription,
             projectID: _createProjectID(),
+            projectToDos: [],
         };
         return projectObject;
     };
@@ -100,6 +101,7 @@ const dataMaster = (() => {
     };
 
     const _deleteProjectTodo = (projectID, IDtoDelete) => {
+        const project = _findTodosProject(IDtoDelete)
         const projectIndex = _retrieveProjectIndex(projectID);
         const todoIndex = _retrieveTodoIndex(IDtoDelete);
         _todoDataset.projects[projectIndex].projectToDos.splice[todoIndex, 1];
@@ -144,8 +146,20 @@ const dataMaster = (() => {
         );
     };
 
-    const _retrieveProjectIndex = (projectToFind) => {
-        return _todoDataset.projects.findIndex(proj => proj.projectID === projectToFind);
+    function _findTodosProject(todoToFind) {
+        let projectId;
+        _todoDataset.projects.forEach(proj => {
+            proj.projectToDos.forEach(todo => {
+                if (todo.toDoId === todoToFind) {
+                    projectId = proj.projectID
+                };
+            });
+        });
+        return projectId;
+    };
+
+    function _retrieveProjectIndex(projectToFind) {
+        return _todoDataset.projects.findIndex(project => project.projectID === projectToFind);
     };
 
     const _retrieveAllTodos = () => {
@@ -292,9 +306,10 @@ const dataMaster = (() => {
     };
 
     function deleteData (IDtoDelete) {
+        console.log(IDtoDelete.length);
         if (IDtoDelete.length === projectIDLength) {
             _deleteProject(IDtoDelete)
-        } else if (IDtoDelete.length === todoIDLength) {
+        } else {
             if (!_deleteGeneralTodo(IDtoDelete)) {
                 _deleteProjectTodo(IDtoDelete)
             };
