@@ -379,7 +379,7 @@ const domManipulator = (() => {
         const resetDiv = createElementClass("div", "reset-settings-div");
         const resetHeading = createElementText("h2", "Data Settings");
         const resetPara = createElementText("p", "By choosing to clear your ToDos, all data stored locally will be deleted and you will start with a blank slate. All complete and incomplete ToDos will disappear permanently. This action cannot be undone.")
-        const clearButton = createElementText("button", "Clear ToDos");
+        const clearButton = createElementText("button", "Reset Data");
         setAttributes(clearButton, {
             "class": "clear-button",
             "type": "button",
