@@ -3,6 +3,14 @@ import { dataMaster as data } from "./dataMaster.js";
 
 const pageInterface = (() => {
 
+    const _setViewMode = () => {
+        if (data.checkViewMode() === "dark") {
+            document.documentElement.setAttribute("data-view-mode", "dark");
+        } else {
+            document.documentElement.setAttribute("data-view-mode", "light");
+        };
+    };
+
     const _findIdStep = (nodeList) => {
         let identifier;
         nodeList.slice(0, 2).forEach(node => {
@@ -90,7 +98,7 @@ const pageInterface = (() => {
 
     function showSettings() {
         dom.removeMainLayout();
-        dom.showSettings();
+        dom.showSettings(data.checkViewMode());
         _createSettingsListeners();
     };
 
@@ -240,6 +248,21 @@ const pageInterface = (() => {
         _showTodosLink(document.querySelector(".todo-list-home > a"), data.retrieveData("date"));
     };
 
+    function _createToggleListener(element) {
+        const switchViewMode = (e) => {
+            if (e.target.checked) {
+                document.documentElement.setAttribute("data-view-mode", "dark");
+            } else {
+                document.documentElement.setAttribute("data-view-mode", "light");
+            }
+        }
+        element.addEventListener("change", (e) => {
+            switchViewMode(e);
+            console.log(document.documentElement.dataset.viewMode)
+            data.saveViewMode(document.documentElement.dataset.viewMode);
+        });
+    };
+
     function _createSiteDeleteLink(element) {
         element.addEventListener("click", () => {
             data.resetSiteData();
@@ -317,6 +340,7 @@ const pageInterface = (() => {
     };
 
     function _createSettingsListeners() {
+        _createToggleListener(document.querySelector("input[type=checkbox]"));
         _createSiteDeleteLink(document.querySelector(".clear-button"));
     };
 
@@ -325,6 +349,7 @@ const pageInterface = (() => {
     // ********************************************* //
 
     const createHomepage = () => {
+        _setViewMode();
         dom.initDashboard();
         dom.initHomepage(
             data.retrieveData("date", 10),
