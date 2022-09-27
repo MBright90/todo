@@ -99,6 +99,7 @@ const pageInterface = (() => {
 
     function showCompleted() {
         dom.removeMainLayout()
+        console.log(data.retrieveData("completed"));
         dom.showCompletedPage(data.retrieveData("completed"));
     };
 
@@ -317,7 +318,8 @@ const pageInterface = (() => {
             completeIconList.forEach(icon => {
                 icon.addEventListener("click", (e) => {
                     _createAlert("Congratulations");
-                    console.log(e.composedPath()[3].dataset.todoId);
+                    data.setComplete(e.composedPath()[3].dataset.todoId);
+                    data.deleteData(e.composedPath()[3].dataset.todoId);
                 });
             }); 
         };
