@@ -5,7 +5,7 @@
     --color-font-primary: #000000;
     --color-background-sidebar: #FFD39A;
     --color-background-main: #f0f0f0;
-    --color-table-row: #dadfd1;
+    --color-table-row: #d7dbcf;
     --color-table-alternate: #eff1ea;
     --color-modal-background: rgba(54, 54, 54, 0.6);
     --color-modal-background-opaque: rgba(54, 54, 54, 0.6);
@@ -121,7 +121,7 @@ header .fa-plus:after {
     width: 3px;
     height: 3px;
 
-    animation: 3s ease-in infinite running plus-pulse;
+    animation: 2s ease-in infinite running plus-pulse;
     animation-delay: 1.5s;
 }
 
@@ -286,9 +286,11 @@ main {
     background-color: var(--color-table-alternate);
 }
 
-.main-layout tr td:nth-of-type(4) {
-    text-align: center;
-    max-width: 100px;
+table tr .interactive  {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    min-width: 100px;
 }
 
 .main-layout .todo-table tr td:last-of-type {
@@ -296,8 +298,7 @@ main {
     justify-content: space-evenly;
 }
 
-.main-layout .deadlines-table tr td:last-of-type,
-.main-layout .deadlines-table tr th:last-of-type {
+.main-layout .deadlines-table .due-date-cell {
     text-align: right;
     width: 200px;
 }
