@@ -1,4 +1,4 @@
-import { formatDistanceStrict, addDays, addMonths, subMonths } from "date-fns"
+import { formatDistanceStrict, addDays, subMonths } from "date-fns"
 
 const dataMaster = (() => {
     const todoIDLength = 12;
@@ -25,11 +25,8 @@ const dataMaster = (() => {
             _parseStorageDates(storageData);
         }
         catch(err) {
-            console.log(err)
-        }
-
-        if (!storageData) {
-            return {
+            console.log(err);
+            storageData = {
                 "general": [
 
                 ],
@@ -49,17 +46,30 @@ const dataMaster = (() => {
         }
         catch(err) {
             console.log(err)
-        };
-
-        if (!completeData) {
-            return [];
+            completeData = [];
         };
 
         return completeData;
     };
 
+    function _retrieveViewMode() {
+        let viewMode;
+        try {
+            viewMode = localStorage.getItem("viewMode");
+        }
+        catch(err) {
+            console.log(err)
+            viewMode = "light"
+        };
+        return viewMode;
+    };
+
     function _saveData() {
         localStorage.setItem('dataset', JSON.stringify(_todoDataset));
+    };
+
+    function _saveViewMode(currentMode) {
+        localStorage.setItem('viewMode', currentMode)
     };
 
     function _deleteStorage() {
@@ -314,7 +324,7 @@ const dataMaster = (() => {
         let data = retrieveData("date");
         const targetDate = addDays(new Date(), daysDifference);
         return data.filter(todo => 
-            parseInt(formatDistanceStrict(todo.dueDate, targetDate, {unit: "day"}).split(" ")[0]) <= daysDifference);
+            parseInt(formatDistanceStrict(todo.dueDate, subMonths(targetDate, 1), {unit: "day"}).split(" ")[0]) <= daysDifference);
     };
 
     const retrieveSingleProject = (projectID) => {
@@ -382,6 +392,14 @@ const dataMaster = (() => {
     
     };
 
+    function checkViewMode() {
+        return _retrieveViewMode();
+    };
+
+    function saveViewMode(viewMode) {
+        _saveViewMode(viewMode);
+    };
+
     function resetSiteData () {
         _deleteStorage();
         _todoDataset = {
@@ -397,6 +415,7 @@ const dataMaster = (() => {
     // Initiate data from storage
     const _todoDataset = _retrieveTodoData();
     const _completeDataset = _retrieveCompleteData();
+    _retrieveViewMode();
     _checkAllOverdue(_todoDataset);
 
     return {
@@ -412,6 +431,9 @@ const dataMaster = (() => {
         parseNewProject,
         parseEditTodo,
         parseEditProject,
+
+        checkViewMode,
+        saveViewMode,
         resetSiteData,
     };
 
