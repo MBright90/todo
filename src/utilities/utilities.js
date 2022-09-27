@@ -94,6 +94,7 @@ const pageInterface = (() => {
         const requestedData = data.retrieveDeadlines(daysDifference);
         dom.removeMainLayout();
         dom.showUpcomingPage(heading, requestedData);
+        _interactiveCellListeners();
     };
 
     function showSettings() {
