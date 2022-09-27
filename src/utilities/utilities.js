@@ -99,7 +99,6 @@ const pageInterface = (() => {
 
     function showCompleted() {
         dom.removeMainLayout()
-        console.log(data.retrieveData("completed"));
         dom.showCompletedPage(data.retrieveData("completed"));
     };
 
@@ -280,7 +279,6 @@ const pageInterface = (() => {
         }
         element.addEventListener("change", (e) => {
             switchViewMode(e);
-            console.log(document.documentElement.dataset.viewMode)
             data.saveViewMode(document.documentElement.dataset.viewMode);
         });
     };
@@ -307,9 +305,9 @@ const pageInterface = (() => {
             const deleteIconList = document.querySelectorAll(".trash-icon");
             deleteIconList.forEach(icon => {
                 _createDeleteLink(icon);
-                icon.addEventListener("click", (e) => {
-                    console.log(e.composedPath()[3].dataset.todoId);
-                });
+                // icon.addEventListener("click", (e) => {
+                //     console.log(e.composedPath()[3].dataset.todoId);
+                // });
             });
         };
 
