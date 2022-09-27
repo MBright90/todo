@@ -311,6 +311,8 @@ const dataMaster = (() => {
             };
             return _todoDataset.general;
 
+        } else if (toSortBy === "completed") {
+            return _completeDataset;
         } else {
             dataArray = _retrieveAllTodos();
             if (amount) {
@@ -324,7 +326,7 @@ const dataMaster = (() => {
         let data = retrieveData("date");
         const targetDate = addDays(new Date(), daysDifference);
         return data.filter(todo => 
-            parseInt(formatDistanceStrict(todo.dueDate, subMonths(targetDate, 1), {unit: "day"}).split(" ")[0]) <= daysDifference);
+            parseInt(formatDistanceStrict(todo.dueDate, targetDate, {unit: "day"}).split(" ")[0]) <= daysDifference);
     };
 
     const retrieveSingleProject = (projectID) => {
