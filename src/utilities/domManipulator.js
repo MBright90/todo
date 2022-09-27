@@ -557,6 +557,14 @@ const domManipulator = (() => {
         _appendToMainLayout(upcomingContainer); 
     };
 
+    function showCompletedPage(data) {
+        const completedContainer = createElementClass("div", "completed-container");
+        const completedHeading = createElementText("h1", "Completed ToDos");
+        const table = _createTodoTable(data);
+        appendChildren(completedContainer, completedHeading, table);
+        _appendToMainLayout(completedContainer);
+    };
+
     function showSettings(currentSettings) {
         const settingsContainer = createElementClass("div", "settings-container");
         const containerHeading = createElementText("h1", "Settings");
@@ -629,6 +637,7 @@ const domManipulator = (() => {
         showProjectPage,
         showAllProjects,
         showUpcomingPage,
+        showCompletedPage,
         showSettings,
 
         showForm,
@@ -887,12 +896,76 @@ const formMaster = (() => {
         };
     };
 
+    function createContactForm() {
+        const formContainer = createElementClass("div", "form-container");
+        const formElement = createElementClass("form", "contact-form");
+        const fieldsetElement = document.createElement("fieldset");
+
+        const fieldsetLegend = createElementText("legend", "Contact Us");
+
+        const fromLabel = createElementText("label", "From");
+        fromLabel.setAttribute("for", "from-input");
+        const fromInput = document.createElement("input");
+        setAttributes(fromInput, {
+            "type": "text",
+            "name": "from-input",
+            "id": "from-input",
+            "min": 5,
+            "max": 100,
+            "required": "",
+        });
+
+        const subjectLabel = createElementText("label", "Subject");
+        subjectLabel.setAttribute("for", "subject-input");
+        const subjectInput = document.createElement("input");
+        setAttributes(subjectInput, {
+            "type": "text",
+            "name": "subject-input",
+            "id": "subject-input",
+            "min": 5,
+            "max": 50,
+            "required": "",
+        });
+
+        const messageLabel = createElementText("label", "Message");
+        messageLabel.setAttribute("for", "message-input");
+        const messageInput = document.createElement("textarea");
+        setAttributes(messageInput, {
+            "name": "message-input",
+            "id": "message-input",
+            "min": 5,
+            "max": 100,
+            "cols": 30,
+            "rows": 15,
+            "required": "",
+        });
+
+        const sendButton = _createSubmitButton();
+        sendButton.textContent = "Send";
+
+        appendChildren(fieldsetElement,
+            fieldsetLegend,
+            fromLabel,
+            fromInput,
+            subjectLabel,
+            subjectInput,
+            messageLabel,
+            messageInput,
+            sendButton);
+        formElement.appendChild(fieldsetElement);
+        appendChildren(formContainer,
+            formElement,
+            _createCloseButton());
+        return formContainer;
+    };
+
     return {
         createTodoForm,
         editTodoForm,
         createProjectForm,
         editProjectForm,
-        checkFormValidity
+        checkFormValidity,
+        createContactForm,
     };
 
 })();
