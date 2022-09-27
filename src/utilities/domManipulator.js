@@ -140,7 +140,6 @@ const domManipulator = (() => {
     function _createTodoTable (toDoList) {
 
         const _createTableRow = (toDo) => {
-            console.log(toDo.dueDate)
             const currentRow = document.createElement("tr");
             currentRow.dataset.todoId = toDo.toDoID;
 
@@ -154,6 +153,7 @@ const domManipulator = (() => {
             if (month < 10) month = `0${month}`;
 
             const toDoDue = createElementText("td", `${date}/${month}/${toDo.dueDate.getFullYear()}`);
+            toDoDue.classList.add("date-col");
             const toDoInteractive = _createInteractiveCell();
 
             if (toDo.overdue) {
@@ -196,7 +196,7 @@ const domManipulator = (() => {
             } else {
                 deadlineDueDate = createElementText("td", daysUntilDue);
             };
-            deadlineDueDate.classList.add("due-date-cell");
+            deadlineDueDate.classList.add("date-col");
 
             if (includeDescription) {
                 const deadlineDescription = createElementText("td", deadline.description)
@@ -242,7 +242,6 @@ const domManipulator = (() => {
 
     function _createCompletedTable(completedData) {
         const _createTableRow = (toDo) => {
-            console.log(toDo.dueDate)
             const currentRow = document.createElement("tr");
 
             const toDoTitle = createElementText("td", toDo.title);
