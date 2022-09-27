@@ -1,5 +1,27 @@
 :root {
-    --border-green: 2px solid #319DA0;
+    --color-base: #319Da0;
+    --border-base: 2px solid #319DA0;
+    --border-input: 2px solid #000000;
+    --color-font-primary: #000000;
+    --color-background-sidebar: #FFD39A;
+    --color-background-main: #f0f0f0;
+    --color-table-row: #dadfd1;
+    --color-table-alternate: #eff1ea;
+    --color-modal-background: rgba(54, 54, 54, 0.6);
+    --color-modal-background-opaque: rgba(54, 54, 54, 0.6);
+}
+
+[data-view-mode="dark"] {
+    --color-base: #E14D2A;
+    --border-base: 2px solid #E14D2A;
+    --border-input: 2px solid #f0f0f0;
+    --color-font-primary: #f0f0f0;
+    --color-background-sidebar: #362d21;
+    --color-background-main: #000000;
+    --color-table-row: #42443e;
+    --color-table-alternate: #222221;
+    --color-modal-background: rgba(238, 238, 238, 0.6);
+    --color-modal-background-opaque: rgba(238, 238, 238, 0.6);
 }
 
 *, html, a {
@@ -40,17 +62,36 @@ ul, li {
 }
 
 body {
+    color: var(--color-font-primary);
     font-family: 'juice-regular', Arial, Helvetica, sans-serif;
     letter-spacing: 2px;
     overflow-x: hidden;
+}
+
+@keyframes plus-pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+
+    }
+    
+    20% {
+        opacity: 0;
+        transform: scale(15);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(15)
+    }
 }
 
 /* ------------------ Header styles ------------------ */
 
 header {
     /* background-color: #781C68; */
-    background-color: #319DA0;
-    color: #FFFFFF;
+    background-color: var(--color-base);
+    color: var(--color-background-main);
     display: sticky;
     font-family: 'amerika';
     top: 0;
@@ -66,10 +107,28 @@ header a {
     position: relative;
 }
 
+header .fa-plus {
+    position: relative;
+}
+
+header .fa-plus:after {
+    content: "";
+    border: 1px solid var(--color-background-main);
+    position: absolute;
+    left: 8px;
+    top: 11px;
+    border-radius: 50%;
+    width: 3px;
+    height: 3px;
+
+    animation: 3s ease-in infinite running plus-pulse;
+    animation-delay: 1.5s;
+}
+
 /* ------------------ Nav styles ------------------ */
 
 nav {
-    background-color: #FFD39A;
+    background-color: var(--color-background-sidebar);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -108,6 +167,7 @@ main {
 }
 
 .main-layout {
+    background-color: var(--color-background-main);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
@@ -118,7 +178,7 @@ main {
 }
 
 .main-layout > div {
-    border: var(--border-green);
+    border: var(--border-base);
     border-radius: 3px;
     display: flex;
     gap: 10px;
@@ -135,9 +195,7 @@ main {
 }
 
 .main-layout div > a {
-    border-bottom: 2px solid white;
-    /* align-self: flex-end;
-    margin-top: auto; */
+    border-bottom: 2px solid transparent;
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -146,7 +204,7 @@ main {
 }
 
 .main-layout div > a:hover {
-    border-bottom: var(--border-green)
+    border-bottom: var(--border-base)
 }
 
 .main-layout .empty-container {
@@ -158,9 +216,9 @@ main {
 }
 
 .main-layout .empty-container div {
-    background-color: #319DA0;
+    background-color: var(--color-base);
     border-radius: 3px;
-    color: #f0f0f0;
+    color: var(--color-background-main);
     line-height: 1.7rem;
     padding: 40px;
     text-align: center;
@@ -170,6 +228,9 @@ main {
 .alert-background .alert-container button,
 .confirm-background .confirm-container .confirm-buttons button,
 .settings-container div button {
+    background-color: var(--color-table-row);
+    border: 1px solid var(--color-font-primary);
+    color: var(--color-font-primary);
     font-family: 'amerika';
     letter-spacing: 3px;
     margin: 10px auto 0;
@@ -195,7 +256,7 @@ main {
 
 .main-layout table td,
 .main-layout table td {
-    border-top: 2px solid #319DA0;
+    border-top: var(--border-base);
     height: 30px;
 }
 
@@ -217,12 +278,12 @@ main {
 
 .main-layout table th,
 .main-layout table th {
-    background-color: #dadfd1;
+    background-color: var(--color-table-row);
 }
 
 .main-layout table tr:nth-of-type(2n),
 .main-layout table tr:nth-of-type(2n) {
-    background-color: #f0f0f0;
+    background-color: var(--color-table-alternate);
 }
 
 .main-layout tr td:nth-of-type(4) {
@@ -239,10 +300,6 @@ main {
 .main-layout .deadlines-table tr th:last-of-type {
     text-align: right;
     width: 200px;
-}
-
-.main-layout .todo-list-home table tr td .is-important {
-    color: #e6e63f;
 }
 
 .main-layout table .overdue {
@@ -267,7 +324,7 @@ main {
 }
 
 .main-layout .project-grid .project-card {
-    background-color: #319DA0;
+    background-color: var(--color-base);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -309,7 +366,7 @@ main {
 
 .main-layout .project-grid .project-card .project-title,
 .main-layout .project-grid .project-card .project-description {
-    color: #f0f0f0;
+    color: var(--color-background-main);
     margin: 5px;
 }
 
@@ -341,13 +398,13 @@ main {
     background-image: url('../assets/images/to-do-list.jpg');
     background-size:cover;
     background-position: center;
-    border: 3px solid #319DA0;
+    border: 3px solid var(--color-base);
     width: 50%;
 }
 
 .main-layout .single-project-container .project-header .project-header-info {
-    background-color: #319DA0;
-    color: #FFFFFF;
+    background-color: var(--color-base);
+    color: var(--color-background-main);
     padding: 20px 10px;
     width: 50%;
 }
@@ -375,7 +432,7 @@ main {
 main .form-background,
 .alert-background,
 .confirm-background {
-    background-color: rgba(54, 54, 54, 0.6);
+    background-color: var(--color-modal-background);
     display: grid;
     align-content: center;
     position: absolute;
@@ -387,7 +444,7 @@ main .form-background,
 }
 
 .form-background .form-container {
-    background-color: #FFFFFF;
+    background-color: var(--color-background-main);
     border-radius: 3px;
     padding: 20px;
     position: relative;
@@ -395,7 +452,7 @@ main .form-background,
 }
 
 .form-background .form-container .close-form {
-    color: rgba(54, 54, 54, 0.8);
+    color: var(--color-modal-background);
     position: absolute;
     top: 5px;
     right: 5px;
@@ -415,6 +472,10 @@ main .form-background,
 
 .form-background .form-container form fieldset input,
 .form-background .form-container form fieldset textarea {
+    background-color: var(--color-table-row);
+    border: var(--border-input);
+    border-radius: 3px;
+    color: var(--color-font-primary);
     font-family: 'juice-regular';
     margin-top: -5px;
     padding: 5px;
@@ -441,17 +502,69 @@ main .form-background,
     line-height: 1.5;
 }
 
+/* View mode toggle switch */
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+.toggle-body {
+    display: inline-block;
+    height: 59px;
+    position: relative;
+    width: 80px;
+}
+
+.toggle-body input {
+    display: none;
+}
+
+.slider {
+    background-color: var(--color-table-row);
+    border: var(--border-base);
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    position: absolute;
+
+    transition: ease-in .2s all;
+    -webkit-transition: ease-in .2s all;
+    -moz-transition: ease-in .2s all;
+}
+
+.slider:before {
+    content: "";
+    background-color: var(--color-base);
+    border-radius: 25px;
+    bottom: 5px;
+    height: 25px;
+    left: 5px;
+    position: absolute;
+    width: 25px;
+
+    transition: ease-in .2s all;
+    -webkit-transition: ease-in .2s all;
+    -moz-transition: ease-in .2s all;
+}
+
+.toggle-body input:checked + .slider:before {
+    transform: translateX(20px);
+} 
+
 /* Alert/Confirm styles */
 
 .alert-background,
 .confirm-background {
-    background-color: rgba(54, 54, 54, 0.6);
+    background-color: var(--color-modal-background);
     z-index: 10;
 }
 
 .alert-background .alert-container,
 .confirm-background .confirm-container {
-    background-color: #319DA0;
+    background-color: var(--color-base);
     border-radius: 3px;
     display: flex;
     flex-direction: column;
@@ -466,7 +579,7 @@ main .form-background,
 
 .alert-background .alert-container p,
 .confirm-background .confirm-container p {
-    color: #FFFFFF;
+    color: var(--color-background-main);
     text-align: center;
 }
 
