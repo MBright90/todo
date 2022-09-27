@@ -97,6 +97,11 @@ const pageInterface = (() => {
         _interactiveCellListeners();
     };
 
+    function showCompleted() {
+        dom.removeMainLayout()
+        dom.showCompletedPage(data.retrieveData("completed"));
+    };
+
     function showSettings() {
         dom.removeMainLayout();
         dom.showSettings(data.checkViewMode());
@@ -137,6 +142,8 @@ const pageInterface = (() => {
                 } else {
                     _createAlert(validityCheck);
                 };
+            } else if (e.composedPath()[2].classList.contains("contact-form")) {
+                dom.removeForm();
             };
         });
     };
@@ -229,12 +236,25 @@ const pageInterface = (() => {
         });
     };
 
+    function _showCompletedLink(element) {
+        element.addEventListener("click", showCompleted);
+    }
+
     function _showSettingsLink(element) {
         element.addEventListener("click", showSettings);
     };
 
+    function _createContactLink(element) {
+        element.addEventListener("click", () => {
+            dom.showForm(forms.createContactForm());
+            _createNewFormListeners();
+        });
+    };
+
     function _siteInfoListeners(elementList) {
+        _showCompletedLink(elementList[0]);
         _showSettingsLink(elementList[1]);
+        _createContactLink(elementList[2]);
     };
 
     function _singleProjectLink (element) {
