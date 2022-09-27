@@ -367,11 +367,26 @@ const domManipulator = (() => {
     };
 
     const _createSettingsToggle = (currentSettings) => {
-        currentSettings = "light";
         const toggleDiv = createElementClass("div", "toggle-settings-div");
         const toggleHeading = createElementText("h2", "View Mode");
-        // code to create toggle switch element
-        appendChildren(toggleDiv, toggleHeading);
+        
+        const toggleContainer = createElementClass("div", "toggle-container");
+        const toggleBody = createElementClass("label", "toggle-body");
+        toggleBody.setAttribute("for", "toggle");
+        const toggleInput = document.createElement("input");
+        setAttributes(toggleInput, {
+            "type": "checkbox",
+            "id": "toggle",
+        });
+        if (currentSettings === "dark") toggleInput.checked = true;
+        const slider = createElementClass("div", "slider");
+
+        appendChildren(toggleBody, toggleInput, slider);
+
+        const toggleLabel = createElementText("p", "Toggle view mode");
+        appendChildren(toggleContainer, toggleBody, toggleLabel);
+
+        appendChildren(toggleDiv, toggleHeading, toggleContainer);
         return toggleDiv;
     };
 
@@ -512,7 +527,7 @@ const domManipulator = (() => {
     function showSettings(currentSettings) {
         const settingsContainer = createElementClass("div", "settings-container");
         const containerHeading = createElementText("h1", "Settings");
-        const toggleContainer = _createSettingsToggle(null);
+        const toggleContainer = _createSettingsToggle(currentSettings);
         const resetContainer = _createSettingsReset();
         appendChildren(settingsContainer, containerHeading, toggleContainer, resetContainer);
         _appendToMainLayout(settingsContainer);
