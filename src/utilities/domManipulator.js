@@ -140,6 +140,7 @@ const domManipulator = (() => {
     function _createTodoTable (toDoList) {
 
         const _createTableRow = (toDo) => {
+            console.log(toDo.dueDate)
             const currentRow = document.createElement("tr");
             currentRow.dataset.todoId = toDo.toDoID;
 
@@ -237,6 +238,33 @@ const domManipulator = (() => {
         });
 
         return deadlinesTable;
+    };
+
+    function _createCompletedTable(completedData) {
+        const _createTableRow = (toDo) => {
+            console.log(toDo.dueDate)
+            const currentRow = document.createElement("tr");
+
+            const toDoTitle = createElementText("td", toDo.title);
+            const toDoDetails = createElementText("td", toDo.description);
+
+            appendChildren(currentRow, toDoTitle, toDoDetails);
+            return currentRow;
+        };
+
+        const _createTableData = (toDoData) => {
+            const tableArr = [];
+            toDoData?.forEach(toDoItem => {
+                const newRow = _createTableRow(toDoItem);
+                tableArr.push(newRow)
+            });
+            return tableArr;
+        };
+
+        const homeListTable = createElementClass("table", "todo-table");
+        homeListTable.appendChild(_createTableHeaders("ToDo", "Details"));
+        _appendTableData(homeListTable, _createTableData(completedData));
+        return homeListTable;
     };
 
     /* Manipulation functions */
@@ -560,7 +588,7 @@ const domManipulator = (() => {
     function showCompletedPage(data) {
         const completedContainer = createElementClass("div", "completed-container");
         const completedHeading = createElementText("h1", "Completed ToDos");
-        const table = _createTodoTable(data);
+        const table = _createCompletedTable(data);
         appendChildren(completedContainer, completedHeading, table);
         _appendToMainLayout(completedContainer);
     };
