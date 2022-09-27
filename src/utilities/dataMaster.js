@@ -10,7 +10,6 @@ const dataMaster = (() => {
 
         function _parseStorageDates(data) {
             data.general?.forEach(todo => {
-                console.log(todo.dueDate)
                 todo.dueDate = new Date(todo.dueDate);
             });
             data.projects.forEach(project => {
@@ -185,10 +184,6 @@ const dataMaster = (() => {
         _saveData();
     };
 
-    const _appendToComplete = (todo) => {
-        // append to completion dataset
-    };
-
     // Data retrieving functions
 
     const _retrieveTodoIndex = (todoToFind, projectIndex) => {
@@ -332,7 +327,6 @@ const dataMaster = (() => {
             return _todoDataset.general;
 
         } else if (toSortBy === "completed") {
-            console.log(_completeDataset);
             return _completeDataset;
         } else {
             dataArray = _retrieveAllTodos();
@@ -376,8 +370,7 @@ const dataMaster = (() => {
 
     function setComplete(dataId) {
         const todo = _retrieveSingleTodo(dataId);
-        _completeDataset.push(todo);
-        console.log(_completeDataset)
+        _completeDataset.unshift(todo);
         _saveCompleteData();
     };
 
