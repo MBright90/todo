@@ -112,6 +112,25 @@ const domManipulator = (() => {
         return tableHeaders
     };
 
+    const _createInteractiveCell = () => {
+        const newCell = createElementClass("td", "interactive");
+
+        const tick = createElementClass("a", "complete-icon");
+        const tickIcon = createElementClass("i", "fa-solid", "fa-check");
+        tick.appendChild(tickIcon);
+
+        const edit = createElementClass("a", "edit-icon");
+        const editIcon = createElementClass("i", "fa-regular", "fa-pen-to-square");
+        edit.appendChild(editIcon);
+
+        const trash = createElementClass("a", "trash-icon");
+        const trashIcon = createElementClass("i", "fa-solid", "fa-trash");
+        trash.appendChild(trashIcon);
+
+        appendChildren(newCell, tick, edit, trash);
+        return newCell;
+    };
+
     const _appendTableData = (tableElement, tableRowArr) => {
         tableRowArr.forEach(tableRow => {
             tableElement.appendChild(tableRow);
@@ -119,25 +138,6 @@ const domManipulator = (() => {
     };
 
     function _createTodoTable (toDoList) {
-
-        const _createInteractiveCell = () => {
-            const newCell = document.createElement("td");
-
-            const tick = createElementClass("a", "complete-icon");
-            const tickIcon = createElementClass("i", "fa-solid", "fa-check");
-            tick.appendChild(tickIcon);
-
-            const edit = createElementClass("a", "edit-icon");
-            const editIcon = createElementClass("i", "fa-regular", "fa-pen-to-square");
-            edit.appendChild(editIcon);
-
-            const trash = createElementClass("a", "trash-icon");
-            const trashIcon = createElementClass("i", "fa-solid", "fa-trash");
-            trash.appendChild(trashIcon);
-
-            appendChildren(newCell, tick, edit, trash);
-            return newCell;
-        };
 
         const _createTableRow = (toDo) => {
             const currentRow = document.createElement("tr");
@@ -177,12 +177,15 @@ const domManipulator = (() => {
         return homeListTable;
     };
 
-    function _createDeadlinesTable(upcomingDeadlines) {
+    function _createUpcomingTable(upcomingDeadlines, includeDescription, isInteractive) {
+        includeDescription = includeDescription || false;
+        isInteractive = isInteractive || false;
 
         const _createDeadlineRow = (deadline) => {
             const daysUntilDue = formatDistanceStrict(new Date(), deadline.dueDate, {unit: "day"});
 
             const deadlineRow = document.createElement("tr");
+            deadlineRow.dataset.todoId = deadline.toDoID;
             const deadlineTitle = createElementText("td", deadline.title);
             let deadlineDueDate;
 
@@ -192,13 +195,43 @@ const domManipulator = (() => {
             } else {
                 deadlineDueDate = createElementText("td", daysUntilDue);
             };
+            deadlineDueDate.classList.add("due-date-cell");
 
-            appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
+            if (includeDescription) {
+                const deadlineDescription = createElementText("td", deadline.description)
+                if (isInteractive) {
+                    const interactiveCell = _createInteractiveCell();
+                    appendChildren(deadlineRow, deadlineTitle, deadlineDescription, deadlineDueDate, interactiveCell);
+                } else {
+                    appendChildren(deadlineRow, deadlineTitle, deadlineDescription, deadlineDueDate);
+                };
+            } else {
+                if (isInteractive) {
+                    const interactiveCell = _createInteractiveCell();
+                    appendChildren(deadlineRow, deadlineTitle, deadlineDueDate, interactiveCell);
+                } else {
+                    appendChildren(deadlineRow, deadlineTitle, deadlineDueDate);
+                };
+            }
+            
             return deadlineRow
         };
 
         const deadlinesTable = createElementClass("table", "deadlines-table");
-        deadlinesTable.appendChild(_createTableHeaders("ToDo", "Days Until Due"));
+        if (includeDescription) {
+            if (isInteractive) {
+                deadlinesTable.appendChild(_createTableHeaders("ToDo","Description", "Days Until Due", ""));
+            } else {
+                deadlinesTable.appendChild(_createTableHeaders("ToDo", "Description", "Days Until Due"));
+            };
+        } else {
+            if (isInteractive) {
+                deadlinesTable.appendChild(_createTableHeaders("ToDo","Days Until Due", ""));
+            } else {
+                deadlinesTable.appendChild(_createTableHeaders("ToDo", "Days Until Due"));
+            };
+        };
+
         upcomingDeadlines.forEach(deadline => {
             deadlinesTable.appendChild(_createDeadlineRow(deadline));
         });
@@ -348,7 +381,7 @@ const domManipulator = (() => {
         };
 
         const tableContainer = createElementClass("div", "deadlines-container");
-        const deadlinesTable = _createDeadlinesTable(upcomingDeadlines);
+        const deadlinesTable = _createUpcomingTable(upcomingDeadlines);
 
         tableContainer.appendChild(deadlinesTable);
         appendChildren(homeDeadlinesContainer, deadlinesTitle, tableContainer);
@@ -509,7 +542,7 @@ const domManipulator = (() => {
     function showUpcomingPage(heading, data) {
         const upcomingContainer = createElementClass("div", "all-todos-container");
         const containerHeading = createElementText("h1", heading);
-        const table = _createDeadlinesTable(data);
+        const table = _createUpcomingTable(data, true, true);
         if (data.length < 1) {
             const message = _noDataMessage("Feeling productive?",
                 "Add some ToDos to this time frame");
@@ -581,7 +614,7 @@ const domManipulator = (() => {
     function updateDeadlines(todoList) {
         const container = document.querySelector(".deadlines-container");
         document.querySelector(".deadlines-table").remove();
-        container.appendChild(_createDeadlinesTable(todoList))
+        container.appendChild(_createUpcomingTable(todoList, false, false))
     };
 
     return {
