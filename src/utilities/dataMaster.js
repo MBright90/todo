@@ -10,6 +10,7 @@ const dataMaster = (() => {
 
         function _parseStorageDates(data) {
             data.general?.forEach(todo => {
+                console.log(todo.dueDate)
                 todo.dueDate = new Date(todo.dueDate);
             });
             data.projects.forEach(project => {
@@ -26,7 +27,10 @@ const dataMaster = (() => {
         }
         catch(err) {
             console.log(err);
-            storageData = {
+        };
+
+        if (!storageData) {
+            return {
                 "general": [
 
                 ],
@@ -34,20 +38,31 @@ const dataMaster = (() => {
 
                 ]
             };
-        };
+        }
         
         return storageData;
     };
 
     function _retrieveCompleteData() {
+
+        function parseCompletedDates(data) {
+            data.foreach(completedTodo => {
+                const dateArr = completedTodo.dueDate.split("-");
+                const dateDate = dateArr[2].split("T")[0]
+                completedTodo.dueDate = new Date(dateArr[0], dateArr[1]-1, dateDate);
+            });
+        };
+
         let completeData;
         try {
             completeData = JSON.parse(localStorage.getItem("complete"));
+            parseCompletedDates(completedData);
         }
         catch(err) {
             console.log(err)
-            completeData = [];
         };
+
+        if (!completeData) return new Array();
 
         return completeData;
     };
@@ -65,15 +80,20 @@ const dataMaster = (() => {
     };
 
     function _saveData() {
-        localStorage.setItem('dataset', JSON.stringify(_todoDataset));
+        localStorage.setItem("dataset", JSON.stringify(_todoDataset));
+    };
+
+    function _saveCompleteData() {
+        localStorage.setItem("complete", JSON.stringify(_completeDataset));
     };
 
     function _saveViewMode(currentMode) {
-        localStorage.setItem('viewMode', currentMode)
+        localStorage.setItem("viewMode", currentMode)
     };
 
     function _deleteStorage() {
-        localStorage.setItem('dataset', "");
+        localStorage.setItem("dataset", "");
+        localStorage.setItem("complete", "");
         // Empty current dataset
         _todoDataset.general?.splice(0, _todoDataset.general.length);
         _todoDataset.projects?.splice(0, _todoDataset.projects.length);
@@ -312,6 +332,7 @@ const dataMaster = (() => {
             return _todoDataset.general;
 
         } else if (toSortBy === "completed") {
+            console.log(_completeDataset);
             return _completeDataset;
         } else {
             dataArray = _retrieveAllTodos();
@@ -355,7 +376,10 @@ const dataMaster = (() => {
 
     function setComplete(dataId) {
         const todo = _retrieveSingleTodo(dataId);
-    }
+        _completeDataset.push(todo);
+        console.log(_completeDataset)
+        _saveCompleteData();
+    };
 
     function parseNewTodo (projectId) {
         projectId = projectId || null;
@@ -404,14 +428,6 @@ const dataMaster = (() => {
 
     function resetSiteData () {
         _deleteStorage();
-        _todoDataset = {
-            "general": [
-
-            ],
-            "projects": [
-
-            ],
-        };
     };
 
     // Initiate data from storage
