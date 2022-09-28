@@ -1,5 +1,6 @@
-import { domManipulator as dom, formMaster as forms } from "./domManipulator";
 import { dataMaster as data } from "./dataMaster.js";
+import { domManipulator as dom } from "./domManipulator";
+import { formMaster as forms } from "./formMaster.js"
 
 const pageInterface = (() => {
 
