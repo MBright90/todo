@@ -270,11 +270,11 @@ const domManipulator = (() => {
         const noProjectMessage = document.createElement("div");
         noProjectContainer.appendChild(noProjectMessage);
 
-        const noProjectHeading = createElementText("h1", headingMessage);
+        const noProjectHeading = domUtils.createElementText("h1", headingMessage);
         noProjectMessage.appendChild(noProjectHeading);
 
         paraStrings.forEach(string => {
-            noProjectMessage.appendChild(createElementText("p", string));
+            noProjectMessage.appendChild(domUtils.createElementText("p", string));
         });
 
         return noProjectContainer;
@@ -326,7 +326,7 @@ const domManipulator = (() => {
         const homeListHeader = domUtils.createElementText("h1", "Your ToDo List");
 
         const homeListTable = _createTodoTable(todoList)
-        const allLink = createElementText("a", "See all");
+        const allLink = domUtils.createElementText("a", "See all");
         if (todoList.length < 1) {
             const noDataMessage = _noDataMessage(
                 "Oh No!",
@@ -436,7 +436,7 @@ const domManipulator = (() => {
     /* Functions to return */
 
     const initDashboard = () => {
-        appendChildren(
+        domUtils.appendChildren(
             body, 
             _createHeader(),
             _initMain(),
