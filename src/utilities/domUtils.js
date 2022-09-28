@@ -1,5 +1,6 @@
 const domUtils = (() => {
-    const createElementClass = (element, ...args) => {
+
+    function createElementClass(element, ...args) {
         const newElement = document.createElement(element);
         args.forEach(arg => {
             newElement.classList.add(arg);
@@ -30,10 +31,13 @@ const domUtils = (() => {
         };
     };
 
-    return createElementClass,
+    return {
+        createElementClass,
         createElementText,
         appendChildren,
-        setAttributes
+        setAttributes,
+    }
+    
 })();
 
 export { domUtils }
