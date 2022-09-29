@@ -44,18 +44,9 @@ const dataMaster = (() => {
 
     function _retrieveCompleteData() {
 
-        function parseCompletedDates(data) {
-            data.foreach(completedTodo => {
-                const dateArr = completedTodo.dueDate.split("-");
-                const dateDate = dateArr[2].split("T")[0]
-                completedTodo.dueDate = new Date(dateArr[0], dateArr[1]-1, dateDate);
-            });
-        };
-
         let completeData;
         try {
             completeData = JSON.parse(localStorage.getItem("complete"));
-            parseCompletedDates(completedData);
         }
         catch(err) {
             console.log(err)
@@ -184,6 +175,16 @@ const dataMaster = (() => {
         _saveData();
     };
 
+    function _editTodo(todo, title, description, dueDate, project) {
+        project = project || null;
+
+        todo.title = title;
+        todo.description = description;
+        todo.dueDate = dueDate;
+
+        _saveData();
+    };
+
     // Data retrieving functions
 
     const _retrieveTodoIndex = (todoToFind, projectIndex) => {
@@ -226,14 +227,15 @@ const dataMaster = (() => {
     };
 
     const _retrieveSingleTodo = (todoID) => {
-        const foundTodo = _todoDataset.general.find(todo => todo.toDoID === todoID);
+        let foundTodo = _todoDataset.general.find(todo => todo.toDoID === todoID);
         if (!foundTodo) {
             _todoDataset.projects.forEach(proj => {
                 proj.projectToDos.forEach(projToDo => {
-                    if (projToDo.todoID === todoID) return projToDo
+                    if (projToDo.toDoID === todoID) foundTodo = projToDo;
                 });
             });
         };
+        console.log(foundTodo);
         return foundTodo; 
     };
 
@@ -246,16 +248,12 @@ const dataMaster = (() => {
         return sortedByDate;
     };
 
-    const _retrieveTimeTodos = (daysAhead) => {
-        const allToDos = _retrieveAllTodos();
-        const dateTarget = addDays(new Date(), daysAhead)
-        return allToDos.filter(todo => todo.dueDate < dateTarget)
-    };
-
     const _checkGeneralOverdue = (date) => {
         _todoDataset.general.forEach(todo => {
             if (todo.dueDate < date) {
                 todo.overdue = true;
+            } else {
+                todo.overdue = false;
             };
         });
     };
@@ -265,6 +263,8 @@ const dataMaster = (() => {
             proj.projectToDos?.forEach(todo => {
                 if (todo.dueDate < date) {
                     todo.overdue = true;
+                } else {
+                    todo.overdue = false;
                 };
             });
         });
@@ -353,6 +353,10 @@ const dataMaster = (() => {
         };
     };
 
+    const retrieveSingleTodo = (todoId) => {
+        return _retrieveSingleTodo(todoId);
+    };
+
     function editData (dataId) {
         const todoIndex = _retrieveTodoIndex(dataId);
         console.log(todoIndex);
@@ -403,12 +407,22 @@ const dataMaster = (() => {
         _addNewProject(projectTitle, projectDescription, projectImageURL);
     };
 
-    function parseEditTodo() {
+    function parseEditTodo(todoId, projectId) {
+        projectId = projectId || null;
 
-    };
+        const todo = _retrieveSingleTodo(todoId);
 
-    function parseEditProject() {
-    
+        const titleInput = document.querySelector("#title-input");
+        const todoTitle = titleInput.value;
+
+        const descriptionInput = document.querySelector("#description-input");
+        const todoDescription = descriptionInput.value;
+
+        const dueDateInput = document.querySelector("#due-date-input");
+        const dateArray = dueDateInput.value.split("-");
+        const dueDate = subMonths(new Date(dateArray[0], dateArray[1], dateArray[2]), 1);
+
+        _editTodo(todo, todoTitle, todoDescription, dueDate, projectId);
     };
 
     function checkViewMode() {
@@ -432,6 +446,7 @@ const dataMaster = (() => {
     return {
         retrieveData,
         retrieveDeadlines,
+        retrieveSingleTodo,
         retrieveSingleProject,
 
         editData,
@@ -441,7 +456,6 @@ const dataMaster = (() => {
         parseNewTodo,
         parseNewProject,
         parseEditTodo,
-        parseEditProject,
 
         checkViewMode,
         saveViewMode,
