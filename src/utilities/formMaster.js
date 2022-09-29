@@ -41,7 +41,7 @@ const formMaster = (() => {
             "max": 30,
             "required": "",
         });
-        if (currentTitle) titleInput.textContent = currentTitle;
+        if (currentTitle) titleInput.value = currentTitle;
         return [titleLabel, titleInput];
     };
 
@@ -59,7 +59,7 @@ const formMaster = (() => {
             "max": 200,
             "required": "",
         });
-        if (currentDescription) descriptionInput.textContent = currentDescription;
+        if (currentDescription) descriptionInput.value = currentDescription;
         return [descriptionLabel, descriptionInput];
     };
 
@@ -77,7 +77,7 @@ const formMaster = (() => {
             "max": _maxDateInput(),
             "required": "",
         });
-        if (currentDueDate) dueDateInput.value = currentDueDate;
+        if (currentDueDate) dueDateInput.valueAsDate = currentDueDate;
         return [dueDateLabel, dueDateInput];
     };
 
@@ -166,9 +166,14 @@ const formMaster = (() => {
 
         const fieldsetLegend = domUtils.createElementText("legend", "Edit ToDo");
 
+        console.log(todo.title)
+
         const titleArr = _createTitleInput("title-input", todo.title);
         const descriptionArr = _createDescriptionInput("description-input", todo.description);
         const dueDateArr = _createDueInput("due-date-input", todo.dueDate);
+
+        const editButton = _createSubmitButton(projectToLink);
+        editButton.textContent = "Edit";
 
         domUtils.appendChildren(fieldsetElement,
             fieldsetLegend,
@@ -178,7 +183,7 @@ const formMaster = (() => {
             descriptionArr[1],
             dueDateArr[0],
             dueDateArr[1],
-            _createSubmitButton(projectToLink),
+            editButton,
         );
 
         formElement.appendChild(fieldsetElement);
