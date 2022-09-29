@@ -14,6 +14,22 @@ const domManipulator = (() => {
 
     /* Utility functions */
 
+    const _noDataMessage = (headingMessage, ...paraStrings) => {
+        // Pass in strings for an 'h1' element and arbitrary amount of 'p' elements in order to display.
+        const noProjectContainer = domUtils.createElementClass("div", "empty-container");
+        const noProjectMessage = document.createElement("div");
+        noProjectContainer.appendChild(noProjectMessage);
+
+        const noProjectHeading = domUtils.createElementText("h1", headingMessage);
+        noProjectMessage.appendChild(noProjectHeading);
+
+        paraStrings.forEach(string => {
+            noProjectMessage.appendChild(domUtils.createElementText("p", string));
+        });
+
+        return noProjectContainer;
+    };
+
     function  _createListedLinks(listContainer, linkArr) {
         linkArr.forEach(link => {
             const li = document.createElement("li");
@@ -230,10 +246,16 @@ const domManipulator = (() => {
             return tableArr;
         };
 
-        const homeListTable = domUtils.createElementClass("table", "todo-table");
-        homeListTable.appendChild(_createTableHeaders("ToDo", "Details"));
-        _appendTableData(homeListTable, _createTableData(completedData));
-        return homeListTable;
+        if (completedData.length > 0) {
+            const homeListTable = domUtils.createElementClass("table", "todo-table");
+            homeListTable.appendChild(_createTableHeaders("ToDo", "Details"));
+            _appendTableData(homeListTable, _createTableData(completedData));
+            return homeListTable
+        } else {
+            return _noDataMessage("Oh No!",
+            "You have not completed any ToDos",
+            "Return after completing at least one ToDo to bask in your achievements")
+        };
     };
 
     /* Manipulation functions */
@@ -262,22 +284,6 @@ const domManipulator = (() => {
     const _initMain = () => {
         const main = document.createElement("main");
         return main;
-    };
-
-    const _noDataMessage = (headingMessage, ...paraStrings) => {
-        // Pass in strings for an 'h1' element and arbitrary amount of 'p' elements in order to display.
-        const noProjectContainer = domUtils.createElementClass("div", "empty-container");
-        const noProjectMessage = document.createElement("div");
-        noProjectContainer.appendChild(noProjectMessage);
-
-        const noProjectHeading = domUtils.createElementText("h1", headingMessage);
-        noProjectMessage.appendChild(noProjectHeading);
-
-        paraStrings.forEach(string => {
-            noProjectMessage.appendChild(domUtils.createElementText("p", string));
-        });
-
-        return noProjectContainer;
     };
 
     const _createHeader = () => {
