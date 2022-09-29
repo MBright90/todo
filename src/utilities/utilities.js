@@ -149,18 +149,27 @@ const pageInterface = (() => {
         });
     };
 
-    const _submitEditFormListener =() => {
+    const _submitEditFormListeners = (dataId) => {
         const formButton = document.querySelector("form > fieldset > button");
         formButton.addEventListener("click", (e) => {
             let validityCheck;
             if (e.composedPath()[2].classList.contains("todo-form")) {
                 validityCheck = forms.checkFormValidity("todo")
-                    // parseEditTodo
+                if (validityCheck === true) {
+                    data.parseEditTodo(dataId);
                     dom.removeForm();
-                    // if part of project - show project
-                    // else show dashboard
-            }
-        })
+                    dom.removeMainLayout()
+                    if (document.querySelector(".single-project-container")) {
+                        const selectedProject = document.querySelector(".single-project-container").dataset.projectId;
+                        dom.showProjectPage(selectedProject);
+                    } else {
+                        showDashboard()
+                    }
+                } else {
+                    _createAlert(validityCheck)
+                };
+            };
+        });
     };
 
     const _closeFormListener = () => {
@@ -297,7 +306,11 @@ const pageInterface = (() => {
             const editIconList = document.querySelectorAll(".edit-icon");
             editIconList.forEach(icon => {
                 icon.addEventListener("click", (e) => {
-                    console.log(e.composedPath()[3].dataset.todoId);
+                    const todo = data.retrieveSingleTodo(e.composedPath()[3].dataset.todoId);
+                    console.log(todo)
+                    dom.showForm(forms.editTodoForm(todo));
+                    _submitEditFormListeners(e.composedPath()[3].dataset.todoId);
+                    _closeFormListener();
                 });
             });
         };
@@ -306,9 +319,6 @@ const pageInterface = (() => {
             const deleteIconList = document.querySelectorAll(".trash-icon");
             deleteIconList.forEach(icon => {
                 _createDeleteLink(icon);
-                // icon.addEventListener("click", (e) => {
-                //     console.log(e.composedPath()[3].dataset.todoId);
-                // });
             });
         };
 
