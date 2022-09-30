@@ -200,12 +200,12 @@ const pageInterface = (() => {
     const _createDeleteLink = (element) => {
         element.addEventListener("click", (e) => {
             let dataId;
-            if (document.querySelector(".single-project-container")) {
-                dataId = document.querySelector(".single-project-container").dataset.projectId;
-                _createConfirm("This will permanently delete your project including all ToDos linked to it", dataId);
-            } else {
+            if (e.composedPath()[3].dataset.todoId) {
                 dataId = e.composedPath()[3].dataset.todoId;
-                _createConfirm("This will permanently delete this todo", dataId);
+                _createConfirm("This will permanently delete this todo", dataId)
+            } else if (document.querySelector(".single-project-container")) {
+                    dataId = document.querySelector(".single-project-container").dataset.projectId;
+                    _createConfirm("This will permanently delete your project including all ToDos linked to it", dataId);
             };
         });
     };
