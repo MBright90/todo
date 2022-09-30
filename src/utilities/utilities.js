@@ -109,6 +109,11 @@ const pageInterface = (() => {
         _createSettingsListeners();
     };
 
+    function showAbout() {
+        dom.removeMainLayout();
+        dom.showAbout();
+    };
+
     // ********************************************* //
     // ************** Event Listeners ************** //
     // ********************************************* //
@@ -261,10 +266,15 @@ const pageInterface = (() => {
         });
     };
 
+    function _createAboutLink(element) {
+        element.addEventListener("click", showAbout);
+    };
+
     function _siteInfoListeners(elementList) {
         _showCompletedLink(elementList[0]);
         _showSettingsLink(elementList[1]);
         _createContactLink(elementList[2]);
+        _createAboutLink(elementList[3]);
     };
 
     function _singleProjectLink (element) {
