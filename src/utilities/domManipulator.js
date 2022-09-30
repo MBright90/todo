@@ -577,6 +577,18 @@ const domManipulator = (() => {
         _appendToMainLayout(settingsContainer);
     };
 
+    function showAbout() {
+        const aboutContainer = domUtils.createElementClass("div", "about-container");
+        const aboutHeading = domUtils.createElementText("h1", "About");
+        const aboutContent = domUtils.createElementClass("div", "about-content");
+        const paraOne = domUtils.createElementText("p", "The purpose of the You Do ToDo Space is to give you a single place where you can organize your life tasks or projects. Life can be messy, but by uploading your most important todos, you can easily prioritize and manage tasks with close deadlines or see which projects are almost at completion. We know that life is always changing, which is why we have ensured that once you have created a todo, you are able to easily edit any of the information for it.");
+        const paraTwo = domUtils.createElementText("p", "To add a new todo, you can click on the plus sign in the top right corner at any time. If this is clicked when you are viewing a project, it will automatically link that todo to the project. To add a new project, click the new project link in the sidebar or click the plus icon in the project overview box. Once you have completed a todo, clicking the check mark next to it will move it to the completed section, where you can view any tasks you have completed.")
+        const paraThree = domUtils.createElementText("p", "This website has been created using vanilla HTML, CSS and JS. It uses only front end technology which creates and stores a dataset within the browsers local storage to allow for persistent data through multiple sessions. The functions to interact with this dataset have bene created with CRUD principles in mind, and as such the user can create, read update or delete any of the data.");
+        domUtils.appendChildren(aboutContent, paraOne, paraTwo, paraThree);
+        domUtils.appendChildren(aboutContainer, aboutHeading, aboutContent);
+        _appendToMainLayout(aboutContainer);
+    }
+
     function showForm(form) {
         const formBackground = domUtils.createElementClass("div", "form-background");
         formBackground.appendChild(form);
@@ -642,6 +654,7 @@ const domManipulator = (() => {
         showUpcomingPage,
         showCompletedPage,
         showSettings,
+        showAbout,
 
         showForm,
         removeForm,
