@@ -487,14 +487,24 @@ main .form-background,
     width: 300px;
 }
 
-/* Settings layout */
+/* Settings/About layout */
 
-.settings-container {
+.settings-container,
+.about-container {
     display: flex;
     flex-direction: column;
 }
 
-.settings-container div {
+.about-container .about-content {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    gap: 20px
+}
+
+.settings-container div,
+.about-container div {
     margin: 10px;
 }
 
@@ -506,6 +516,7 @@ main .form-background,
 .settings-container div p {
     line-height: 1.5;
 }
+
 
 /* View mode toggle switch */
 
