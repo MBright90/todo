@@ -29,16 +29,12 @@ const pageInterface = (() => {
   function showProjects() {
     dom.removeMainLayout();
     dom.showAllProjects(data.retrieveData('projects'));
-    // ProjectCardLinks();
-    // createProjectLink(document.querySelector('.all-projects-container > .fa-plus'));
   }
 
   function showSingleProject(projectId) {
     const selectedProject = data.retrieveSingleProject(projectId);
     dom.removeMainLayout();
     dom.showProjectPage(selectedProject);
-    // projectManipulationLinks();
-    // interactiveCellListeners();
   }
 
   function showAllTodos(todoData) {
@@ -272,6 +268,8 @@ const pageInterface = (() => {
             const selectedProject = data.retrieveSingleProject(e.target.dataset.projectToLink);
             dom.removeMainLayout();
             dom.showProjectPage(selectedProject);
+            projectManipulationLinks();
+            interactiveCellListeners();
           } else {
             data.parseNewTodo();
             dom.removeForm();
