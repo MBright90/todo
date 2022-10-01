@@ -22,8 +22,10 @@ const domUtils = (() => {
   }
 
   function setAttributes(element, attributes) {
-    attributes.forEach((key, value) => element.setAttribute(key, value));
+    Object.keys(attributes).forEach((key) => element.setAttribute(key, attributes[key]));
   }
+
+  console.log(typeof setAttributes);
 
   return {
     createElementClass,
