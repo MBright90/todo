@@ -1,39 +1,40 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { format, addDays } from 'date-fns';
-import domUtils from './domUtils';
+import { format, addDays } from "date-fns";
+import domUtils from "./domUtils";
 
 // ********************************************* //
 // **************** Form Master **************** //
 // ********************************************* //
 
 const formMaster = (() => {
-  const minDateInput = () => format(new Date(), 'yyyy-MM-dd');
+  const minDateInput = () => format(new Date(), "yyyy-MM-dd");
 
-  const maxDateInput = () => format(addDays(new Date(), 730), 'yyyy-MM-dd');
+  const maxDateInput = () => format(addDays(new Date(), 730), "yyyy-MM-dd");
 
   const createSubmitButton = (projectId) => {
     projectId = projectId || null;
-    const button = domUtils.createElementText('button', 'Create');
-    button.setAttribute('type', 'button');
+    const button = domUtils.createElementText("button", "Create");
+    button.setAttribute("type", "button");
     if (projectId) button.dataset.projectToLink = projectId;
     return button;
   };
 
-  const createCloseButton = () => domUtils.createElementClass('i', 'fa-solid', 'fa-xmark', 'close-form');
+  const createCloseButton = () =>
+    domUtils.createElementClass("i", "fa-solid", "fa-xmark", "close-form");
 
   const createTitleInput = (titleId, currentTitle) => {
     currentTitle = currentTitle || null;
 
-    const titleLabel = domUtils.createElementText('label', 'Title');
-    titleLabel.setAttribute('for', titleId);
-    const titleInput = document.createElement('input');
+    const titleLabel = domUtils.createElementText("label", "Title");
+    titleLabel.setAttribute("for", titleId);
+    const titleInput = document.createElement("input");
     domUtils.setAttributes(titleInput, {
-      type: 'text',
+      type: "text",
       name: titleId,
       id: titleId,
       min: 3,
       max: 30,
-      required: '',
+      required: "",
     });
     if (currentTitle) titleInput.value = currentTitle;
     return [titleLabel, titleInput];
@@ -42,16 +43,16 @@ const formMaster = (() => {
   const createDescriptionInput = (descriptionId, currentDescription) => {
     currentDescription = currentDescription || null;
 
-    const descriptionLabel = domUtils.createElementText('label', 'Description');
-    descriptionLabel.setAttribute('for', descriptionId);
-    const descriptionInput = document.createElement('textarea');
+    const descriptionLabel = domUtils.createElementText("label", "Description");
+    descriptionLabel.setAttribute("for", descriptionId);
+    const descriptionInput = document.createElement("textarea");
     domUtils.setAttributes(descriptionInput, {
       name: descriptionId,
       id: descriptionId,
       cols: 30,
       rows: 10,
       max: 200,
-      required: '',
+      required: "",
     });
     if (currentDescription) descriptionInput.value = currentDescription;
     return [descriptionLabel, descriptionInput];
@@ -60,16 +61,16 @@ const formMaster = (() => {
   const createDueInput = (dueDateId, currentDueDate) => {
     currentDueDate = currentDueDate || null;
 
-    const dueDateLabel = domUtils.createElementText('label', 'Due Date');
-    dueDateLabel.setAttribute('for', dueDateId);
-    const dueDateInput = document.createElement('input');
+    const dueDateLabel = domUtils.createElementText("label", "Due Date");
+    dueDateLabel.setAttribute("for", dueDateId);
+    const dueDateInput = document.createElement("input");
     domUtils.setAttributes(dueDateInput, {
-      type: 'date',
+      type: "date",
       name: dueDateId,
       id: dueDateId,
       min: minDateInput(),
       max: maxDateInput(),
-      required: '',
+      required: "",
     });
     if (currentDueDate) dueDateInput.valueAsDate = currentDueDate;
     return [dueDateLabel, dueDateInput];
@@ -78,14 +79,14 @@ const formMaster = (() => {
   const createImageInput = (imageInputId, currentImageUrl) => {
     currentImageUrl = currentImageUrl || null;
 
-    const imageLabel = domUtils.createElementText('label', 'Image URL');
-    imageLabel.setAttribute('for', imageInputId);
-    const imageInput = document.createElement('input');
+    const imageLabel = domUtils.createElementText("label", "Image URL");
+    imageLabel.setAttribute("for", imageInputId);
+    const imageInput = document.createElement("input");
     domUtils.setAttributes(imageInput, {
-      type: 'url',
+      type: "url",
       name: imageInputId,
       id: imageInputId,
-      placeholder: '[Optional]',
+      placeholder: "[Optional]",
     });
     if (currentImageUrl) imageInput.textContent = currentImageUrl;
     return [imageLabel, imageInput];
@@ -94,15 +95,15 @@ const formMaster = (() => {
   const createTodoForm = (projectToLink) => {
     projectToLink = projectToLink || null;
 
-    const formContainer = domUtils.createElementClass('div', 'form-container');
-    const formElement = domUtils.createElementClass('form', 'todo-form');
-    const fieldsetElement = document.createElement('fieldset');
+    const formContainer = domUtils.createElementClass("div", "form-container");
+    const formElement = domUtils.createElementClass("form", "todo-form");
+    const fieldsetElement = document.createElement("fieldset");
 
-    const fieldsetLegend = domUtils.createElementText('legend', 'New ToDo');
+    const fieldsetLegend = domUtils.createElementText("legend", "New ToDo");
 
-    const titleArr = createTitleInput('title-input');
-    const descriptionArr = createDescriptionInput('description-input');
-    const dueDateArr = createDueInput('due-date-input');
+    const titleArr = createTitleInput("title-input");
+    const descriptionArr = createDescriptionInput("description-input");
+    const dueDateArr = createDueInput("due-date-input");
 
     domUtils.appendChildren(
       fieldsetElement,
@@ -113,28 +114,24 @@ const formMaster = (() => {
       descriptionArr[1],
       dueDateArr[0],
       dueDateArr[1],
-      createSubmitButton(projectToLink),
+      createSubmitButton(projectToLink)
     );
 
     formElement.appendChild(fieldsetElement);
-    domUtils.appendChildren(
-      formContainer,
-      formElement,
-      createCloseButton(),
-    );
+    domUtils.appendChildren(formContainer, formElement, createCloseButton());
     return formContainer;
   };
 
   const createProjectForm = () => {
-    const formContainer = domUtils.createElementClass('div', 'form-container');
-    const formElement = domUtils.createElementClass('form', 'project-form');
-    const fieldsetElement = document.createElement('fieldset');
+    const formContainer = domUtils.createElementClass("div", "form-container");
+    const formElement = domUtils.createElementClass("form", "project-form");
+    const fieldsetElement = document.createElement("fieldset");
 
-    const fieldsetLegend = domUtils.createElementText('legend', 'New Project');
+    const fieldsetLegend = domUtils.createElementText("legend", "New Project");
 
-    const titleArr = createTitleInput('project-title-input');
-    const descriptionArr = createDescriptionInput('project-description-input');
-    const imageArr = createImageInput('image-input');
+    const titleArr = createTitleInput("project-title-input");
+    const descriptionArr = createDescriptionInput("project-description-input");
+    const imageArr = createImageInput("image-input");
 
     domUtils.appendChildren(
       fieldsetElement,
@@ -145,35 +142,34 @@ const formMaster = (() => {
       descriptionArr[1],
       imageArr[0],
       imageArr[1],
-      createSubmitButton(),
+      createSubmitButton()
     );
 
     formElement.appendChild(fieldsetElement);
-    domUtils.appendChildren(
-      formContainer,
-      formElement,
-      createCloseButton(),
-    );
+    domUtils.appendChildren(formContainer, formElement, createCloseButton());
     return formContainer;
   };
 
   function editTodoForm(todo, projectToLink) {
     projectToLink = projectToLink || null;
 
-    const formContainer = domUtils.createElementClass('div', 'form-container');
-    const formElement = domUtils.createElementClass('form', 'todo-form');
-    const fieldsetElement = document.createElement('fieldset');
+    const formContainer = domUtils.createElementClass("div", "form-container");
+    const formElement = domUtils.createElementClass("form", "todo-form");
+    const fieldsetElement = document.createElement("fieldset");
 
-    const fieldsetLegend = domUtils.createElementText('legend', 'Edit ToDo');
+    const fieldsetLegend = domUtils.createElementText("legend", "Edit ToDo");
 
     console.log(todo.title);
 
-    const titleArr = createTitleInput('title-input', todo.title);
-    const descriptionArr = createDescriptionInput('description-input', todo.description);
-    const dueDateArr = createDueInput('due-date-input', todo.dueDate);
+    const titleArr = createTitleInput("title-input", todo.title);
+    const descriptionArr = createDescriptionInput(
+      "description-input",
+      todo.description
+    );
+    const dueDateArr = createDueInput("due-date-input", todo.dueDate);
 
     const editButton = createSubmitButton(projectToLink);
-    editButton.textContent = 'Edit';
+    editButton.textContent = "Edit";
 
     domUtils.appendChildren(
       fieldsetElement,
@@ -184,28 +180,30 @@ const formMaster = (() => {
       descriptionArr[1],
       dueDateArr[0],
       dueDateArr[1],
-      editButton,
+      editButton
     );
 
     formElement.appendChild(fieldsetElement);
-    domUtils.appendChildren(
-      formContainer,
-      formElement,
-      createCloseButton(),
-    );
+    domUtils.appendChildren(formContainer, formElement, createCloseButton());
     return formContainer;
   }
 
   function editProjectForm(project) {
-    const formContainer = domUtils.createElementClass('div', 'form-container');
-    const formElement = domUtils.createElementClass('form', 'project-form');
-    const fieldsetElement = document.createElement('fieldset');
+    const formContainer = domUtils.createElementClass("div", "form-container");
+    const formElement = domUtils.createElementClass("form", "project-form");
+    const fieldsetElement = document.createElement("fieldset");
 
-    const fieldsetLegend = domUtils.createElementText('legend', 'Edit Project');
+    const fieldsetLegend = domUtils.createElementText("legend", "Edit Project");
 
-    const titleArr = createTitleInput('project-title-input', project.projectTitle);
-    const descriptionArr = createDescriptionInput('project-description-input', project.projectDescription);
-    const imageArr = createImageInput('image-input', project.projectImage);
+    const titleArr = createTitleInput(
+      "project-title-input",
+      project.projectTitle
+    );
+    const descriptionArr = createDescriptionInput(
+      "project-description-input",
+      project.projectDescription
+    );
+    const imageArr = createImageInput("image-input", project.projectImage);
 
     domUtils.appendChildren(
       fieldsetElement,
@@ -216,89 +214,92 @@ const formMaster = (() => {
       descriptionArr[1],
       imageArr[0],
       imageArr[1],
-      createSubmitButton(),
+      createSubmitButton()
     );
 
     formElement.appendChild(fieldsetElement);
-    domUtils.appendChildren(
-      formContainer,
-      formElement,
-      createCloseButton(),
-    );
+    domUtils.appendChildren(formContainer, formElement, createCloseButton());
     return formContainer;
   }
 
   function checkFormValidity(formType) {
-    if (formType === 'todo') {
-      const titleInput = document.querySelector('#title-input');
-      const descriptionInput = document.querySelector('#description-input');
-      const dueDateInput = document.querySelector('#due-date-input');
+    if (formType === "todo") {
+      const titleInput = document.querySelector("#title-input");
+      const descriptionInput = document.querySelector("#description-input");
+      const dueDateInput = document.querySelector("#due-date-input");
 
       if (!titleInput.checkValidity()) {
-        return 'Please input a valid title';
-      } if (!descriptionInput.checkValidity()) {
-        return 'Please input a valid description';
-      } if (!dueDateInput.checkValidity()) {
-        return 'Please choose a date within the next two years';
-      } return true;
+        return "Please input a valid title";
+      }
+      if (!descriptionInput.checkValidity()) {
+        return "Please input a valid description";
+      }
+      if (!dueDateInput.checkValidity()) {
+        return "Please choose a date within the next two years";
+      }
+      return true;
     }
 
-    const projectTitleInput = document.querySelector('#project-title-input');
-    const projectDescriptionInput = document.querySelector('#project-description-input');
+    const projectTitleInput = document.querySelector("#project-title-input");
+    const projectDescriptionInput = document.querySelector(
+      "#project-description-input"
+    );
 
     if (!projectTitleInput.checkValidity()) {
-      return 'Please input a valid project title';
-    } if (!projectDescriptionInput.checkValidity()) {
-      return 'Please input a valid description';
-    } return true;
+      return "Please input a valid project title";
+    }
+    if (!projectDescriptionInput.checkValidity()) {
+      return "Please input a valid description";
+    }
+    return true;
   }
 
   function createContactForm() {
-    const formContainer = domUtils.createElementClass('div', 'form-container');
-    const formElement = domUtils.createElementClass('form', 'contact-form');
-    const fieldsetElement = document.createElement('fieldset');
+    const formContainer = domUtils.createElementClass("div", "form-container");
+    const formElement = domUtils.createElementClass("form", "contact-form");
+    const fieldsetElement = document.createElement("fieldset");
 
-    const fieldsetLegend = domUtils.createElementText('legend', 'Contact Us');
+    const fieldsetLegend = domUtils.createElementText("legend", "Contact Us");
 
-    const fromLabel = domUtils.createElementText('label', 'From');
-    fromLabel.setAttribute('for', 'from-input');
-    const fromInput = document.createElement('input');
+    const fromLabel = domUtils.createElementText("label", "From");
+    fromLabel.setAttribute("for", "from-input");
+    const fromInput = document.createElement("input");
     domUtils.setAttributes(fromInput, {
-      type: 'text',
-      name: 'from-input',
-      id: 'from-input',
+      type: "text",
+      name: "from-input",
+      id: "from-input",
       min: 5,
       max: 100,
-      required: '',
+      required: "",
     });
 
-    const subjectLabel = domUtils.createElementText('label', 'Subject');
-    subjectLabel.setAttribute('for', 'subject-input');
-    const subjectInput = document.createElement('input');
+    const subjectLabel = domUtils.createElementText("label", "Subject");
+    subjectLabel.setAttribute("for", "subject-input");
+    const subjectInput = document.createElement("input");
     domUtils.setAttributes(subjectInput, {
-      type: 'text',
-      name: 'subject-input',
-      id: 'subject-input',
+      type: "text",
+      name: "subject-input",
+      id: "subject-input",
       min: 5,
       max: 50,
-      required: '',
+      required: "",
     });
 
-    const messageLabel = domUtils.createElementText('label', 'Message');
-    messageLabel.setAttribute('for', 'message-input');
-    const messageInput = document.createElement('textarea');
+    const messageLabel = domUtils.createElementText("label", "Message");
+    messageLabel.setAttribute("for", "message-input");
+    const messageInput = document.createElement("textarea");
     domUtils.setAttributes(messageInput, {
-      name: 'message-input',
-      id: 'message-input',
+      name: "message-input",
+      id: "message-input",
       min: 5,
       max: 100,
       cols: 30,
       rows: 15,
-      required: '',
+      required: "",
     });
 
     const sendButton = createSubmitButton();
-    sendButton.textContent = 'Send';
+    sendButton.textContent = "Send";
 
     domUtils.appendChildren(
       fieldsetElement,
@@ -309,14 +310,10 @@ const formMaster = (() => {
       subjectInput,
       messageLabel,
       messageInput,
-      sendButton,
+      sendButton
     );
     formElement.appendChild(fieldsetElement);
-    domUtils.appendChildren(
-      formContainer,
-      formElement,
-      createCloseButton(),
-    );
+    domUtils.appendChildren(formContainer, formElement, createCloseButton());
     return formContainer;
   }
 

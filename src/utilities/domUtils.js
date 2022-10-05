@@ -12,7 +12,7 @@ const domUtils = (() => {
     try {
       newElement.textContent = text;
     } catch (err) {
-      console.log('No text can be added to this element');
+      console.log("No text can be added to this element");
     }
     return newElement;
   }
@@ -22,7 +22,9 @@ const domUtils = (() => {
   }
 
   function setAttributes(element, attributes) {
-    Object.keys(attributes).forEach((key) => element.setAttribute(key, attributes[key]));
+    Object.keys(attributes).forEach((key) =>
+      element.setAttribute(key, attributes[key])
+    );
   }
 
   console.log(typeof setAttributes);

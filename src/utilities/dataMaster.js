@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { formatDistanceStrict, addDays, subMonths } from 'date-fns';
+import { formatDistanceStrict, addDays, subMonths } from "date-fns";
 
 const dataMaster = (() => {
   const todoIDLength = 12;
@@ -23,7 +23,7 @@ const dataMaster = (() => {
 
     let storageData;
     try {
-      storageData = JSON.parse(localStorage.getItem('dataset'));
+      storageData = JSON.parse(localStorage.getItem("dataset"));
       parseStorageDates(storageData);
     } catch (err) {
       console.log(err);
@@ -31,12 +31,8 @@ const dataMaster = (() => {
 
     if (!storageData) {
       return {
-        general: [
-
-        ],
-        projects: [
-
-        ],
+        general: [],
+        projects: [],
       };
     }
 
@@ -46,7 +42,7 @@ const dataMaster = (() => {
   function retrieveCompleteData() {
     let completeData;
     try {
-      completeData = JSON.parse(localStorage.getItem('complete'));
+      completeData = JSON.parse(localStorage.getItem("complete"));
     } catch (err) {
       console.log(err);
     }
@@ -67,29 +63,29 @@ const dataMaster = (() => {
   function retrieveViewMode() {
     let viewMode;
     try {
-      viewMode = localStorage.getItem('viewMode');
+      viewMode = localStorage.getItem("viewMode");
     } catch (err) {
       console.log(err);
-      viewMode = 'light';
+      viewMode = "light";
     }
     return viewMode;
   }
 
   function saveData() {
-    localStorage.setItem('dataset', JSON.stringify(todoDataset));
+    localStorage.setItem("dataset", JSON.stringify(todoDataset));
   }
 
   function saveCompleteData() {
-    localStorage.setItem('complete', JSON.stringify(completeDataset));
+    localStorage.setItem("complete", JSON.stringify(completeDataset));
   }
 
   function addViewToStorage(currentMode) {
-    localStorage.setItem('viewMode', currentMode);
+    localStorage.setItem("viewMode", currentMode);
   }
 
   function deleteStorage() {
-    localStorage.setItem('dataset', '');
-    localStorage.setItem('complete', '');
+    localStorage.setItem("dataset", "");
+    localStorage.setItem("complete", "");
     // Empty current dataset
     todoDataset.general?.splice(0, todoDataset.general.length);
     todoDataset.projects?.splice(0, todoDataset.projects.length);
@@ -130,16 +126,21 @@ const dataMaster = (() => {
   const createTodoID = () => {
     const date = new Date();
     const newID = `${date.getSeconds()}${date.getHours()}${date.getFullYear()}${date.getMilliseconds()}`;
-    return newID.padStart(todoIDLength, '0');
+    return newID.padStart(todoIDLength, "0");
   };
 
   const createProjectID = () => {
     const date = new Date();
     const newID = `${date.getMilliseconds()}${date.getSeconds()}${date.getMinutes()}${date.getMonth()}`;
-    return newID.padStart(projectIDLength, '1');
+    return newID.padStart(projectIDLength, "1");
   };
 
-  const createTodoObject = (todoTitle, todoDescription, todoDueDate, isImportant) => {
+  const createTodoObject = (
+    todoTitle,
+    todoDescription,
+    todoDueDate,
+    isImportant
+  ) => {
     const todoObject = {
       title: todoTitle,
       description: todoDescription,
@@ -151,7 +152,11 @@ const dataMaster = (() => {
     return todoObject;
   };
 
-  const createProjectObject = (newProjectTitle, newProjectDescription, newProjectImage) => {
+  const createProjectObject = (
+    newProjectTitle,
+    newProjectDescription,
+    newProjectImage
+  ) => {
     const projectObject = {
       projectTitle: newProjectTitle,
       projectImage: newProjectImage || null,
@@ -173,7 +178,9 @@ const dataMaster = (() => {
 
   const appendProjectTodo = (todoObject, findProjectID) => {
     todoObject.complete = false;
-    const project = todoDataset.projects.find((proj) => proj.projectID === findProjectID);
+    const project = todoDataset.projects.find(
+      (proj) => proj.projectID === findProjectID
+    );
     if (!project.projectToDos) {
       project.projectToDos = [];
     }
@@ -201,12 +208,16 @@ const dataMaster = (() => {
   const retrieveTodoIndex = (todoToFind, projectIndex) => {
     projectIndex = null || projectIndex;
     let todoIndex;
-    todoIndex = todoDataset.general.findIndex((todo) => todo.toDoID === todoToFind);
+    todoIndex = todoDataset.general.findIndex(
+      (todo) => todo.toDoID === todoToFind
+    );
 
     if (todoIndex === -1) {
       if (projectIndex >= 0) {
         const project = todoDataset.projects[projectIndex];
-        todoIndex = project.projectToDos.findIndex((todo) => todo.toDoID === todoToFind);
+        todoIndex = project.projectToDos.findIndex(
+          (todo) => todo.toDoID === todoToFind
+        );
       }
     }
     return todoIndex;
@@ -225,7 +236,9 @@ const dataMaster = (() => {
   }
 
   function retrieveProjectIndex(projectToFind) {
-    return todoDataset.projects.findIndex((project) => project.projectID === projectToFind);
+    return todoDataset.projects.findIndex(
+      (project) => project.projectID === projectToFind
+    );
   }
 
   const retrieveAllTodos = () => {
@@ -253,7 +266,9 @@ const dataMaster = (() => {
 
   const retrieveDateOrdered = () => {
     const allToDos = retrieveAllTodos();
-    const sortedByDate = allToDos.sort((a, b) => (a.dueDate > b.dueDate ? 1 : -1));
+    const sortedByDate = allToDos.sort((a, b) =>
+      a.dueDate > b.dueDate ? 1 : -1
+    );
     return sortedByDate;
   };
 
@@ -318,25 +333,28 @@ const dataMaster = (() => {
 
     let dataArray = [];
 
-    if (toSortBy === 'date') {
+    if (toSortBy === "date") {
       dataArray = retrieveDateOrdered();
       if (amount) {
         return dataArray.slice(0, amount);
       }
       return dataArray;
-    } if (toSortBy === 'projects') {
+    }
+    if (toSortBy === "projects") {
       dataArray = todoDataset.projects;
       if (amount) {
         return dataArray.slice(0, amount);
       }
       return dataArray;
-    } if (toSortBy === 'general') {
+    }
+    if (toSortBy === "general") {
       dataArray = todoDataset.general;
       if (amount) {
         return dataArray.slice(0, amount);
       }
       return todoDataset.general;
-    } if (toSortBy === 'completed') {
+    }
+    if (toSortBy === "completed") {
       return completeDataset;
     }
     dataArray = retrieveAllTodos();
@@ -347,13 +365,23 @@ const dataMaster = (() => {
   }
 
   function retrieveDeadlines(daysDifference) {
-    const data = retrieveData('date');
+    const data = retrieveData("date");
     const targetDate = addDays(new Date(), daysDifference);
-    return data.filter((todo) => parseInt(formatDistanceStrict(todo.dueDate, targetDate, { unit: 'day' }).split(' ')[0], 10) <= daysDifference);
+    return data.filter(
+      (todo) =>
+        parseInt(
+          formatDistanceStrict(todo.dueDate, targetDate, { unit: "day" }).split(
+            " "
+          )[0],
+          10
+        ) <= daysDifference
+    );
   }
 
   const retrieveSingleProject = (projectID) => {
-    const foundProject = todoDataset.projects.find((proj) => proj.projectID === projectID);
+    const foundProject = todoDataset.projects.find(
+      (proj) => proj.projectID === projectID
+    );
     if (!foundProject) {
       throw new Error(`No Project Found with ID ${projectID}`);
     } else {
@@ -385,27 +413,32 @@ const dataMaster = (() => {
   function parseNewTodo(projectId) {
     projectId = projectId || null;
 
-    const titleInput = document.querySelector('#title-input');
+    const titleInput = document.querySelector("#title-input");
     const todoTitle = titleInput.value;
 
-    const descriptionInput = document.querySelector('#description-input');
+    const descriptionInput = document.querySelector("#description-input");
     const todoDescription = descriptionInput.value;
 
-    const dueDateInput = document.querySelector('#due-date-input');
-    const dateArray = dueDateInput.value.split('-');
-    const dueDate = subMonths(new Date(dateArray[0], dateArray[1], dateArray[2]), 1);
+    const dueDateInput = document.querySelector("#due-date-input");
+    const dateArray = dueDateInput.value.split("-");
+    const dueDate = subMonths(
+      new Date(dateArray[0], dateArray[1], dateArray[2]),
+      1
+    );
 
     addNewTodo(todoTitle, todoDescription, dueDate, projectId);
   }
 
   function parseNewProject() {
-    const projectTitleInput = document.querySelector('#project-title-input');
+    const projectTitleInput = document.querySelector("#project-title-input");
     const projectTitle = projectTitleInput.value;
 
-    const projectDescriptionInput = document.querySelector('#project-description-input');
+    const projectDescriptionInput = document.querySelector(
+      "#project-description-input"
+    );
     const projectDescription = projectDescriptionInput.value;
 
-    const projectImageInput = document.querySelector('#image-input');
+    const projectImageInput = document.querySelector("#image-input");
     const projectImageURL = projectImageInput.value;
 
     addNewProject(projectTitle, projectDescription, projectImageURL);
@@ -416,15 +449,18 @@ const dataMaster = (() => {
 
     const todo = retrieveTodo(todoId);
 
-    const titleInput = document.querySelector('#title-input');
+    const titleInput = document.querySelector("#title-input");
     const todoTitle = titleInput.value;
 
-    const descriptionInput = document.querySelector('#description-input');
+    const descriptionInput = document.querySelector("#description-input");
     const todoDescription = descriptionInput.value;
 
-    const dueDateInput = document.querySelector('#due-date-input');
-    const dateArray = dueDateInput.value.split('-');
-    const dueDate = subMonths(new Date(dateArray[0], dateArray[1], dateArray[2]), 1);
+    const dueDateInput = document.querySelector("#due-date-input");
+    const dateArray = dueDateInput.value.split("-");
+    const dueDate = subMonths(
+      new Date(dateArray[0], dateArray[1], dateArray[2]),
+      1
+    );
 
     editTodo(todo, todoTitle, todoDescription, dueDate, projectId);
   }
