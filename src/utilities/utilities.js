@@ -1,25 +1,25 @@
 /* eslint-disable no-use-before-define */
-import data from "./dataMaster";
-import dom from "./domManipulator";
-import forms from "./formMaster";
+import data from './dataMaster';
+import dom from './domManipulator';
+import forms from './formMaster';
 
 const pageInterface = (() => {
   const setViewMode = () => {
-    if (data.checkViewMode() === "dark") {
-      document.documentElement.setAttribute("data-view-mode", "dark");
+    if (data.checkViewMode() === 'dark') {
+      document.documentElement.setAttribute('data-view-mode', 'dark');
     } else {
-      document.documentElement.setAttribute("data-view-mode", "light");
+      document.documentElement.setAttribute('data-view-mode', 'light');
     }
   };
 
   const findIdStep = (nodeList) => {
     let identifier;
     nodeList.slice(0, 2).forEach((node) => {
-      if (node.classList.contains("project-card")) {
+      if (node.classList.contains('project-card')) {
         identifier = node.dataset.projectId;
       }
     });
-    return identifier || console.log("No project ID found");
+    return identifier || console.log('No project ID found');
   };
 
   // ********************************************* //
@@ -28,7 +28,7 @@ const pageInterface = (() => {
 
   function showProjects() {
     dom.removeMainLayout();
-    dom.showAllProjects(data.retrieveData("projects"));
+    dom.showAllProjects(data.retrieveData('projects'));
   }
 
   function showSingleProject(projectId) {
@@ -51,7 +51,7 @@ const pageInterface = (() => {
 
   function showCompleted() {
     dom.removeMainLayout();
-    dom.showCompletedPage(data.retrieveData("completed"));
+    dom.showCompletedPage(data.retrieveData('completed'));
   }
 
   function showSettings() {
@@ -70,9 +70,9 @@ const pageInterface = (() => {
   // ********************************************* //
 
   function addAlertListener() {
-    const alertButton = document.querySelector(".alert-container > button");
+    const alertButton = document.querySelector('.alert-container > button');
     alertButton.addEventListener(
-      "click",
+      'click',
       () => {
         dom.removeAlert();
       },
@@ -81,13 +81,13 @@ const pageInterface = (() => {
   }
 
   function addConfirmListeners(dataId) {
-    const buttonList = document.querySelectorAll(".confirm-buttons > button");
-    buttonList[0].addEventListener("click", () => {
+    const buttonList = document.querySelectorAll('.confirm-buttons > button');
+    buttonList[0].addEventListener('click', () => {
       data.deleteData(dataId);
       dom.removeConfirm();
       showDashboard();
     });
-    buttonList[1].addEventListener("click", () => {
+    buttonList[1].addEventListener('click', () => {
       dom.removeConfirm();
     });
   }
@@ -107,23 +107,23 @@ const pageInterface = (() => {
   // ********************************************* //
 
   const createDropLink = (element) => {
-    element.addEventListener("click", () => {
-      console.log("drop link CLICKED!");
+    element.addEventListener('click', () => {
+      console.log('drop link CLICKED!');
       // Code block to show menu
     });
   };
 
   const createDeleteLink = (element) => {
-    element.addEventListener("click", (e) => {
+    element.addEventListener('click', (e) => {
       let dataId;
       if (e.composedPath()[3].dataset.todoId) {
         dataId = e.composedPath()[3].dataset.todoId;
-        createConfirm("This will permanently delete this todo", dataId);
-      } else if (document.querySelector(".single-project-container")) {
-        dataId = document.querySelector(".single-project-container").dataset
+        createConfirm('This will permanently delete this todo', dataId);
+      } else if (document.querySelector('.single-project-container')) {
+        dataId = document.querySelector('.single-project-container').dataset
           .projectId;
         createConfirm(
-          "This will permanently delete your project including all ToDos linked to it",
+          'This will permanently delete your project including all ToDos linked to it',
           dataId
         );
       }
@@ -131,12 +131,12 @@ const pageInterface = (() => {
   };
 
   const createHomeLink = (element) => {
-    element.addEventListener("click", showDashboard);
+    element.addEventListener('click', showDashboard);
   };
 
   const createTimeLinks = (linkList, ...args) => {
     for (let i = 0; i < linkList.length; i += 1) {
-      linkList[i].addEventListener("click", () => {
+      linkList[i].addEventListener('click', () => {
         showUpcoming(linkList[i].textContent, args[i]);
         interactiveCellListeners();
       });
@@ -144,7 +144,7 @@ const pageInterface = (() => {
   };
 
   const createProjectLink = (element) => {
-    element.addEventListener("click", () => {
+    element.addEventListener('click', () => {
       dom.showForm(forms.createProjectForm());
       createNewFormListeners();
     });
@@ -152,11 +152,11 @@ const pageInterface = (() => {
 
   const showProjectsLink = (element) => {
     if (element) {
-      element.addEventListener("click", () => {
+      element.addEventListener('click', () => {
         showProjects();
         ProjectCardLinks();
         createProjectLink(
-          document.querySelector(".all-projects-container > .fa-plus")
+          document.querySelector('.all-projects-container > .fa-plus')
         );
       });
     }
@@ -168,31 +168,31 @@ const pageInterface = (() => {
   }
 
   function showTodosLink(element, todoData) {
-    element.addEventListener("click", () => {
+    element.addEventListener('click', () => {
       showAllTodos(todoData);
     });
   }
 
   function showCompletedLink(element) {
-    element.addEventListener("click", showCompleted);
+    element.addEventListener('click', showCompleted);
   }
 
   function showSettingsLink(element) {
-    element.addEventListener("click", () => {
+    element.addEventListener('click', () => {
       showSettings();
       createSettingsListeners();
     });
   }
 
   function createContactLink(element) {
-    element.addEventListener("click", () => {
+    element.addEventListener('click', () => {
       dom.showForm(forms.createContactForm());
       createNewFormListeners();
     });
   }
 
   function createAboutLink(element) {
-    element.addEventListener("click", showAbout);
+    element.addEventListener('click', showAbout);
   }
 
   function siteInfoListeners(elementList) {
@@ -203,29 +203,29 @@ const pageInterface = (() => {
   }
 
   function seeAllLinks() {
-    showProjectsLink(document.querySelector(".project-list-home a"));
+    showProjectsLink(document.querySelector('.project-list-home a'));
     showTodosLink(
-      document.querySelector(".todo-list-home > a"),
-      data.retrieveData("date")
+      document.querySelector('.todo-list-home > a'),
+      data.retrieveData('date')
     );
   }
 
   function createToggleListener(element) {
     const switchViewMode = (e) => {
       if (e.target.checked) {
-        document.documentElement.setAttribute("data-view-mode", "dark");
+        document.documentElement.setAttribute('data-view-mode', 'dark');
       } else {
-        document.documentElement.setAttribute("data-view-mode", "light");
+        document.documentElement.setAttribute('data-view-mode', 'light');
       }
     };
-    element.addEventListener("change", (e) => {
+    element.addEventListener('change', (e) => {
       switchViewMode(e);
       data.saveViewMode(document.documentElement.dataset.viewMode);
     });
   }
 
   function createSiteDeleteLink(element) {
-    element.addEventListener("click", () => {
+    element.addEventListener('click', () => {
       data.resetSiteData();
       showDashboard();
     });
@@ -233,9 +233,9 @@ const pageInterface = (() => {
 
   function interactiveCellListeners() {
     const addEditListeners = () => {
-      const editIconList = document.querySelectorAll(".edit-icon");
+      const editIconList = document.querySelectorAll('.edit-icon');
       editIconList.forEach((icon) => {
-        icon.addEventListener("click", (e) => {
+        icon.addEventListener('click', (e) => {
           const todo = data.retrieveSingleTodo(
             e.composedPath()[3].dataset.todoId
           );
@@ -248,17 +248,17 @@ const pageInterface = (() => {
     };
 
     const addDeleteListeners = () => {
-      const deleteIconList = document.querySelectorAll(".trash-icon");
+      const deleteIconList = document.querySelectorAll('.trash-icon');
       deleteIconList.forEach((icon) => {
         createDeleteLink(icon);
       });
     };
 
     const addCompleteListeners = () => {
-      const completeIconList = document.querySelectorAll(".complete-icon");
+      const completeIconList = document.querySelectorAll('.complete-icon');
       completeIconList.forEach((icon) => {
-        icon.addEventListener("click", (e) => {
-          createAlert("Congratulations");
+        icon.addEventListener('click', (e) => {
+          createAlert('Congratulations');
           data.setComplete(e.composedPath()[3].dataset.todoId);
           data.deleteData(e.composedPath()[3].dataset.todoId);
         });
@@ -271,11 +271,11 @@ const pageInterface = (() => {
   }
 
   const submitNewFormListener = () => {
-    const formButton = document.querySelector("form > fieldset > button");
-    formButton.addEventListener("click", (e) => {
+    const formButton = document.querySelector('form > fieldset > button');
+    formButton.addEventListener('click', (e) => {
       let validityCheck;
-      if (e.composedPath()[2].classList.contains("todo-form")) {
-        validityCheck = forms.checkFormValidity("todo");
+      if (e.composedPath()[2].classList.contains('todo-form')) {
+        validityCheck = forms.checkFormValidity('todo');
         if (validityCheck === true) {
           if (e.target.dataset.projectToLink) {
             data.parseNewTodo(e.target.dataset.projectToLink);
@@ -295,38 +295,38 @@ const pageInterface = (() => {
         } else {
           createAlert(validityCheck);
         }
-      } else if (e.composedPath()[2].classList.contains("project-form")) {
-        validityCheck = forms.checkFormValidity("project");
+      } else if (e.composedPath()[2].classList.contains('project-form')) {
+        validityCheck = forms.checkFormValidity('project');
         if (validityCheck === true) {
           data.parseNewProject();
           dom.removeForm();
           showProjects();
           ProjectCardLinks();
           createProjectLink(
-            document.querySelector(".all-projects-container > .fa-plus")
+            document.querySelector('.all-projects-container > .fa-plus')
           );
         } else {
           createAlert(validityCheck);
         }
-      } else if (e.composedPath()[2].classList.contains("contact-form")) {
+      } else if (e.composedPath()[2].classList.contains('contact-form')) {
         dom.removeForm();
       }
     });
   };
 
   const submitEditFormListeners = (dataId) => {
-    const formButton = document.querySelector("form > fieldset > button");
-    formButton.addEventListener("click", (e) => {
+    const formButton = document.querySelector('form > fieldset > button');
+    formButton.addEventListener('click', (e) => {
       let validityCheck;
-      if (e.composedPath()[2].classList.contains("todo-form")) {
-        validityCheck = forms.checkFormValidity("todo");
+      if (e.composedPath()[2].classList.contains('todo-form')) {
+        validityCheck = forms.checkFormValidity('todo');
         if (validityCheck === true) {
           data.parseEditTodo(dataId);
           dom.removeForm();
           dom.removeMainLayout();
-          if (document.querySelector(".single-project-container")) {
+          if (document.querySelector('.single-project-container')) {
             const selectedProject = document.querySelector(
-              ".single-project-container"
+              '.single-project-container'
             ).dataset.projectId;
             dom.showProjectPage(selectedProject);
           } else {
@@ -340,11 +340,11 @@ const pageInterface = (() => {
   };
 
   const closeFormListener = () => {
-    const closeButton = document.querySelector(".form-container > i");
+    const closeButton = document.querySelector('.form-container > i');
     closeButton.addEventListener(
-      "click",
+      'click',
       () => {
-        document.querySelector(".form-background").remove();
+        document.querySelector('.form-background').remove();
       },
       { once: true }
     );
@@ -360,10 +360,10 @@ const pageInterface = (() => {
   }
 
   const createAddLink = (element) => {
-    element.addEventListener("click", () => {
+    element.addEventListener('click', () => {
       let project;
-      if (document.querySelector(".single-project-container")) {
-        project = document.querySelector(".single-project-container").dataset
+      if (document.querySelector('.single-project-container')) {
+        project = document.querySelector('.single-project-container').dataset
           .projectId;
       }
       dom.showForm(forms.createTodoForm(project));
@@ -372,46 +372,46 @@ const pageInterface = (() => {
   };
 
   function addHeaderListeners() {
-    createDropLink(document.querySelector(".drop-link"));
-    createAddLink(document.querySelector(".new-icon"));
+    createDropLink(document.querySelector('.drop-link'));
+    createAddLink(document.querySelector('.new-icon'));
   }
 
   function addSidebarListeners() {
-    createHomeLink(document.querySelector(".home-link"));
-    showProjectsLink(document.querySelector(".projects-link"));
+    createHomeLink(document.querySelector('.home-link'));
+    showProjectsLink(document.querySelector('.projects-link'));
     createTimeLinks(
-      document.querySelectorAll(".date-links li a"),
+      document.querySelectorAll('.date-links li a'),
       730,
       1,
       7,
       31
     );
-    createProjectLinksGroup(document.querySelectorAll(".project-links li a"));
-    siteInfoListeners(document.querySelectorAll(".extra-links a"));
+    createProjectLinksGroup(document.querySelectorAll('.project-links li a'));
+    siteInfoListeners(document.querySelectorAll('.extra-links a'));
   }
 
   function ProjectCardLinks() {
-    document.querySelectorAll(".project-card").forEach((card) => {
+    document.querySelectorAll('.project-card').forEach((card) => {
       singleProjectLink(card);
     });
   }
 
   function projectManipulationLinks() {
     createAddLink(
-      document.querySelector(".project-header-info > .project-plus")
+      document.querySelector('.project-header-info > .project-plus')
     );
     createDeleteLink(
-      document.querySelector(".project-header-info > .project-delete")
+      document.querySelector('.project-header-info > .project-delete')
     );
   }
 
   function createSettingsListeners() {
-    createToggleListener(document.querySelector("input[type=checkbox]"));
-    createSiteDeleteLink(document.querySelector(".clear-button"));
+    createToggleListener(document.querySelector('input[type=checkbox]'));
+    createSiteDeleteLink(document.querySelector('.clear-button'));
   }
 
   function singleProjectLink(element) {
-    element.addEventListener("click", (e) => {
+    element.addEventListener('click', (e) => {
       const projectId = findIdStep(e.composedPath());
       showSingleProject(projectId);
       projectManipulationLinks();
@@ -426,8 +426,8 @@ const pageInterface = (() => {
   function showDashboard() {
     dom.removeMainLayout();
     dom.initHomepage(
-      data.retrieveData("date", 10),
-      data.retrieveData("projects", 3),
+      data.retrieveData('date', 10),
+      data.retrieveData('projects', 3),
       data.retrieveDeadlines(7)
     );
     ProjectCardLinks();
@@ -443,9 +443,9 @@ const pageInterface = (() => {
     setViewMode();
     dom.initDashboard();
     dom.initHomepage(
-      data.retrieveData("date", 10),
-      data.retrieveData("projects", 3),
-      data.retrieveData("date", 5)
+      data.retrieveData('date', 10),
+      data.retrieveData('projects', 3),
+      data.retrieveData('date', 5)
     );
     addHeaderListeners();
     addSidebarListeners();
