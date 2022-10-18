@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { formatDistanceStrict } from "date-fns";
-import domUtils from "./domUtils";
+import { formatDistanceStrict } from 'date-fns';
+import domUtils from './domUtils';
 
 // *********** Overarching utility functions ************* //
 
@@ -10,24 +10,24 @@ import domUtils from "./domUtils";
 
 const domManipulator = (() => {
   const { body } = document;
-  const mainLayout = domUtils.createElementClass("div", "main-layout");
+  const mainLayout = domUtils.createElementClass('div', 'main-layout');
 
   /* Utility functions */
 
   const noDataMessage = (headingMessage, ...paraStrings) => {
     // Pass in strings for an 'h1' element and arbitrary amount of 'p' elements in order to display.
     const noProjectContainer = domUtils.createElementClass(
-      "div",
-      "empty-container"
+      'div',
+      'empty-container'
     );
-    const noProjectMessage = document.createElement("div");
+    const noProjectMessage = document.createElement('div');
     noProjectContainer.appendChild(noProjectMessage);
 
-    const noProjectHeading = domUtils.createElementText("h1", headingMessage);
+    const noProjectHeading = domUtils.createElementText('h1', headingMessage);
     noProjectMessage.appendChild(noProjectHeading);
 
     paraStrings.forEach((string) => {
-      noProjectMessage.appendChild(domUtils.createElementText("p", string));
+      noProjectMessage.appendChild(domUtils.createElementText('p', string));
     });
 
     return noProjectContainer;
@@ -35,28 +35,28 @@ const domManipulator = (() => {
 
   function createListedLinks(listContainer, linkArr) {
     linkArr.forEach((link) => {
-      const li = document.createElement("li");
-      const liLink = domUtils.createElementText("a", link);
+      const li = document.createElement('li');
+      const liLink = domUtils.createElementText('a', link);
       li.appendChild(liLink);
       listContainer.appendChild(li);
     });
   }
 
   const createProjectCard = (project) => {
-    const projectCard = domUtils.createElementClass("div", "project-card");
+    const projectCard = domUtils.createElementClass('div', 'project-card');
     projectCard.dataset.projectId = project.projectID;
 
-    const projectImage = domUtils.createElementClass("div", "project-image");
+    const projectImage = domUtils.createElementClass('div', 'project-image');
     if (project.projectImage) {
       projectImage.style.backgroundImage = `url('${project.projectImage}')`;
     }
 
-    const projectTitle = domUtils.createElementClass("div", "project-title");
+    const projectTitle = domUtils.createElementClass('div', 'project-title');
     projectTitle.textContent = project.projectTitle;
 
     const projectDescription = domUtils.createElementClass(
-      "div",
-      "project-description"
+      'div',
+      'project-description'
     );
     projectDescription.textContent = project.projectDescription;
 
@@ -70,7 +70,7 @@ const domManipulator = (() => {
   };
 
   const createProjectGrid = (projects) => {
-    const projectGrid = domUtils.createElementClass("div", "project-grid");
+    const projectGrid = domUtils.createElementClass('div', 'project-grid');
     projects.forEach((project) => {
       projectGrid.appendChild(createProjectCard(project));
     });
@@ -79,31 +79,31 @@ const domManipulator = (() => {
 
   function createAlert(alertString) {
     const alertContainer = domUtils.createElementClass(
-      "div",
-      "alert-container"
+      'div',
+      'alert-container'
     );
-    const alertPara = domUtils.createElementText("p", alertString);
-    const confirmButton = domUtils.createElementText("button", "Ok");
+    const alertPara = domUtils.createElementText('p', alertString);
+    const confirmButton = domUtils.createElementText('button', 'Ok');
     domUtils.appendChildren(alertContainer, alertPara, confirmButton);
     return alertContainer;
   }
 
   function createConfirm(confirmString) {
     const confirmContainer = domUtils.createElementClass(
-      "div",
-      "confirm-container"
+      'div',
+      'confirm-container'
     );
-    const confirmPara = domUtils.createElementText("p", confirmString);
+    const confirmPara = domUtils.createElementText('p', confirmString);
     const continuePara = domUtils.createElementText(
-      "p",
-      "Are you sure you would like to continue?"
+      'p',
+      'Are you sure you would like to continue?'
     );
     const buttonContainer = domUtils.createElementClass(
-      "div",
-      "confirm-buttons"
+      'div',
+      'confirm-buttons'
     );
-    const confirmButton = domUtils.createElementText("button", "Continue");
-    const cancelButton = domUtils.createElementText("button", "Cancel");
+    const confirmButton = domUtils.createElementText('button', 'Continue');
+    const cancelButton = domUtils.createElementText('button', 'Cancel');
 
     domUtils.appendChildren(buttonContainer, confirmButton, cancelButton);
     domUtils.appendChildren(
@@ -118,31 +118,31 @@ const domManipulator = (() => {
   /* Table functions */
 
   const createTableHeaders = (...headers) => {
-    const tableHeaders = document.createElement("tr");
+    const tableHeaders = document.createElement('tr');
     headers.forEach((heading) => {
-      const headingCell = domUtils.createElementText("th", heading);
+      const headingCell = domUtils.createElementText('th', heading);
       tableHeaders.appendChild(headingCell);
     });
     return tableHeaders;
   };
 
   const createInteractiveCell = () => {
-    const newCell = domUtils.createElementClass("td", "interactive");
+    const newCell = domUtils.createElementClass('td', 'interactive');
 
-    const tick = domUtils.createElementClass("a", "complete-icon");
-    const tickIcon = domUtils.createElementClass("i", "fa-solid", "fa-check");
+    const tick = domUtils.createElementClass('a', 'complete-icon');
+    const tickIcon = domUtils.createElementClass('i', 'fa-solid', 'fa-check');
     tick.appendChild(tickIcon);
 
-    const edit = domUtils.createElementClass("a", "edit-icon");
+    const edit = domUtils.createElementClass('a', 'edit-icon');
     const editIcon = domUtils.createElementClass(
-      "i",
-      "fa-regular",
-      "fa-pen-to-square"
+      'i',
+      'fa-regular',
+      'fa-pen-to-square'
     );
     edit.appendChild(editIcon);
 
-    const trash = domUtils.createElementClass("a", "trash-icon");
-    const trashIcon = domUtils.createElementClass("i", "fa-solid", "fa-trash");
+    const trash = domUtils.createElementClass('a', 'trash-icon');
+    const trashIcon = domUtils.createElementClass('i', 'fa-solid', 'fa-trash');
     trash.appendChild(trashIcon);
 
     domUtils.appendChildren(newCell, tick, edit, trash);
@@ -157,11 +157,11 @@ const domManipulator = (() => {
 
   function createTodoTable(toDoList) {
     const createTableRow = (toDo) => {
-      const currentRow = document.createElement("tr");
+      const currentRow = document.createElement('tr');
       currentRow.dataset.todoId = toDo.toDoID;
 
-      const toDoTitle = domUtils.createElementText("td", toDo.title);
-      const toDoDetails = domUtils.createElementText("td", toDo.description);
+      const toDoTitle = domUtils.createElementText('td', toDo.title);
+      const toDoDetails = domUtils.createElementText('td', toDo.description);
 
       let date = toDo.dueDate.getDate();
       if (date < 10) date = `0${date}`;
@@ -170,14 +170,14 @@ const domManipulator = (() => {
       if (month < 10) month = `0${month}`;
 
       const toDoDue = domUtils.createElementText(
-        "td",
+        'td',
         `${date}/${month}/${toDo.dueDate.getFullYear()}`
       );
-      toDoDue.classList.add("date-col");
+      toDoDue.classList.add('date-col');
       const toDoInteractive = createInteractiveCell();
 
       if (toDo.overdue) {
-        currentRow.classList.add("overdue");
+        currentRow.classList.add('overdue');
       }
 
       domUtils.appendChildren(
@@ -198,9 +198,9 @@ const domManipulator = (() => {
       });
       return tableArr;
     };
-    const homeListTable = domUtils.createElementClass("table", "todo-table");
+    const homeListTable = domUtils.createElementClass('table', 'todo-table');
     homeListTable.appendChild(
-      createTableHeaders("ToDo", "Details", "Due Date", "")
+      createTableHeaders('ToDo', 'Details', 'Due Date', '')
     );
     appendTableData(homeListTable, createTableData(toDoList));
     return homeListTable;
@@ -216,28 +216,28 @@ const domManipulator = (() => {
 
     const createDeadlineRow = (deadline) => {
       const daysUntilDue = formatDistanceStrict(new Date(), deadline.dueDate, {
-        unit: "day",
+        unit: 'day',
       });
 
-      const deadlineRow = document.createElement("tr");
+      const deadlineRow = document.createElement('tr');
       deadlineRow.dataset.todoId = deadline.toDoID;
-      const deadlineTitle = domUtils.createElementText("td", deadline.title);
+      const deadlineTitle = domUtils.createElementText('td', deadline.title);
       let deadlineDueDate;
 
       if (deadline.overdue) {
-        deadlineRow.classList.add("overdue");
+        deadlineRow.classList.add('overdue');
         deadlineDueDate = domUtils.createElementText(
-          "td",
+          'td',
           `Overdue: ${daysUntilDue}`
         );
       } else {
-        deadlineDueDate = domUtils.createElementText("td", daysUntilDue);
+        deadlineDueDate = domUtils.createElementText('td', daysUntilDue);
       }
-      deadlineDueDate.classList.add("date-col");
+      deadlineDueDate.classList.add('date-col');
 
       if (includeDescription) {
         const deadlineDescription = domUtils.createElementText(
-          "td",
+          'td',
           deadline.description
         );
         if (isInteractive) {
@@ -273,25 +273,25 @@ const domManipulator = (() => {
     };
 
     const deadlinesTable = domUtils.createElementClass(
-      "table",
-      "deadlines-table"
+      'table',
+      'deadlines-table'
     );
     if (includeDescription) {
       if (isInteractive) {
         deadlinesTable.appendChild(
-          createTableHeaders("ToDo", "Description", "Days Until Due", "")
+          createTableHeaders('ToDo', 'Description', 'Days Until Due', '')
         );
       } else {
         deadlinesTable.appendChild(
-          createTableHeaders("ToDo", "Description", "Days Until Due")
+          createTableHeaders('ToDo', 'Description', 'Days Until Due')
         );
       }
     } else if (isInteractive) {
       deadlinesTable.appendChild(
-        createTableHeaders("ToDo", "Days Until Due", "")
+        createTableHeaders('ToDo', 'Days Until Due', '')
       );
     } else {
-      deadlinesTable.appendChild(createTableHeaders("ToDo", "Days Until Due"));
+      deadlinesTable.appendChild(createTableHeaders('ToDo', 'Days Until Due'));
     }
 
     upcomingDeadlines.forEach((deadline) => {
@@ -303,10 +303,10 @@ const domManipulator = (() => {
 
   function createCompletedTable(completedData) {
     const createTableRow = (toDo) => {
-      const currentRow = document.createElement("tr");
+      const currentRow = document.createElement('tr');
 
-      const toDoTitle = domUtils.createElementText("td", toDo.title);
-      const toDoDetails = domUtils.createElementText("td", toDo.description);
+      const toDoTitle = domUtils.createElementText('td', toDo.title);
+      const toDoDetails = domUtils.createElementText('td', toDo.description);
 
       domUtils.appendChildren(currentRow, toDoTitle, toDoDetails);
       return currentRow;
@@ -322,25 +322,25 @@ const domManipulator = (() => {
     };
 
     if (completedData.length > 0) {
-      const homeListTable = domUtils.createElementClass("table", "todo-table");
-      homeListTable.appendChild(createTableHeaders("ToDo", "Details"));
+      const homeListTable = domUtils.createElementClass('table', 'todo-table');
+      homeListTable.appendChild(createTableHeaders('ToDo', 'Details'));
       appendTableData(homeListTable, createTableData(completedData));
       return homeListTable;
     }
     return noDataMessage(
-      "Oh No!",
-      "You have not completed any ToDos",
-      "Return after completing at least one ToDo to bask in your achievements"
+      'Oh No!',
+      'You have not completed any ToDos',
+      'Return after completing at least one ToDo to bask in your achievements'
     );
   }
 
   /* Manipulation functions */
 
   const appendToMain = (...elements) => {
-    if (!document.querySelector("main")) {
-      throw new Error("No 'main' element found");
+    if (!document.querySelector('main')) {
+      throw new Error('No \'main\' element found');
     } else {
-      const main = document.querySelector("main");
+      const main = document.querySelector('main');
       elements.forEach((element) => {
         main.appendChild(element);
       });
@@ -348,8 +348,8 @@ const domManipulator = (() => {
   };
 
   const appendToMainLayout = (...elements) => {
-    if (!document.querySelector(".main-layout")) {
-      throw new Error("No 'main-layout' element found");
+    if (!document.querySelector('.main-layout')) {
+      throw new Error('No \'main-layout\' element found');
     } else {
       elements.forEach((element) => {
         mainLayout.appendChild(element);
@@ -358,25 +358,25 @@ const domManipulator = (() => {
   };
 
   const initMain = () => {
-    const main = document.createElement("main");
+    const main = document.createElement('main');
     return main;
   };
 
   const createHeader = () => {
-    const header = document.createElement("header");
+    const header = document.createElement('header');
 
-    const dropLink = domUtils.createElementClass("a", "drop-link");
+    const dropLink = domUtils.createElementClass('a', 'drop-link');
     const dropLinkIcon = domUtils.createElementClass(
-      "i",
-      "fa-solid",
-      "fa-bars"
+      'i',
+      'fa-solid',
+      'fa-bars'
     );
     dropLink.appendChild(dropLinkIcon);
 
-    const headerLogo = domUtils.createElementText("h1", "You Do ToDo");
+    const headerLogo = domUtils.createElementText('h1', 'You Do ToDo');
 
-    const addItemLink = domUtils.createElementClass("a", "new-icon");
-    const addItemIcon = domUtils.createElementClass("i", "fa-solid", "fa-plus");
+    const addItemLink = domUtils.createElementClass('a', 'new-icon');
+    const addItemIcon = domUtils.createElementClass('i', 'fa-solid', 'fa-plus');
     addItemLink.appendChild(addItemIcon);
 
     domUtils.appendChildren(header, dropLink, headerLogo, addItemLink);
@@ -384,27 +384,27 @@ const domManipulator = (() => {
   };
 
   const createNav = () => {
-    const nav = document.createElement("nav");
+    const nav = document.createElement('nav');
 
-    const homeHeader = document.createElement("h1");
-    const homeHeaderLink = domUtils.createElementText("a", "Home");
-    homeHeaderLink.classList.add("home-link");
+    const homeHeader = document.createElement('h1');
+    const homeHeaderLink = domUtils.createElementText('a', 'Home');
+    homeHeaderLink.classList.add('home-link');
     homeHeader.appendChild(homeHeaderLink);
 
-    const dateUl = domUtils.createElementClass("ul", "date-links");
-    createListedLinks(dateUl, ["Upcoming", "Today", "This Week", "This Month"]);
+    const dateUl = domUtils.createElementClass('ul', 'date-links');
+    createListedLinks(dateUl, ['Upcoming', 'Today', 'This Week', 'This Month']);
 
-    const projectHeader = domUtils.createElementText("h1", "Projects");
-    projectHeader.classList.add("projects-link");
-    const projectUl = domUtils.createElementClass("ul", "project-links");
-    createListedLinks(projectUl, ["New Project", "Project Overview"]);
+    const projectHeader = domUtils.createElementText('h1', 'Projects');
+    projectHeader.classList.add('projects-link');
+    const projectUl = domUtils.createElementClass('ul', 'project-links');
+    createListedLinks(projectUl, ['New Project', 'Project Overview']);
 
-    const extraUl = domUtils.createElementClass("ul", "extra-links");
+    const extraUl = domUtils.createElementClass('ul', 'extra-links');
     createListedLinks(extraUl, [
-      "Completed",
-      "Settings",
-      "Contact Us",
-      "About",
+      'Completed',
+      'Settings',
+      'Contact Us',
+      'About',
     ]);
 
     domUtils.appendChildren(
@@ -420,19 +420,19 @@ const domManipulator = (() => {
 
   const createHomeList = (todoList) => {
     const homeListContainer = domUtils.createElementClass(
-      "div",
-      "todo-list-home",
-      "todo-table-container"
+      'div',
+      'todo-list-home',
+      'todo-table-container'
     );
-    const homeListHeader = domUtils.createElementText("h1", "Your ToDo List");
+    const homeListHeader = domUtils.createElementText('h1', 'Your ToDo List');
 
     const homeListTable = createTodoTable(todoList);
-    const allLink = domUtils.createElementText("a", "See all");
+    const allLink = domUtils.createElementText('a', 'See all');
     if (todoList.length < 1) {
       const dataMessage = noDataMessage(
-        "Oh No!",
-        "You currently have no ToDos",
-        "Add a ToDo and begin working towards your goals"
+        'Oh No!',
+        'You currently have no ToDos',
+        'Add a ToDo and begin working towards your goals'
       );
       domUtils.appendChildren(
         homeListContainer,
@@ -454,15 +454,15 @@ const domManipulator = (() => {
 
   const createHomeProjects = (topProjectList) => {
     const homeProjectContainer = domUtils.createElementClass(
-      "div",
-      "project-list-home"
+      'div',
+      'project-list-home'
     );
-    const homeProjectHeading = domUtils.createElementText("h1", "Projects");
+    const homeProjectHeading = domUtils.createElementText('h1', 'Projects');
     if (topProjectList.length < 1) {
       const messageContainer = noDataMessage(
-        "Oh No!",
-        "You have no current projects",
-        "Create a new project from the sidebar"
+        'Oh No!',
+        'You have no current projects',
+        'Create a new project from the sidebar'
       );
       domUtils.appendChildren(
         homeProjectContainer,
@@ -474,7 +474,7 @@ const domManipulator = (() => {
 
     const projectGrid = createProjectGrid(topProjectList);
 
-    const allLink = domUtils.createElementText("a", "See all");
+    const allLink = domUtils.createElementText('a', 'See all');
 
     domUtils.appendChildren(
       homeProjectContainer,
@@ -487,19 +487,19 @@ const domManipulator = (() => {
 
   const createHomeDeadlines = (upcomingDeadlines) => {
     const homeDeadlinesContainer = domUtils.createElementClass(
-      "div",
-      "upcoming-deadlines-home"
+      'div',
+      'upcoming-deadlines-home'
     );
     const deadlinesTitle = domUtils.createElementText(
-      "h1",
-      "Upcoming Deadlines"
+      'h1',
+      'Upcoming Deadlines'
     );
 
     if (upcomingDeadlines.length < 1) {
       const messageContainer = noDataMessage(
-        "Great News",
-        "You have no upcoming deadlines",
-        "Sit back and relax, or add a new ToDo for this week"
+        'Great News',
+        'You have no upcoming deadlines',
+        'Sit back and relax, or add a new ToDo for this week'
       );
       domUtils.appendChildren(
         homeDeadlinesContainer,
@@ -510,8 +510,8 @@ const domManipulator = (() => {
     }
 
     const tableContainer = domUtils.createElementClass(
-      "div",
-      "deadlines-container"
+      'div',
+      'deadlines-container'
     );
     const deadlinesTable = createUpcomingTable(upcomingDeadlines);
 
@@ -526,29 +526,29 @@ const domManipulator = (() => {
 
   const projectHeaderInfo = (project) => {
     const projectInfo = domUtils.createElementClass(
-      "div",
-      "project-header-info"
+      'div',
+      'project-header-info'
     );
 
     const projectHeading = domUtils.createElementText(
-      "h1",
+      'h1',
       project.projectTitle
     );
     const projectDescription = domUtils.createElementText(
-      "p",
+      'p',
       project.projectDescription
     );
     const newProjectTodo = domUtils.createElementClass(
-      "i",
-      "fa-solid",
-      "fa-plus",
-      "project-plus"
+      'i',
+      'fa-solid',
+      'fa-plus',
+      'project-plus'
     );
     const deleteProjectLink = domUtils.createElementClass(
-      "i",
-      "fa-solid",
-      "fa-trash",
-      "project-delete"
+      'i',
+      'fa-solid',
+      'fa-trash',
+      'project-delete'
     );
     domUtils.appendChildren(
       projectInfo,
@@ -561,26 +561,26 @@ const domManipulator = (() => {
   };
 
   const createSettingsToggle = (currentSettings) => {
-    const toggleDiv = domUtils.createElementClass("div", "toggle-settings-div");
-    const toggleHeading = domUtils.createElementText("h2", "View Mode");
+    const toggleDiv = domUtils.createElementClass('div', 'toggle-settings-div');
+    const toggleHeading = domUtils.createElementText('h2', 'View Mode');
 
     const toggleContainer = domUtils.createElementClass(
-      "div",
-      "toggle-container"
+      'div',
+      'toggle-container'
     );
-    const toggleBody = domUtils.createElementClass("label", "toggle-body");
-    toggleBody.setAttribute("for", "toggle");
-    const toggleInput = document.createElement("input");
+    const toggleBody = domUtils.createElementClass('label', 'toggle-body');
+    toggleBody.setAttribute('for', 'toggle');
+    const toggleInput = document.createElement('input');
     domUtils.setAttributes(toggleInput, {
-      type: "checkbox",
-      id: "toggle",
+      type: 'checkbox',
+      id: 'toggle',
     });
-    if (currentSettings === "dark") toggleInput.checked = true;
-    const slider = domUtils.createElementClass("div", "slider");
+    if (currentSettings === 'dark') toggleInput.checked = true;
+    const slider = domUtils.createElementClass('div', 'slider');
 
     domUtils.appendChildren(toggleBody, toggleInput, slider);
 
-    const toggleLabel = domUtils.createElementText("p", "Toggle view mode");
+    const toggleLabel = domUtils.createElementText('p', 'Toggle view mode');
     domUtils.appendChildren(toggleContainer, toggleBody, toggleLabel);
 
     domUtils.appendChildren(toggleDiv, toggleHeading, toggleContainer);
@@ -588,16 +588,16 @@ const domManipulator = (() => {
   };
 
   const createSettingsReset = () => {
-    const resetDiv = domUtils.createElementClass("div", "reset-settings-div");
-    const resetHeading = domUtils.createElementText("h2", "Data Settings");
+    const resetDiv = domUtils.createElementClass('div', 'reset-settings-div');
+    const resetHeading = domUtils.createElementText('h2', 'Data Settings');
     const resetPara = domUtils.createElementText(
-      "p",
-      "By choosing to clear your ToDos, all data stored locally will be deleted and you will start with a blank slate. All complete and incomplete ToDos will disappear permanently. This action cannot be undone."
+      'p',
+      'By choosing to clear your ToDos, all data stored locally will be deleted and you will start with a blank slate. All complete and incomplete ToDos will disappear permanently. This action cannot be undone.'
     );
-    const clearButton = domUtils.createElementText("button", "Reset Data");
+    const clearButton = domUtils.createElementText('button', 'Reset Data');
     domUtils.setAttributes(clearButton, {
-      class: "clear-button",
-      type: "button",
+      class: 'clear-button',
+      type: 'button',
     });
     domUtils.appendChildren(resetDiv, resetHeading, resetPara, clearButton);
     return resetDiv;
@@ -623,8 +623,8 @@ const domManipulator = (() => {
   };
 
   function removeMainLayout() {
-    const mainList = document.querySelectorAll(".main-layout > div");
-    if (!mainList) return console.log("No main element found");
+    const mainList = document.querySelectorAll('.main-layout > div');
+    if (!mainList) return console.log('No main element found');
     mainList.forEach((div) => {
       div.remove();
     });
@@ -633,19 +633,19 @@ const domManipulator = (() => {
 
   function showTodoPage(todoData) {
     const todoContainer = domUtils.createElementClass(
-      "div",
-      "all-todos-container",
-      "todo-table-container"
+      'div',
+      'all-todos-container',
+      'todo-table-container'
     );
-    const todoHeading = domUtils.createElementText("h1", "All ToDos");
+    const todoHeading = domUtils.createElementText('h1', 'All ToDos');
     if (todoData.length > 0) {
       const todoTable = createTodoTable(todoData);
       domUtils.appendChildren(todoContainer, todoHeading, todoTable);
     } else {
       const dataMessage = noDataMessage(
-        "Oh No!",
-        "You currently have no ToDos",
-        "Add a ToDo and begin working towards your goals"
+        'Oh No!',
+        'You currently have no ToDos',
+        'Add a ToDo and begin working towards your goals'
       );
       domUtils.appendChildren(todoContainer, todoHeading, dataMessage);
     }
@@ -655,16 +655,16 @@ const domManipulator = (() => {
 
   function showProjectPage(project) {
     const projectContainer = domUtils.createElementClass(
-      "div",
-      "single-project-container"
+      'div',
+      'single-project-container'
     );
     projectContainer.dataset.projectId = project.projectID;
 
-    const projectHeader = domUtils.createElementClass("div", "project-header");
+    const projectHeader = domUtils.createElementClass('div', 'project-header');
 
     const projectImage = domUtils.createElementClass(
-      "div",
-      "project-header-image"
+      'div',
+      'project-header-image'
     );
     if (project.projectImage)
       projectImage.style.backgroundImage = `url('${project.projectImage}')`;
@@ -674,17 +674,17 @@ const domManipulator = (() => {
     if (project.projectToDos?.length > 0) {
       const projectTable = createTodoTable(project.projectToDos);
       const tableContainer = domUtils.createElementClass(
-        "div",
-        "todo-table-container"
+        'div',
+        'todo-table-container'
       );
 
       tableContainer.appendChild(projectTable);
       domUtils.appendChildren(projectContainer, projectHeader, tableContainer);
     } else {
       const dataMessage = noDataMessage(
-        "Oh No!",
-        "This project does not contain any ToDos",
-        "Add a ToDo to this project and work towards your goals"
+        'Oh No!',
+        'This project does not contain any ToDos',
+        'Add a ToDo to this project and work towards your goals'
       );
       domUtils.appendChildren(projectContainer, projectHeader, dataMessage);
     }
@@ -694,14 +694,14 @@ const domManipulator = (() => {
 
   function showAllProjects(projects) {
     const projectContainer = domUtils.createElementClass(
-      "div",
-      "all-projects-container"
+      'div',
+      'all-projects-container'
     );
-    const projectHeading = domUtils.createElementText("h1", "All Projects");
+    const projectHeading = domUtils.createElementText('h1', 'All Projects');
     const addProjectLink = domUtils.createElementClass(
-      "i",
-      "fa-solid",
-      "fa-plus"
+      'i',
+      'fa-solid',
+      'fa-plus'
     );
     if (projects.length < 1) {
       domUtils.appendChildren(
@@ -709,9 +709,9 @@ const domManipulator = (() => {
         addProjectLink,
         projectHeading,
         noDataMessage(
-          "Oh No!",
-          "You have no current projects",
-          "Create a new project from the sidebar"
+          'Oh No!',
+          'You have no current projects',
+          'Create a new project from the sidebar'
         )
       );
     } else {
@@ -727,15 +727,15 @@ const domManipulator = (() => {
 
   function showUpcomingPage(heading, data) {
     const upcomingContainer = domUtils.createElementClass(
-      "div",
-      "all-todos-container"
+      'div',
+      'all-todos-container'
     );
-    const containerHeading = domUtils.createElementText("h1", heading);
+    const containerHeading = domUtils.createElementText('h1', heading);
     const table = createUpcomingTable(data, true, true);
     if (data.length < 1) {
       const message = noDataMessage(
-        "Feeling productive?",
-        "Add some ToDos to this time frame"
+        'Feeling productive?',
+        'Add some ToDos to this time frame'
       );
       domUtils.appendChildren(
         upcomingContainer,
@@ -745,8 +745,8 @@ const domManipulator = (() => {
       );
     } else if (data.length < 10) {
       const message = noDataMessage(
-        "Feeling energized?",
-        "Add even more ToDos and get cracking!"
+        'Feeling energized?',
+        'Add even more ToDos and get cracking!'
       );
       domUtils.appendChildren(
         upcomingContainer,
@@ -762,12 +762,12 @@ const domManipulator = (() => {
 
   function showCompletedPage(data) {
     const completedContainer = domUtils.createElementClass(
-      "div",
-      "completed-container"
+      'div',
+      'completed-container'
     );
     const completedHeading = domUtils.createElementText(
-      "h1",
-      "Completed ToDos"
+      'h1',
+      'Completed ToDos'
     );
     const table = createCompletedTable(data);
     domUtils.appendChildren(completedContainer, completedHeading, table);
@@ -776,10 +776,10 @@ const domManipulator = (() => {
 
   function showSettings(currentSettings) {
     const settingsContainer = domUtils.createElementClass(
-      "div",
-      "settings-container"
+      'div',
+      'settings-container'
     );
-    const containerHeading = domUtils.createElementText("h1", "Settings");
+    const containerHeading = domUtils.createElementText('h1', 'Settings');
     const toggleContainer = createSettingsToggle(currentSettings);
     const resetContainer = createSettingsReset();
     domUtils.appendChildren(
@@ -793,22 +793,22 @@ const domManipulator = (() => {
 
   function showAbout() {
     const aboutContainer = domUtils.createElementClass(
-      "div",
-      "about-container"
+      'div',
+      'about-container'
     );
-    const aboutHeading = domUtils.createElementText("h1", "About");
-    const aboutContent = domUtils.createElementClass("div", "about-content");
+    const aboutHeading = domUtils.createElementText('h1', 'About');
+    const aboutContent = domUtils.createElementClass('div', 'about-content');
     const paraOne = domUtils.createElementText(
-      "p",
-      "The purpose of the You Do ToDo Space is to give you a single place where you can organize your life tasks or projects. Life can be messy, but by uploading your most important todos, you can easily prioritize and manage tasks with close deadlines or see which projects are almost at completion. We know that life is always changing, which is why we have ensured that once you have created a todo, you are able to easily edit any of the information for it."
+      'p',
+      'The purpose of the You Do ToDo Space is to give you a single place where you can organize your life tasks or projects. Life can be messy, but by uploading your most important todos, you can easily prioritize and manage tasks with close deadlines or see which projects are almost at completion. We know that life is always changing, which is why we have ensured that once you have created a todo, you are able to easily edit any of the information for it.'
     );
     const paraTwo = domUtils.createElementText(
-      "p",
-      "To add a new todo, you can click on the plus sign in the top right corner at any time. If this is clicked when you are viewing a project, it will automatically link that todo to the project. To add a new project, click the new project link in the sidebar or click the plus icon in the project overview box. Once you have completed a todo, clicking the check mark next to it will move it to the completed section, where you can view any tasks you have completed."
+      'p',
+      'To add a new todo, you can click on the plus sign in the top right corner at any time. If this is clicked when you are viewing a project, it will automatically link that todo to the project. To add a new project, click the new project link in the sidebar or click the plus icon in the project overview box. Once you have completed a todo, clicking the check mark next to it will move it to the completed section, where you can view any tasks you have completed.'
     );
     const paraThree = domUtils.createElementText(
-      "p",
-      "This website has been created using vanilla HTML, CSS and JS. It uses only front end technology which creates and stores a dataset within the browsers local storage to allow for persistent data through multiple sessions. The functions to interact with this dataset have bene created with CRUD principles in mind, and as such the user can create, read update or delete any of the data."
+      'p',
+      'This website has been created using vanilla HTML, CSS and JS. It uses only front end technology which creates and stores a dataset within the browsers local storage to allow for persistent data through multiple sessions. The functions to interact with this dataset have bene created with CRUD principles in mind, and as such the user can create, read update or delete any of the data.'
     );
     domUtils.appendChildren(aboutContent, paraOne, paraTwo, paraThree);
     domUtils.appendChildren(aboutContainer, aboutHeading, aboutContent);
@@ -817,61 +817,61 @@ const domManipulator = (() => {
 
   function showForm(form) {
     const formBackground = domUtils.createElementClass(
-      "div",
-      "form-background"
+      'div',
+      'form-background'
     );
     formBackground.appendChild(form);
     appendToMain(formBackground);
   }
 
   function removeForm() {
-    const formToRemove = document.querySelector(".form-background");
+    const formToRemove = document.querySelector('.form-background');
     formToRemove.remove();
   }
 
   function showAlert(alertString) {
     const alertBackground = domUtils.createElementClass(
-      "div",
-      "alert-background"
+      'div',
+      'alert-background'
     );
     alertBackground.appendChild(createAlert(alertString));
     appendToMain(alertBackground);
   }
 
   function removeAlert() {
-    const alertContainer = document.querySelector(".alert-background");
+    const alertContainer = document.querySelector('.alert-background');
     alertContainer.remove();
   }
 
   function showConfirm(confirmString) {
     const confirmBackground = domUtils.createElementClass(
-      "div",
-      "confirm-background"
+      'div',
+      'confirm-background'
     );
     confirmBackground.appendChild(createConfirm(confirmString));
     appendToMain(confirmBackground);
   }
 
   function removeConfirm() {
-    const confirmBackground = document.querySelector(".confirm-background");
+    const confirmBackground = document.querySelector('.confirm-background');
     confirmBackground.remove();
   }
 
   function updateTable(todoList) {
-    const container = document.querySelector(".todo-table-container");
-    document.querySelector(".todo-table").remove();
+    const container = document.querySelector('.todo-table-container');
+    document.querySelector('.todo-table').remove();
     container.appendChild(createTodoTable(todoList));
   }
 
   function updateHomeProjects(projectList) {
-    const container = document.querySelector(".project-list-home");
-    document.querySelector(".project-grid").remove();
+    const container = document.querySelector('.project-list-home');
+    document.querySelector('.project-grid').remove();
     container.appendChild(createProjectGrid(projectList));
   }
 
   function updateDeadlines(todoList) {
-    const container = document.querySelector(".deadlines-container");
-    document.querySelector(".deadlines-table").remove();
+    const container = document.querySelector('.deadlines-container');
+    document.querySelector('.deadlines-table').remove();
     container.appendChild(createUpcomingTable(todoList, false, false));
   }
 
