@@ -12,7 +12,7 @@ const domUtils = (() => {
     try {
       newElement.textContent = text;
     } catch (err) {
-      console.log("No text can be added to this element");
+      throw new Error('No text can be added to this element');
     }
     return newElement;
   }
